@@ -1,7 +1,6 @@
-import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
-import AuthProvider from '../components/Auth/AuthProvider/AuthProvider';
+import AuthProvider from '../components/auth/authProvider/AuthProvider';
 import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWorkerRegister";
 import Header from "../components/Header/Header";
 import { BottomBar } from "../components/Bottombar/Bottombar";
