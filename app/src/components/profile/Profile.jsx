@@ -22,11 +22,11 @@ export default function Profile() {
   const { name, email } = session.user;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gray-900">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] ">
       <img
         src={getGravatarUrl(email)}
         alt="Profile"
-        className="w-24 h-24 rounded-fullmb-4"
+        className="w-24 h-24 rounded-full mb-4"
         loading="lazy"
       />
       <h2 className="text-2xl font-bold mb-1">{name}</h2>
