@@ -6,7 +6,7 @@ import md5 from "md5";
 import API from "../../../utils/api";
 import { useEffect } from "react";
 
-function getGravatarUrl(email, size = 64) {
+function getGravatarUrl(email, size = 152) {
   const hash = md5(email.trim().toLowerCase());
   return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 }
