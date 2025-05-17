@@ -7,6 +7,7 @@ const CORE_ASSETS = [
     '/manifest.json',
     '/fonts/RedHatDisplay-VariableFont_wght.ttf',
     '/fonts/RedHatMono-VariableFont_wght.ttf',
+    '/fonts/Bungee-Regular.ttf',
     '/icons/icon-16x16.avif',
     '/icons/icon-32x32.avif',
     '/icons/icon-48x48.avif',

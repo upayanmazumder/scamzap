@@ -4,8 +4,8 @@
   "description": "Protect yourself from scams and frauds",
   "start_url": "/",
   "display": "fullscreen",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#184e79",
+  "theme_color": "#184e79",
   "categories": [
     "scam",
     "fraud",
