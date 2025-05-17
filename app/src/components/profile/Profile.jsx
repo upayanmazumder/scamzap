@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import md5 from "md5";
 
-function getGravatarUrl(email, size = 96) {
+function getGravatarUrl(email, size = 152) {
   const hash = md5(email.trim().toLowerCase());
   return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
 }
@@ -27,6 +27,7 @@ export default function Profile() {
         src={getGravatarUrl(email)}
         alt="Profile"
         className="w-24 h-24 rounded-fullmb-4"
+        loading="lazy"
       />
       <h2 className="text-2xl font-bold mb-1">{name}</h2>
       <p className="text-gray-600 mb-6">{email}</p>
