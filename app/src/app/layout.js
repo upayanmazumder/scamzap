@@ -32,10 +32,10 @@ export default function RootLayout({ children }) {
           name="apple-mobile-web-app-status-bar-style"
           content="black-translucent"
         />
-        <meta property="og:title" content="Upayan" />
+        <meta property="og:title" content="Scamzap" />
         <meta
           property="og:description"
-          content="Welcome to my portfolio website!"
+          content="Welcome to Scamzap!"
         />
         <meta property="og:image" content="/icons/icon-512x512.avif" />
         <meta property="og:url" content="https://scamzap.upayan.dev" />
@@ -44,11 +44,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {/* <AuthProvider> */}
-          {/* <Header /> */}
+        <AuthProvider>
+          <Header />
           {children}
-          {/* <ServiceWorkerRegister /> */}
-        {/* </AuthProvider> */}
+          <ServiceWorkerRegister />
+        </AuthProvider>
       </body>
     </html>
   );
