@@ -18,10 +18,14 @@ export const BottomBar = () => {
 
   return (
     <div
-      className="fixed z-50 w-full h-16 max-w-lg border-2 border-[var(--input)] bg-[var(--background)] px-2 py-2
-      bottom-0 left-1/2 -translate-x-1/2
-      lg:top-0 lg:left-0 lg:h-screen lg:w-56 lg:max-w-none lg:translate-x-0 lg:translate-y-0
-      lg:flex lg:flex-col lg:items-start lg:justify-start lg:rounded-none lg:py-4 lg:px-3"
+      className="
+        fixed z-50 w-full h-16 max-w-lg bg-[var(--background)] px-2 py-2
+        bottom-0 left-1/2 -translate-x-1/2
+        border-t-2 border-[var(--input)]
+        lg:top-0 lg:left-0 lg:h-screen lg:w-56 lg:max-w-none lg:translate-x-0 lg:translate-y-0
+        lg:flex lg:flex-col lg:items-start lg:justify-start lg:rounded-none lg:py-4 lg:px-3
+        lg:border-t-0 lg:border-r-2
+      "
     >
       <div className="hidden lg:flex items-center justify-start gap-2 mb-6 w-full">
         <Image src="/favicon.ico" alt="Logo" width={32} height={32} />
