@@ -13,7 +13,8 @@ export default function InternetSecurity() {
         Internet Security
       </h1>
       <p className="text-lg text-gray-700 mb-8 text-center max-w-xl">
-        Start your journey to becoming cyber smart. Complete lessons to unlock the next!
+        Start your journey to becoming cyber smart. Complete lessons to unlock
+        the next!
       </p>
 
       <div className="flex flex-col gap-8 items-center">
