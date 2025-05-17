@@ -24,18 +24,23 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="flex items-center justify-between px-8 py-4 bg-gray-800 text-white shadow-md">
-      <div className="flex items-center gap-4">
-        <h1 className="text-2xl font-bold tracking-wide">Scamzap</h1>
+    <header className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 py-4 bg-gray-800 text-white shadow-md w-full">
+      <div
+        className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto mb-2 sm:mb-0"
+        style={{ margin: "0" }}
+      >
+        <h1 className="text-xl sm:text-2xl font-bold tracking-wide">Scamzap</h1>
         <span
-          className={`text-sm font-medium px-2 py-1 rounded ${
+          className={`text-xs sm:text-sm font-medium px-2 py-1 rounded ${
             isOnline ? "bg-green-500" : "bg-red-500"
           }`}
         >
           {isOnline ? "API Online" : "API Offline"}
         </span>
       </div>
-      <Authenticate />
+      <div className="w-full sm:w-auto flex justify-end">
+        <Authenticate />
+      </div>
     </header>
   );
 }
