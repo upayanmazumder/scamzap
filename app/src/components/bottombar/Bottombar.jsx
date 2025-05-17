@@ -1,8 +1,8 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
+import { usePathname, useRouter } from "next/navigation";
 import { Home, Search, User, Settings } from "lucide-react";
 
 const navItems = [
@@ -13,39 +13,49 @@ const navItems = [
 ];
 
 export const BottomBar = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
   return (
     <div
-      className="fixed z-50 w-full h-16 max-w-lg bg-[var(--background)] border border-[var(--input)] bottom-0 left-1/2 
-  lg:w-48 lg:h-screen lg:top-0 lg:left-0 lg:translate-y-0 lg:rounded-none lg:flex 
-  lg:flex-col lg:justify-start lg:items-start lg:py-4 lg:px-3"
+      className="fixed z-50 w-full h-16 max-w-lg border-2 border-[var(--input)] bg-[var(--background)] px-2 py-2
+      bottom-0 left-1/2 -translate-x-1/2
+      lg:top-0 lg:left-0 lg:h-screen lg:w-56 lg:max-w-none lg:translate-x-0 lg:translate-y-0
+      lg:flex lg:flex-col lg:items-start lg:justify-start lg:rounded-none lg:py-4 lg:px-3"
     >
-      <div className="hidden lg:flex items-center justify-center mb-6 w-full">
+      <div className="hidden lg:flex items-center justify-start gap-2 mb-6 w-full">
         <Image src="/favicon.ico" alt="Logo" width={32} height={32} />
-        <h1
-          className="text-2xl font-bold text-center"
-          style={{ color: "var(--foreground)", fontSize: "1.5rem" }}
-        >
-          Scamzap
-        </h1>
+        <h1 className="text-2xl font-bold text-[var(--foreground)]">Scamzap</h1>
       </div>
 
-      <div className="grid h-full max-w-lg grid-cols-4 mx-auto lg:grid-cols-1 lg:max-w-none lg:w-full lg:gap-2">
-        {navItems.map(({ href, label, icon: Icon }) => (
-          <Link
-            key={href}
-            href={href}
-            className="inline-flex flex-col items-center justify-center px-5 py-1 rounded-s-full group lg:rounded-md lg:flex-row lg:justify-start lg:px-3 lg:py-2 hover:bg-muted transition"
-          >
-            <Icon className="w-6 h-6" style={{ color: "var(--foreground)" }} />
+      <div className="grid w-full h-full grid-cols-4 lg:grid-cols-1 lg:gap-2">
+        {navItems.map(({ href, label, icon: Icon }) => {
+          const isActive = pathname === href;
 
-            <span
-              className="sr-only lg:not-sr-only lg:ml-3 lg:text-sm"
-              style={{ color: "var(--foreground)" }}
+          return (
+            <button
+              key={href}
+              onClick={() => router.push(href)}
+              className={`
+                appearance-none bg-transparent border-none outline-none
+                group inline-flex items-center justify-center p-2 rounded-md transition
+                flex-col lg:flex-row lg:justify-center lg:items-center lg:w-full
+                hover:!text-[var(--theme-red)] hover:bg-muted
+                ${
+                  isActive
+                    ? "!text-[var(--theme-orange)]"
+                    : "!text-[var(--theme-yellow)]"
+                }
+              `}
+              style={{ backgroundColor: "transparent", boxShadow: "none" }}
             >
-              {label}
-            </span>
-          </Link>
-        ))}
+              <Icon className="w-6 h-6" />
+              <span className="sr-only lg:not-sr-only lg:ml-3 lg:text-sm">
+                {label}
+              </span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );
