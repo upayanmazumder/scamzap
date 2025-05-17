@@ -4,7 +4,8 @@ import "./globals.css";
 import AuthProvider from './components/Auth/AuthProvider/AuthProvider';
 import Authenticate from "./components/Auth/Authenticate/Authenticate";
 import ServiceWorkerRegister from "./components/serviceworkerregister/ServiceWorkerRegister";
-import Header from "./components/Header/Header";
+import Header from "../components/Header/Header";
+import { BottomBar } from "../components/Bottombar/Bottombar";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -43,12 +44,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Header />
-        <AuthProvider>
-          <Authenticate />
+        {/* <AuthProvider> */}
+          {/* <Header /> */}
           {children}
-          <ServiceWorkerRegister />
-        </AuthProvider>
+          {/* <ServiceWorkerRegister /> */}
+        {/* </AuthProvider> */}
       </body>
     </html>
   );
