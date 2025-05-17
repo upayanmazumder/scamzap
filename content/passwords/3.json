@@ -1,0 +1,107 @@
+[
+	{
+	  "id": 1,
+	  "topic": "Password Strength",
+	  "question": "Anita uses the password 'Sunshine123' for her email. Is this a strong password?",
+	  "options": [
+		"Yes, because it has letters and numbers",
+		"No, it uses common words that are easy to guess",
+		"Yes, because it is long",
+		"No, because it has uppercase letters"
+	  ],
+	  "answer": "No, it uses common words that are easy to guess",
+	  "explanation": "Using common words makes passwords easier to guess by attackers."
+	},
+	{
+	  "id": 2,
+	  "topic": "Passphrases",
+	  "question": "Ramesh wants a password that is easy to remember and strong. Which is better?",
+	  "options": [
+		"'CatDog123'",
+		"'MySunnyDayIsBright!'",
+		"'12345678'",
+		"'Password1'"
+	  ],
+	  "answer": "'MySunnyDayIsBright!'",
+	  "explanation": "Passphrases with multiple words and symbols are easier to remember and harder to guess."
+	},
+	{
+	  "id": 3,
+	  "topic": "Avoiding Patterns",
+	  "question": "Lakshmi uses 'abcd1234' as her password. Why is this risky?",
+	  "options": [
+		"Because it is too short",
+		"Because it's a common pattern",
+		"Because it uses numbers",
+		"Because it uses lowercase letters"
+	  ],
+	  "answer": "Because it's a common pattern",
+	  "explanation": "Simple sequences like 'abcd' or '1234' are very easy for hackers to guess."
+	},
+	{
+	  "id": 4,
+	  "topic": "Updating Passwords",
+	  "question": "Jai has been using the same password for 3 years. What should he do?",
+	  "options": [
+		"Keep it if it’s working",
+		"Change it regularly to stay safe",
+		"Share it with friends",
+		"Use the same password for all accounts"
+	  ],
+	  "answer": "Change it regularly to stay safe",
+	  "explanation": "Regular password updates help protect your accounts if old passwords get stolen."
+	},
+	{
+	  "id": 5,
+	  "topic": "Shared Devices",
+	  "question": "Rekha logs into her email on a public library computer. What should she do after finishing?",
+	  "options": [
+		"Close the browser without logging out",
+		"Log out of her account before leaving",
+		"Leave the computer as it is",
+		"Write her password on paper"
+	  ],
+	  "answer": "Log out of her account before leaving",
+	  "explanation": "Always log out on public computers to protect your account from others."
+	},
+	{
+	  "id": 6,
+	  "topic": "Memory Tips",
+	  "question": "Deepak wants to remember his complex password. Which helps best?",
+	  "options": [
+		"Writing it on a sticky note on his monitor",
+		"Using a password manager app",
+		"Telling his neighbor",
+		"Using the same password everywhere"
+	  ],
+	  "answer": "Using a password manager app",
+	  "explanation": "Password managers safely store and recall complex passwords for you."
+	},
+	{
+	  "id": 7,
+	  "topic": "Avoid Using Personal Info",
+	  "question": "Meena uses her birth year '1950' in her password. Why is this a bad idea?",
+	  "options": [
+		"Because birth years are easy to guess",
+		"Because it makes the password longer",
+		"Because numbers are bad",
+		"Because it’s hard to remember"
+	  ],
+	  "answer": "Because birth years are easy to guess",
+	  "explanation": "Personal info like birthdates is often easy for others to find and guess."
+	},
+	{
+	  "id": 8,
+	  "topic": "Password Length",
+	  "question": "Vikram’s password is only 6 characters long. What should he do?",
+	  "options": [
+		"Make it longer, at least 12 characters",
+		"Keep it short for easy typing",
+		"Use only numbers",
+		"Use only letters"
+	  ],
+	  "answer": "Make it longer, at least 12 characters",
+	  "explanation": "Longer passwords are harder to crack and safer."
+	}
+  ]
+  
