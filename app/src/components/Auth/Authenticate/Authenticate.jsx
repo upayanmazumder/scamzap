@@ -1,7 +1,7 @@
 "use client";
 
-import { useSession, signIn, signOut } from "next-auth/react";
-import { FaGoogle, FaSignOutAlt } from "react-icons/fa";
+import { useSession, signIn } from "next-auth/react";
+import { FaGoogle } from "react-icons/fa";
 import md5 from "md5";
 import API from "../../../utils/api";
 import { useEffect } from "react";
@@ -46,14 +46,6 @@ export default function Authenticate() {
           <span className="text-gray-200 text-sm truncate flex-1">
             <span className="font-semibold">{session.user.name}</span>
           </span>
-          <button
-            onClick={() => signOut()}
-            className="flex items-center px-2 py-1 sm:px-3 sm:py-1.5 bg-red-600 text-xs sm:text-sm text-white rounded hover:bg-red-700 transition"
-            title="Sign out"
-          >
-            <FaSignOutAlt className="mr-1" />
-            <span className="hidden sm:inline">Sign out</span>
-          </button>
         </div>
       ) : (
         <button

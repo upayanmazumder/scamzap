@@ -115,7 +115,6 @@ body {
   justify-content: space-between;
 }
 
-
 h1 {
   font-size: var(--font-size-huge);
 }
@@ -149,8 +148,8 @@ p {
 }
 
 main {
-  margin: 4.5rem;
-  padding: var(--padding-medium);
+  margin: 0.5rem 4.5rem;
+  padding: 0.5rem var(--padding-medium);
   min-height: 70vh;
   display: flex;
   flex-direction: column;
