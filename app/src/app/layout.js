@@ -2,8 +2,8 @@ import "./globals.css";
 
 import AuthProvider from '../components/auth/authProvider/AuthProvider';
 import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWorkerRegister";
-import Header from "../components/Header/Header";
-import { BottomBar } from "../components/Bottombar/Bottombar";
+import Header from "../components/header/Header";
+import { BottomBar } from "../components/bottombar/Bottombar";
 
 export const metadata = {
   title: "Scamzap",
