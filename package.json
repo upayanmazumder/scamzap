@@ -2,13 +2,13 @@
   "name": "scamzap",
   "version": "1.0.0",
   "description": "",
-  "homepage": "https://github.com/upayanmazumder-DevLabs/scamzap#readme",
+  "homepage": "https://github.com/upayanmazumder/scamzap#readme",
   "bugs": {
-    "url": "https://github.com/upayanmazumder-DevLabs/scamzap/issues"
+    "url": "https://github.com/upayanmazumder/scamzap/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/upayanmazumder-DevLabs/scamzap.git"
+    "url": "git+https://github.com/upayanmazumder/scamzap.git"
   },
   "license": "MIT",
   "author": "",

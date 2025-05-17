@@ -1,5 +1,3 @@
-import Authenticate from './components/Auth/Authenticate/Authenticate';
-
 export default function Home() {
   return (
     <main>
