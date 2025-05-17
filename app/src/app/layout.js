@@ -24,7 +24,7 @@ export default function RootLayout({ children }) {
           property="og:description"
           content="Welcome to Scamzap!"
         />
-        <meta property="og:image" content="/icons/icon-512x512.avif" />
+        <meta property="og:image" content="/icons/icon-512x512.webp" />
         <meta property="og:url" content="https://scamzap.upayan.dev" />
         <meta property="og:type" content="website" />
       </head>
