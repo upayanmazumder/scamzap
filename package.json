@@ -1,0 +1,25 @@
+{
+  "name": "scamzap",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/upayanmazumder-DevLabs/scamzap#readme",
+  "bugs": {
+    "url": "https://github.com/upayanmazumder-DevLabs/scamzap/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/upayanmazumder-DevLabs/scamzap.git"
+  },
+  "license": "MIT",
+  "author": "",
+  "type": "commonjs",
+  "main": "none",
+  "scripts": {
+    "dev:api": "cd api && npm run dev",
+    "dev:app": "cd app && npm run dev",
+    "dev": "concurrently \"npm run dev:api\" \"npm run dev:app\""
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  }
+}
