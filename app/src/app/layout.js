@@ -1,6 +1,6 @@
 import "./globals.css";
 
-import AuthProvider from '../components/auth/authProvider/AuthProvider';
+import AuthProvider from '../components/auth/authprovider/AuthProvider';
 import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWorkerRegister";
 import Header from "../components/header/Header";
 import { BottomBar } from "../components/bottombar/Bottombar";
