@@ -1,0 +1,107 @@
+[
+	{
+	  "id": 1,
+	  "topic": "Developer Check",
+	  "question": "Anita wants to install a health app. She sees it’s made by 'HealthyLife Inc.'. What should she do next?",
+	  "options": [
+		"Check if the developer is well-known or trusted",
+		"Install it immediately without checking",
+		"Ignore developer info",
+		"Ask a stranger on the internet"
+	  ],
+	  "answer": "Check if the developer is well-known or trusted",
+	  "explanation": "Trusted developers are more likely to provide safe and reliable apps."
+	},
+	{
+	  "id": 2,
+	  "topic": "App Reviews",
+	  "question": "Vikram finds two apps for language learning. One has many positive reviews, the other has very few. Which is safer to choose?",
+	  "options": [
+		"The one with many positive reviews",
+		"The one with few reviews",
+		"Any of them is fine",
+		"The cheapest one"
+	  ],
+	  "answer": "The one with many positive reviews",
+	  "explanation": "More positive reviews usually mean better app quality and safety."
+	},
+	{
+	  "id": 3,
+	  "topic": "App Ratings",
+	  "question": "Sunita wants to download a cooking app with a 1-star rating and many complaints. What should she do?",
+	  "options": [
+		"Avoid installing it",
+		"Download quickly before rating changes",
+		"Ignore the ratings",
+		"Install it anyway"
+	  ],
+	  "answer": "Avoid installing it",
+	  "explanation": "Low ratings often mean the app has problems or risks."
+	},
+	{
+	  "id": 4,
+	  "topic": "App Permissions",
+	  "question": "Kiran wants to install a flashlight app, but it asks for access to contacts and messages. What should he do?",
+	  "options": [
+		"Avoid the app or find a safer one",
+		"Allow all permissions",
+		"Ignore permissions and install",
+		"Ask a friend to install it first"
+	  ],
+	  "answer": "Avoid the app or find a safer one",
+	  "explanation": "Apps should only ask for permissions needed for their function."
+	},
+	{
+	  "id": 5,
+	  "topic": "App Size",
+	  "question": "Nita sees a music player app that is only 200 KB. Should she be careful before downloading?",
+	  "options": [
+		"Yes, very small apps might not work properly or could be suspicious",
+		"No, smaller apps are always better",
+		"No, size doesn’t matter",
+		"Yes, but only if it costs money"
+	  ],
+	  "answer": "Yes, very small apps might not work properly or could be suspicious",
+	  "explanation": "Very small apps may be incomplete or unsafe."
+	},
+	{
+	  "id": 6,
+	  "topic": "App Updates",
+	  "question": "Raj notices an app hasn’t been updated for 3 years. Should he be cautious?",
+	  "options": [
+		"Yes, outdated apps may have security risks",
+		"No, old apps are safer",
+		"Ignore update dates",
+		"Update manually from the internet"
+	  ],
+	  "answer": "Yes, outdated apps may have security risks",
+	  "explanation": "Regular updates keep apps secure and fix bugs."
+	},
+	{
+	  "id": 7,
+	  "topic": "Official Logos",
+	  "question": "Meena finds a banking app, but the logo looks blurry and different from the official bank website. What should she do?",
+	  "options": [
+		"Avoid installing it",
+		"Install it anyway",
+		"Ignore the logo",
+		"Ask a friend to check"
+	  ],
+	  "answer": "Avoid installing it",
+	  "explanation": "Fake apps often use incorrect logos to trick users."
+	},
+	{
+	  "id": 8,
+	  "topic": "App Description",
+	  "question": "Deepak reads the app description, but it’s full of spelling mistakes and bad grammar. Should he trust this app?",
+	  "options": [
+		"No, poor descriptions are a warning sign",
+		"Yes, description doesn’t matter",
+		"Ignore and install",
+		"Ask someone else to check"
+	  ],
+	  "answer": "No, poor descriptions are a warning sign",
+	  "explanation": "Fake apps often have poor or unclear descriptions."
+	}
+  ]
+  

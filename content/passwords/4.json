@@ -1,0 +1,107 @@
+[
+	{
+	  "id": 1,
+	  "topic": "Reusing Passwords",
+	  "question": "Vimla uses the same password 'Mango2023' for her Facebook, email, and shopping account. What’s the risk?",
+	  "options": [
+		"Nothing, it helps her remember",
+		"If one account is hacked, all others become unsafe",
+		"It’s fine because she changes it every year",
+		"It’s okay if she trusts the websites"
+	  ],
+	  "answer": "If one account is hacked, all others become unsafe",
+	  "explanation": "Using the same password everywhere means one leak can give access to all your accounts."
+	},
+	{
+	  "id": 2,
+	  "topic": "2FA Basics",
+	  "question": "Salim enables '2-step verification' on his email. Now, after entering his password, he gets a code on his phone. Is this helpful?",
+	  "options": [
+		"No, it’s confusing",
+		"Yes, it adds extra safety",
+		"Only works on Sundays",
+		"It replaces the password"
+	  ],
+	  "answer": "Yes, it adds extra safety",
+	  "explanation": "2-step verification (2FA) adds a second layer of protection after your password."
+	},
+	{
+	  "id": 3,
+	  "topic": "Typo Troubles",
+	  "question": "Mohan creates a strong password but keeps getting 'Wrong Password' errors. What could help?",
+	  "options": [
+		"Typing slowly and checking spelling",
+		"Changing it to something simple like 1234",
+		"Telling his grandson",
+		"Giving up and not using the account"
+	  ],
+	  "answer": "Typing slowly and checking spelling",
+	  "explanation": "Strong passwords are good, but they must be typed carefully each time."
+	},
+	{
+	  "id": 4,
+	  "topic": "Auto-Save Risks",
+	  "question": "Seema logs into her email on her nephew’s laptop. The browser offers to save her password. What should she do?",
+	  "options": [
+		"Click 'Yes' to make logging in easier",
+		"Click 'No' because it’s not her own device",
+		"Ignore it and leave it on screen",
+		"Ask the browser what to do"
+	  ],
+	  "answer": "Click 'No' because it’s not her own device",
+	  "explanation": "Never save your password on someone else's device—it may stay there even after you leave."
+	},
+	{
+	  "id": 5,
+	  "topic": "Password Managers",
+	  "question": "Ravi uses a password manager that stores all his passwords. Is that safe?",
+	  "options": [
+		"Yes, if the password manager itself is protected by a strong master password",
+		"No, it’s always unsafe",
+		"Only if it's written on paper",
+		"He should stop using it"
+	  ],
+	  "answer": "Yes, if the password manager itself is protected by a strong master password",
+	  "explanation": "Password managers are secure tools if protected properly."
+	},
+	{
+	  "id": 6,
+	  "topic": "Password Recovery",
+	  "question": "Fatima forgot her password. She sees a 'Forgot Password?' link. What’s the best next step?",
+	  "options": [
+		"Click the link and follow instructions",
+		"Create a new account",
+		"Wait and hope she remembers",
+		"Ask a friend to reset it"
+	  ],
+	  "answer": "Click the link and follow instructions",
+	  "explanation": "Most websites offer a safe way to recover your password using that link."
+	},
+	{
+	  "id": 7,
+	  "topic": "Family Devices",
+	  "question": "Jagdish shares a Netflix account with his family. His granddaughter asks for the password. What should he consider?",
+	  "options": [
+		"Share it, then change it later if needed",
+		"Never share with anyone",
+		"Give his email password too",
+		"Tell her to ask Netflix"
+	  ],
+	  "answer": "Share it, then change it later if needed",
+	  "explanation": "Sometimes we share passwords with family, but it’s smart to change it later to stay safe."
+	},
+	{
+	  "id": 8,
+	  "topic": "Password Habits",
+	  "question": "Usha keeps all her passwords in a notebook under her TV remote. Is this safe?",
+	  "options": [
+		"Yes, it’s private",
+		"No, someone can easily find it",
+		"Yes, because it’s hidden",
+		"Yes, if the notebook is old"
+	  ],
+	  "answer": "No, someone can easily find it",
+	  "explanation": "Physical notes can be lost or found. If written down, they should be kept very securely."
+	}
+  ]
+  
