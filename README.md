@@ -1,5 +1,7 @@
 # scamzap  
 
+[![Build Docker Image](https://github.com/upayanmazumder/scamzap/actions/workflows/docker-image.yml/badge.svg)](https://github.com/upayanmazumder/scamzap/actions/workflows/docker-image.yml)
+
 Protect yourselves from scams!
 
 ## 🌐 Live URLs  
