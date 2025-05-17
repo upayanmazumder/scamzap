@@ -28,7 +28,7 @@ export default function Header() {
     <header className="flex flex-col sm:flex-row items-center justify-between px-4 sm:px-8 py-4 bg-gray-800 text-white shadow-md w-full">
       <div
         className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 w-full sm:w-auto mb-2 sm:mb-0"
-        style={{ margin: "0" }}
+        style={{ margin: "0 4rem" }}
       >
         <h1 className="text-xl sm:text-2xl font-bold tracking-wide">Scamzap</h1>
         <span className="flex items-center gap-1">
