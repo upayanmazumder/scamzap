@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { FaCircle } from "react-icons/fa";
 import Authenticate from "../Auth/Authenticate/Authenticate";
 import API from "../../utils/api";
 
@@ -30,12 +31,12 @@ export default function Header() {
         style={{ margin: "0" }}
       >
         <h1 className="text-xl sm:text-2xl font-bold tracking-wide">Scamzap</h1>
-        <span
-          className={`text-xs sm:text-sm font-medium px-2 py-1 rounded ${
-            isOnline ? "bg-green-500" : "bg-red-500"
-          }`}
-        >
-          {isOnline ? "API Online" : "API Offline"}
+        <span className="flex items-center gap-1">
+          <FaCircle
+            className={isOnline ? "text-green-500" : "text-red-500"}
+            title={isOnline ? "API Online" : "API Offline"}
+            size={14}
+          />
         </span>
       </div>
       <div className="w-full sm:w-auto flex justify-end">
