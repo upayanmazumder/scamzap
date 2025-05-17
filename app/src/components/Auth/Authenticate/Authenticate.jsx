@@ -37,7 +37,10 @@ export default function Authenticate() {
   return (
     <div className="flex flex-col items-center justify-center w-full">
       {session ? (
-        <div className="flex items-center gap-2 p-2 sm:p-4 bg-gray-800 rounded-lg w-full max-w-xs sm:max-w-sm">
+        <div
+          className="flex items-center gap-2 p-2 sm:p-2 bg-gray-700 rounded-lg w-full max-w-xs sm:max-w-sm cursor-pointer"
+          onClick={() => (window.location.href = "/profile")}
+        >
           <img
             src={getGravatarUrl(session.user.email)}
             alt="Profile"

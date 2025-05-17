@@ -1,4 +1,10 @@
 {
   "colorWheel.settings.workspaceColor": "hsl(97,87%,41%)",
-  "cSpell.words": ["Bottombar", "Scamzap", "serviceworkerregister"]
+  "cSpell.words": [
+    "Bottombar",
+    "fullmb",
+    "Scamzap",
+    "serviceworkerregister",
+    "wght"
+  ]
 }
