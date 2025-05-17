@@ -1,0 +1,112 @@
+{
+  "name": "Scamzap",
+  "short_name": "Scamzap",
+  "description": "Protect yourself from scams and frauds",
+  "start_url": "/",
+  "display": "fullscreen",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "categories": [
+    "scam",
+    "fraud",
+    "protection",
+    "security"
+  ],
+  "icons": [
+    {
+      "src": "/icons/icon-16x16.avif",
+      "sizes": "16x16",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-32x32.avif",
+      "sizes": "32x32",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-48x48.avif",
+      "sizes": "48x48",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-64x64.avif",
+      "sizes": "64x64",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-72x72.avif",
+      "sizes": "72x72",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-76x76.avif",
+      "sizes": "76x76",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-96x96.avif",
+      "sizes": "96x96",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-114x114.avif",
+      "sizes": "114x114",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-120x120.avif",
+      "sizes": "120x120",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-128x128.avif",
+      "sizes": "128x128",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-144x144.avif",
+      "sizes": "144x144",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-152x152.avif",
+      "sizes": "152x152",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-180x180.avif",
+      "sizes": "180x180",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-192x192.avif",
+      "sizes": "192x192",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-196x196.avif",
+      "sizes": "196x196",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-228x228.avif",
+      "sizes": "228x228",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-256x256.avif",
+      "sizes": "256x256",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-384x384.avif",
+      "sizes": "384x384",
+      "type": "image/avif"
+    },
+    {
+      "src": "/icons/icon-512x512.avif",
+      "sizes": "512x512",
+      "type": "image/avif"
+    }
+  ]
+}
