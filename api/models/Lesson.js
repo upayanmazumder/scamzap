@@ -11,9 +11,9 @@ const quizSchema = new mongoose.Schema({
 });
 
 const lessonSchema = new mongoose.Schema({
-  topic: String,
-  content: String,
-  quiz: [quizSchema],
+    topic: String,
+    content: String,
+    quiz: [quizSchema],
 });
 
 const Lesson = mongoose.model("Lesson", lessonSchema);
