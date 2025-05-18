@@ -70,16 +70,13 @@ export default function Profile() {
 
   return (
     <div className="py-8 flex flex-col items-center">
-      <div className="bg-orange-400 rounded-md relative overflow-hidden shadow-md w-full max-w-md">
-        <div className="absolute top-2 right-2 text-gray-700 cursor-pointer">
-          <FaPencilAlt />
-        </div>
+      <div className="bg-orange-400 rounded-[40px] relative overflow-hidden shadow-md w-full max-w-md">
         <div className="flex justify-center p-6">
           {image ? (
             <img
               src={image}
               alt={`${name || "User"}'s profile picture`}
-              className="w-24 h-24 rounded-full border-4 border-white object-cover shadow-sm"
+              className="w-24 h-24 object-cover shadow-sm"
               loading="lazy"
             />
           ) : (
