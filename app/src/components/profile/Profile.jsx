@@ -53,7 +53,7 @@ export default function Profile() {
 
   const handleShare = () => {
     if (session?.user?.sub) {
-      const url = `${window.location.origin}/users/${session.user.sub}`;
+      const url = `${window.location.origin}/search/${session.user.sub}`;
       navigator.clipboard.writeText(url).then(() => {
         setCopySuccess(true);
         setTimeout(() => setCopySuccess(false), 10000);
