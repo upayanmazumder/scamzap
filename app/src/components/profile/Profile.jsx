@@ -112,7 +112,7 @@ export default function Profile() {
             <motion.img
               src={image}
               alt={`${name || "User"}'s profile picture`}
-              className="w-24 h-24 object-cover shadow-sm"
+              className="w-24 h-24 object-cover "
               loading="lazy"
               initial={{ scale: 0.8, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
