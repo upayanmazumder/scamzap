@@ -92,7 +92,7 @@ export default function Hero() {
               initial="initial"
               animate="animate"
               exit="exit"
-              className="space-y-8 flex flex-col items-center justify-center"
+              className="p-10 sm:p-12 md:p-16 bg-[#164A78] backdrop-blur-md rounded-2xl shadow-xl space-y-8 flex flex-col items-center justify-center max-w-2xl w-full"
             >
               <img
                 src="/mascot/smile.svg"
@@ -100,7 +100,7 @@ export default function Hero() {
                 width={250}
                 height={250}
               />
-              <div className="flex justify-center">
+              <div className="flex justify-center w-full">
                 <Authenticate />
               </div>
             </motion.div>

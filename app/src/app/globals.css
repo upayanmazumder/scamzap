@@ -223,6 +223,11 @@ button {
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
+  background-color: var(--theme-orange);
+}
+
+button:hover {
+  background-color: var(--theme-red);
 }
 
 button svg {

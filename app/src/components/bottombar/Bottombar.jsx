@@ -34,23 +34,26 @@ export const BottomBar = () => {
 
       <div className="grid w-full h-full grid-cols-4 lg:grid-cols-1 lg:gap-2">
         {navItems.map(({ href, label, icon: Icon }) => {
-          const isActive = pathname === href;
+          const isActive =
+            (href === "/" &&
+              (pathname === "/" || pathname.startsWith("/learn"))) ||
+            pathname === href;
 
           return (
             <button
               key={href}
               onClick={() => router.push(href)}
               className={`
-                appearance-none bg-transparent border-none outline-none
-                group inline-flex items-center justify-center p-2 rounded-md transition
-                flex-col lg:flex-row lg:justify-center lg:items-center lg:w-full
-                hover:!text-[var(--theme-red)] hover:bg-muted
-                ${
-                  isActive
-                    ? "!text-[var(--theme-orange)]"
-                    : "!text-[var(--theme-yellow)]"
-                }
-              `}
+        appearance-none bg-transparent border-none outline-none
+        group inline-flex items-center justify-center p-2 rounded-md transition
+        flex-col lg:flex-row lg:justify-center lg:items-center lg:w-full
+        hover:!text-[var(--theme-red)] hover:bg-muted
+        ${
+          isActive
+            ? "!text-[var(--theme-orange)]"
+            : "!text-[var(--theme-yellow)]"
+        }
+      `}
               style={{ backgroundColor: "transparent", boxShadow: "none" }}
             >
               <Icon className="w-6 h-6" />
