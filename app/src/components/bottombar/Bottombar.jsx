@@ -52,9 +52,9 @@ export const BottomBar = () => {
       <div className="grid w-full h-full grid-cols-4 lg:grid-cols-1 lg:gap-2">
         {navItems.map(({ href, label, icon: Icon }) => {
           const isActive =
-            (href === "/" &&
-              (pathname === "/" || pathname.startsWith("/learn"))) ||
-            pathname === href;
+            href === "/"
+              ? pathname === "/" || pathname.startsWith("/learn")
+              : pathname === href || pathname.startsWith(`${href}/`);
 
           return (
             <motion.button
