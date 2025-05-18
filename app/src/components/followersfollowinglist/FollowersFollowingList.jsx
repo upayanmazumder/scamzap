@@ -1,4 +1,3 @@
-// components/profile/FollowersFollowingList.jsx
 "use client";
 
 import React, { useEffect, useState } from "react";
@@ -26,7 +25,7 @@ export default function FollowersFollowingList({ userId, type }) {
         {open ? `Hide ${type}` : `View ${type}`}
       </button>
       {open && (
-        <ul className="mt-2 bg-white text-black rounded-md p-2 max-h-48 overflow-y-auto">
+        <ul className="mt-2 bg-orange-100 text-[var(--theme-orange)] rounded-md p-2 max-h-48 overflow-y-auto">
           {list.length === 0 ? (
             <li>No {type}</li>
           ) : (

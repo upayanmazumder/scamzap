@@ -12,7 +12,6 @@ export default function LessonDetail() {
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // Quiz state
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -64,11 +63,11 @@ export default function LessonDetail() {
   };
 
   return (
-    <>
+    <main>
       {!quizCompleted && (
         <div className="w-full h-4 bg-gray-300 rounded mb-6">
           <div
-            className="h-full bg-green-600 transition-all duration-300 rounded"
+            className="h-full bg-[var(--theme-green)] transition-all duration-300 rounded"
             style={{
               width: `${
                 ((currentIndex + (showAnswer ? 1 : 0)) / quiz.length) * 100
@@ -84,15 +83,10 @@ export default function LessonDetail() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="text-center text-green-700 text-xl font-semibold flex flex-col items-center gap-6 mt-10"
+              className="text-center text-[var(--foreground)] text-xl font-semibold flex flex-col items-center gap-6 mt-10 h-full justify-center"
             >
               🎉 You have completed the quiz! Great job!
-              <button
-                onClick={() => router.push("/learn")}
-                className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white text-lg font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-              >
-                Complete
-              </button>
+              <button onClick={() => router.push("/learn")}>Complete</button>
             </motion.div>
           ) : (
             <AnimatePresence mode="wait">
@@ -117,7 +111,7 @@ export default function LessonDetail() {
                       const isCorrect = option === currentQuiz.answer;
 
                       let optionClass =
-                        "cursor-pointer rounded-md border px-4 py-2 select-none ";
+                        "cursor-pointer rounded-md border px-4 py-2 select-none";
                       if (showAnswer) {
                         if (isCorrect) {
                           optionClass +=
@@ -130,7 +124,7 @@ export default function LessonDetail() {
                         }
                       } else {
                         optionClass +=
-                          "hover:bg-blue-100 border-gray-300 text-gray-900";
+                          "hover:bg-blue-100 text-[var(--foreground)]";
                       }
 
                       return (
@@ -160,13 +154,10 @@ export default function LessonDetail() {
                       transition={{ duration: 0.4 }}
                       className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] sm:w-[30rem] bg-white shadow-lg border border-gray-300 rounded-2xl px-6 py-4 z-50"
                     >
-                      <p className="text-gray-800 mb-4">
+                      <p className="text-[var(--theme-black)] mb-4">
                         {currentQuiz.explanation}
                       </p>
-                      <button
-                        onClick={handleNextQuestion}
-                        className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
-                      >
+                      <button onClick={handleNextQuestion} className="w-full">
                         {currentIndex + 1 < quiz.length
                           ? "Next Question"
                           : "Finish Quiz"}
@@ -179,6 +170,6 @@ export default function LessonDetail() {
           )}
         </section>
       </div>
-    </>
+    </main>
   );
 }

@@ -138,10 +138,7 @@ export default function Profile() {
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         <h2 className="text-3xl font-semibold">{name || "Anonymous"}</h2>
-        <p
-          className="text-lg text-blue-200 cursor-help"
-          title={`Joined at ${joinedTime}`}
-        >
+        <p className="text-lg cursor-help" title={`Joined at ${joinedTime}`}>
           Joined {joinedDateFull}
         </p>
         <motion.div

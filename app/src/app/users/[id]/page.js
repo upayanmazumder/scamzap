@@ -129,11 +129,11 @@ export default function User() {
                 <FaUserCircle className="text-2xl" />
                 {user.name}
               </h1>
-              <p className="text-gray-600 flex items-center gap-2">
+              <p className="text-[var(--foreground)] flex items-center gap-2">
                 <FaEnvelope className="text-lg" />
                 {user.email}
               </p>
-              <div className="flex space-x-6 mt-4 text-gray-800 font-semibold">
+              <div className="flex space-x-6 mt-4 text-[var(--foreground)] font-semibold">
                 <span>Followers: {user.followers?.length ?? 0}</span>
                 <span>Following: {user.following?.length ?? 0}</span>
               </div>
@@ -146,6 +146,7 @@ export default function User() {
                       ? "bg-red-500 text-white hover:bg-red-600"
                       : "bg-blue-500 text-white hover:bg-blue-600"
                   }`}
+                  style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}
                 >
                   {processing
                     ? "Processing..."

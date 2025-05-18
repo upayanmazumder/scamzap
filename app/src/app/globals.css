@@ -1,40 +1,53 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'RedHatDisplay';
-  src: url('../../public/fonts/RedHatDisplay-VariableFont_wght.ttf') format('truetype');
+  font-family: "RedHatDisplay";
+  src: url("../../public/fonts/RedHatDisplay-VariableFont_wght.ttf")
+    format("truetype");
 }
 
 @font-face {
-  font-family: 'RedHatMono';
-  src: url('../../public/fonts/RedHatMono-VariableFont_wght.ttf') format('truetype');
+  font-family: "RedHatMono";
+  src: url("../../public/fonts/RedHatMono-VariableFont_wght.ttf")
+    format("truetype");
 }
 
 @font-face {
-  font-family: 'Montserrat-Regular';
-  src: url('../../public/fonts/Montserrat-Regular.ttf') format('truetype');
+  font-family: "Montserrat-Regular";
+  src: url("../../public/fonts/Montserrat-Regular.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Montserrat-Bold';
-  src: url('../../public/fonts/Montserrat-Bold.ttf') format('truetype');
+  font-family: "Montserrat-Bold";
+  src: url("../../public/fonts/Montserrat-Bold.ttf") format("truetype");
 }
 
 @font-face {
-  font-family: 'Bungee-Regular';
-  src: url('../../public/fonts/Bungee-Regular.ttf') format('truetype');
+  font-family: "Bungee-Regular";
+  src: url("../../public/fonts/Bungee-Regular.ttf") format("truetype");
 }
 
 :root {
+  --theme-blue: #3b82f6;
+  --theme-orange: #fb923c;
+  --theme-yellow: #ffefc0;
+  --theme-black: #111827;
+  --theme-green: #10b981;
+  --theme-red: #f97316;
+
   --background: var(--theme-blue);
-  --foreground: var(--theme-white);
+  --foreground: var(--theme-yellow);
 
   --color: var(--foreground);
 
   --header-background-color: var(--background);
   --footer-background-color: var(--background);
   --sidebar-background-color: var(--background);
-  --card-background: linear-gradient(145deg, rgba(10, 25, 47, 0.7), rgba(2, 12, 27, 0.7));
+  --card-background: linear-gradient(
+    145deg,
+    rgba(10, 25, 47, 0.7),
+    rgba(2, 12, 27, 0.7)
+  );
 
   --text-link-color: var(--theme-orange);
   --text-link-hover-color: var(--theme-red);
@@ -72,21 +85,14 @@
   --transition-slow: 0.8s ease-in-out;
 
   --box-shadow-default: 0 4px 12px rgba(0, 0, 0, 0.2);
-
-  --theme-blue: #3b82f6;
-  --theme-orange: #fb923c;
-  --theme-yellow: #ffefc0;
-  --theme-white: #f1f5f9;
-  --theme-black: #111827;
-  --theme-green: #10b981;
-  --theme-red: #f97316;
 }
 
 * {
   box-sizing: border-box;
-  transition: all var(--transition-fast);
+  transition: all var(--transition-medium);
   -webkit-tap-highlight-color: transparent;
-  font-family: 'Bungee-Regular', system-ui, sans-serif;
+  font-family: "Bungee-Regular", system-ui, sans-serif;
+  border-color: var(--foreground);
 }
 
 html,
@@ -135,10 +141,12 @@ h5,
 h6 {
   font-weight: var(--font-weight-bold);
   margin: 0 0 var(--margin-small) 0;
+  color: var(--foreground);
 }
 
 p {
   margin: 0 0 var(--margin-small);
+  color: var(--foreground);
 }
 
 main {
@@ -171,13 +179,13 @@ section {
 }
 
 .section-link:hover {
-  color: whitesmoke
+  color: whitesmoke;
 }
 
 .section-title {
   font-size: var(--font-size-huge);
   font-weight: var(--font-weight-bold);
-  font-family: 'Montserrat-Bold';
+  font-family: "Montserrat-Bold";
 }
 
 .page-header {
@@ -222,6 +230,7 @@ button {
   -webkit-user-select: none;
   user-select: none;
   background-color: var(--theme-orange);
+  color: var(--foreground);
 }
 
 button:hover {
@@ -285,7 +294,7 @@ td {
 
 code,
 pre {
-  font-family: 'RedHatMono', monospace;
+  font-family: "RedHatMono", monospace;
   background-color: rgba(0, 0, 0, 0.3);
   padding: var(--padding-tiny);
   border-radius: var(--border-radius-tiny);
@@ -346,9 +355,11 @@ blockquote {
 
 ::-webkit-scrollbar {
   width: 8px;
-  background: linear-gradient(to bottom,
+  background: linear-gradient(
+      to bottom,
       rgba(128, 128, 128, 0.1),
-      rgba(128, 128, 128, 0.15)),
+      rgba(128, 128, 128, 0.15)
+    ),
     var(--background-color);
 }
 

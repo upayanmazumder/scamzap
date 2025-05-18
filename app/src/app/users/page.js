@@ -93,12 +93,15 @@ export default function Users() {
 
           return (
             <li
-              key={user._id}
-              className="border p-4 rounded-md flex justify-between items-center transition"
+              key={user.id}
+              className="border p-4 rounded-md flex justify-between items-center transition hover:shadow-md hover:bg-gray-600"
+              style={{ borderColor: "var(--foreground)" }}
             >
               <Link href={`/users/${user.id}`} className="block flex-grow">
-                <h2 className="text-xl font-semibold">{user.name}</h2>
-                <div className="text-sm text-gray-300 mt-1 flex space-x-4">
+                <h2 className="text-xl font-semibold text-[var(--foreground)]">
+                  {user.name}
+                </h2>
+                <div className="text-sm text-[var(--foreground)] mt-1 flex space-x-4">
                   <span>Followers: {user.followers?.length ?? 0}</span>
                   <span>Following: {user.following?.length ?? 0}</span>
                 </div>
