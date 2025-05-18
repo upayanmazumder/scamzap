@@ -3,7 +3,6 @@ import User from '../models/User.js';
 
 const router = express.Router();
 
-
 router.post('/', async (req, res) => {
     try {
         const user = await User.create(req.body);
@@ -12,7 +11,6 @@ router.post('/', async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 });
-
 
 router.get('/:id', async (req, res) => {
     try {
@@ -24,11 +22,10 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-
-// Delete user
-router.delete('/:id', async (req, res) => {
-    await User.findByIdAndDelete(req.params.id);
-    res.json({ message: 'User deleted' });
-});
+// // Delete user
+// router.delete('/:id', async (req, res) => {
+//     await User.findByIdAndDelete(req.params.id);
+//     res.json({ message: 'User deleted' });
+// });
 
 export default router;

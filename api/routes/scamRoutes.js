@@ -3,7 +3,6 @@ import Scam from '../models/Scam.js';
 
 const router = express.Router();
 
-
 router.post('/', async (req, res) => {
     try {
         const scam = await Scam.create(req.body);
@@ -12,7 +11,6 @@ router.post('/', async (req, res) => {
         res.status(400).json({ error: err.message });
     }
 });
-
 
 router.get('/', async (req, res) => {
     try {
@@ -32,7 +30,6 @@ router.get('/categories', async (req, res) => {
     }
 });
 
-
 router.get('/category/:category', async (req, res) => {
     try {
         const scams = await Scam.find({ category: req.params.category });
@@ -41,7 +38,6 @@ router.get('/category/:category', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
 
 router.get('/recent', async (req, res) => {
     try {
@@ -63,7 +59,6 @@ router.get('/user/:userId', async (req, res) => {
         res.status(500).json({ error: err.message });
     }
 });
-
 
 router.get('/:id', async (req, res) => {
     try {
