@@ -37,7 +37,7 @@ export default function Profile() {
 
   if (status === "loading") {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-blue-500">
+      <div className="flex flex-col items-center justify-center">
         <Loader />
       </div>
     );
@@ -45,7 +45,7 @@ export default function Profile() {
 
   if (!session) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-blue-500 text-white">
+      <div className="flex flex-col items-center justify-center text-white">
         <p className="text-lg mb-4">You are not signed in.</p>
       </div>
     );
@@ -60,9 +60,17 @@ export default function Profile() {
       })
     : "N/A";
 
+  const joinedTime = createdAt
+    ? new Date(createdAt).toLocaleTimeString(undefined, {
+        hour: "numeric",
+        minute: "2-digit",
+        second: "2-digit",
+      })
+    : "";
+
   return (
-    <div className="min-h-screen bg-blue-500 py-8 flex flex-col items-center">
-      <div className="bg-orange-400 rounded-md relative overflow-hidden shadow-md">
+    <div className="py-8 flex flex-col items-center">
+      <div className="bg-orange-400 rounded-md relative overflow-hidden shadow-md w-full max-w-md">
         <div className="absolute top-2 right-2 text-gray-700 cursor-pointer">
           <FaPencilAlt />
         </div>
@@ -80,9 +88,14 @@ export default function Profile() {
         </div>
       </div>
 
-      <div className="mt-6 text-white text-center">
+      <div className="mt-6 text-white text-center w-full max-w-md">
         <h2 className="text-3xl font-semibold">{name || "Anonymous"}</h2>
-        <p className="text-lg text-blue-200">Joined {joinedDateFull}</p>
+        <p
+          className="text-lg text-blue-200 cursor-help"
+          title={`Joined at ${joinedTime}`}
+        >
+          Joined {joinedDateFull}
+        </p>
         <div className="flex items-center justify-center gap-4 mt-2">
           <p>
             <strong className="font-semibold">{followingCount}</strong>{" "}
@@ -93,15 +106,14 @@ export default function Profile() {
             Followers
           </p>
         </div>
+        <button
+          onClick={() => signOut()}
+          className="items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200 shadow-md mt-4"
+        >
+          <FaSignOutAlt />
+          Logout
+        </button>
       </div>
-
-      <button
-        onClick={() => signOut()}
-        className="absolute bottom-8 right-8 flex items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200 shadow-md"
-      >
-        <FaSignOutAlt />
-        Logout
-      </button>
     </div>
   );
 }
