@@ -78,7 +78,7 @@ export default function Profile() {
     );
   }
 
-  const { name, image } = session.user || {};
+  const { name, email, image } = session.user || {};
   const joinedDateFull = createdAt
     ? new Date(createdAt).toLocaleDateString(undefined, {
         year: "numeric",
@@ -137,10 +137,12 @@ export default function Profile() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, delay: 0.5 }}
       >
-        <h2 className="text-3xl font-semibold">{name || "Anonymous"}</h2>
+        <h2 className="text-3xl font-semibold">{name}</h2>
+        {email && <p className="text-gray-300 text-sm mt-1">{email}</p>}
         <p className="text-lg cursor-help" title={`Joined at ${joinedTime}`}>
           Joined {joinedDateFull}
         </p>
+
         <motion.div
           className="flex items-center justify-center gap-4 mt-2"
           initial={{ opacity: 0, y: 10 }}
