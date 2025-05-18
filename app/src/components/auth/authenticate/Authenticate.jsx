@@ -2,16 +2,15 @@
 
 import { useSession, signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import API from "../../../utils/api";
 
 export default function Authenticate() {
   const { data: session } = useSession();
-  const hasRegistered = useRef(false);
 
   useEffect(() => {
     const registerUser = async () => {
-      if (!session?.user?.email || hasRegistered.current) return;
+      if (!session?.user?.email) return;
 
       try {
         const res = await fetch(`${API}/users`, {
@@ -24,8 +23,12 @@ export default function Authenticate() {
           }),
         });
 
-        if (!res.ok) throw new Error("Failed to register user");
-        hasRegistered.current = true;
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(`Failed to register user: ${errorText}`);
+        }
+
+        console.log("User sync successful");
       } catch (err) {
         console.error("User registration failed:", err);
       }
