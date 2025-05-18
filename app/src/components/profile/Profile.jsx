@@ -3,6 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Loader from "../loader/Loader";
 import React from "react";
+import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -27,12 +28,16 @@ export default function Profile() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
-      <img
-        src={image || "/default-avatar.png"}
-        alt={`${name || "User"}'s profile picture`}
-        className="w-24 h-24 rounded-full mb-4 border border-gray-300 object-cover"
-        loading="lazy"
-      />
+      {image ? (
+        <img
+          src={image}
+          alt={`${name || "User"}'s profile picture`}
+          className="w-24 h-24 rounded-full mb-4 border border-gray-300 object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <FaUserCircle className="w-24 h-24 mb-4 text-gray-400" />
+      )}
       <h2 className="text-2xl font-semibold mb-1">
         {name || "Anonymous User"}
       </h2>
@@ -44,8 +49,9 @@ export default function Profile() {
       )}
       <button
         onClick={() => signOut()}
-        className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
+        className="flex items-center gap-2 px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
       >
+        <FaSignOutAlt />
         Log out
       </button>
     </div>
