@@ -1,4 +1,5 @@
 import UserRoleManager from "../../components/admin/userrolemanager/UserRoleManager";
+import LessonManager from "../../components/admin/lessonmanager/LessonManager.jsx";
 
 export default function Dashboard() {
   return (
@@ -8,6 +9,7 @@ export default function Dashboard() {
         <p>Manage users and content</p>
       </div>
       <UserRoleManager />
+      <LessonManager />
     </main>
   );
 }
