@@ -29,7 +29,12 @@ export const BottomBar = () => {
     >
       <div className="hidden lg:flex items-center justify-start gap-2 mb-6 w-full">
         <Image src="/favicon.ico" alt="Logo" width={32} height={32} />
-        <h1 className="text-2xl font-bold text-[var(--foreground)]">Scamzap</h1>
+        <h1
+          className="text-2xl font-bold text-[var(--foreground)]"
+          style={{ margin: 0 }}
+        >
+          Scamzap
+        </h1>
       </div>
 
       <div className="grid w-full h-full grid-cols-4 lg:grid-cols-1 lg:gap-2">
