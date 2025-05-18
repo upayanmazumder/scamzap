@@ -59,7 +59,7 @@ router.get("/stats", isAdmin, async (req, res) => {
   res.json({ totalLessons, totalQuizzes: totalQuizzes[0]?.total || 0 });
 });
 
-router.post("/lessons",isAdmin ,async (req, res) => {
+router.post("/lessons", isAdmin, async (req, res) => {
   try {
     const lesson = await Lesson.create(req.body);
     res.status(201).json(lesson);

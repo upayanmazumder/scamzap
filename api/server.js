@@ -6,7 +6,7 @@ import userRoutes from "./routes/userRoutes.js";
 import scamRoutes from "./routes/scamRoutes.js";
 import lessonRoutes from "./routes/lessonRoutes.js";
 import followRoutes from "./routes/followRoutes.js";
-import adminRoutes from './routes/adminRoutes.js';
+import adminRoutes from "./routes/adminRoutes.js";
 import path from "path";
 import { fileURLToPath } from "url";
 
