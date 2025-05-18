@@ -2,6 +2,7 @@ import "./globals.css";
 
 import AuthProvider from '../components/auth/authprovider/AuthProvider';
 import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWorkerRegister";
+import { BottomBar } from "../components/bottombar/Bottombar";
 
 export const metadata = {
   title: "Scamzap",
@@ -31,6 +32,7 @@ export default function RootLayout({ children }) {
         className={`antialiased`}
       >
         <AuthProvider>
+          <BottomBar />
           {children}
           <ServiceWorkerRegister />
         </AuthProvider>

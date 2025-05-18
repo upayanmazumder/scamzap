@@ -18,6 +18,9 @@ export const BottomBar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
+  // Hide BottomBar for "/" and any "/learn/*" routes but not "/learn"
+  if (pathname === "/" || pathname.startsWith("/learn/")) return null;
+
   return (
     <div
       className="
