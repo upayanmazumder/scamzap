@@ -98,7 +98,6 @@ export default function Users() {
             >
               <Link href={`/users/${user.id}`} className="block flex-grow">
                 <h2 className="text-xl font-semibold">{user.name}</h2>
-                <p className="text-gray-700">{user.email}</p>
                 <div className="text-sm text-gray-300 mt-1 flex space-x-4">
                   <span>Followers: {user.followers?.length ?? 0}</span>
                   <span>Following: {user.following?.length ?? 0}</span>
