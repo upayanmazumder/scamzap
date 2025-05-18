@@ -21,7 +21,7 @@ export default function FollowersFollowingList({ userId, type }) {
     <div className="text-center mt-2">
       <button
         onClick={() => setOpen((prev) => !prev)}
-        className="text-blue-300 hover:underline"
+        className="text-blue-100 hover:underline"
       >
         {open ? `Hide ${type}` : `View ${type}`}
       </button>

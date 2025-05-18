@@ -103,7 +103,7 @@ export default function Profile() {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <motion.div
-        className="bg-orange-400 rounded-[40px] relative overflow-hidden shadow-md w-full max-w-md"
+        className="relative overflow-hidden w-full max-w-md"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
