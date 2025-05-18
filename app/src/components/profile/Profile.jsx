@@ -1,6 +1,8 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
+import Loader from "../loader/Loader";
+import React from "react";
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -8,7 +10,7 @@ export default function Profile() {
   if (status === "loading") {
     return (
       <div className="flex flex-col items-center justify-center min-h-[60vh]">
-        <p className="text-gray-500">Loading your profile...</p>
+        <Loader />
       </div>
     );
   }
