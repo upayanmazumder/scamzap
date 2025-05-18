@@ -24,7 +24,7 @@ export default function Profile() {
       const userId = session.user.sub;
       setLoadingCreatedAt(true);
       setError(null);
-      fetch(`${API}/users/${userId}`)
+      fetch(`${API}/search/${userId}`)
         .then(async (res) => {
           if (!res.ok) {
             throw new Error(`Error fetching user: ${res.statusText}`);
