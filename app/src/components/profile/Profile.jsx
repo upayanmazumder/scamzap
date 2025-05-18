@@ -97,7 +97,7 @@ export default function Profile() {
 
   return (
     <motion.div
-      className="py-8 flex flex-col items-center"
+      className="flex flex-col items-center"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
@@ -108,7 +108,7 @@ export default function Profile() {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <div className="flex justify-center p-6">
+        <div className="flex justify-center">
           {image ? (
             <motion.img
               src={image}
