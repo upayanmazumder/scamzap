@@ -2,31 +2,37 @@
 
 import { useSession, signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
+import { useEffect, useRef } from "react";
 import API from "../../../utils/api";
-import { useEffect } from "react";
 
 export default function Authenticate() {
   const { data: session } = useSession();
+  const hasRegistered = useRef(false);
 
   useEffect(() => {
     const registerUser = async () => {
-      if (session?.user?.email) {
-        try {
-          await fetch(`${API}/users`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              name: session.user.name,
-              email: session.user.email,
-            }),
-          });
-        } catch (err) {
-          console.error("User registration failed:", err);
-        }
+      if (!session?.user?.email || hasRegistered.current) return;
+
+      try {
+        const res = await fetch(`${API}/users`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: session.user.sub,
+            name: session.user.name,
+            email: session.user.email,
+          }),
+        });
+
+        if (!res.ok) throw new Error("Failed to register user");
+        hasRegistered.current = true;
+      } catch (err) {
+        console.error("User registration failed:", err);
       }
     };
+
     registerUser();
-  }, [session?.user?.email]);
+  }, [session]);
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
@@ -36,7 +42,7 @@ export default function Authenticate() {
           onClick={() => (window.location.href = "/profile")}
         >
           <img
-            src={session.user.image}
+            src={session.user.image ?? ""}
             alt="Profile"
             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-600"
           />
