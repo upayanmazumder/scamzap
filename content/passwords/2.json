@@ -1,107 +1,101 @@
 [
-	{
-	  "id": 1,
-	  "topic": "Reusing Passwords",
-	  "question": "Neela uses the same password for her bank, email, and shopping apps. Is this safe?",
-	  "options": [
-		"Yes, it's easy to remember",
-		"No, if one account is hacked, all are at risk",
-		"Only safe for shopping apps",
-		"Yes, because she writes it down"
-	  ],
-	  "answer": "No, if one account is hacked, all are at risk",
-	  "explanation": "Using the same password everywhere is risky. If one site is broken into, all your accounts can be in danger."
-	},
-	{
-	  "id": 2,
-	  "topic": "Strong Password Tips",
-	  "question": "Sanjay wants to create a new password. Which tip will help him make it stronger?",
-	  "options": [
-		"Use your birthdate",
-		"Add your name twice",
-		"Use a mix of letters, numbers, and symbols",
-		"Keep it very short"
-	  ],
-	  "answer": "Use a mix of letters, numbers, and symbols",
-	  "explanation": "A good password uses a variety of characters and is not based on personal information."
-	},
-	{
-	  "id": 3,
-	  "topic": "Recognizing Weak Passwords",
-	  "question": "Which of these passwords chosen by Kanta is the weakest?",
-	  "options": [
-		"Kanta@2022",
-		"Hello123",
-		"abcdef",
-		"My$Bank#1"
-	  ],
-	  "answer": "abcdef",
-	  "explanation": "Simple letter combinations like 'abcdef' are easy for hackers to guess."
-	},
-	{
-	  "id": 4,
-	  "topic": "Typing Passwords Safely",
-	  "question": "Dilip is entering his password in a café. What should he be careful about?",
-	  "options": [
-		"The keyboard color",
-		"The speed of typing",
-		"Who is watching him",
-		"Whether he has glasses on"
-	  ],
-	  "answer": "Who is watching him",
-	  "explanation": "Always make sure no one is looking over your shoulder while you type your password in public."
-	},
-	{
-	  "id": 5,
-	  "topic": "Avoiding Common Mistakes",
-	  "question": "Fatima writes her passwords in a notebook near her computer. Is this a good idea?",
-	  "options": [
-		"Yes, it helps her remember",
-		"Only if the notebook is hidden",
-		"No, someone could find and use it",
-		"Yes, if it's in English"
-	  ],
-	  "answer": "No, someone could find and use it",
-	  "explanation": "Passwords written in visible places can be easily misused. Always store them safely."
-	},
-	{
-	  "id": 6,
-	  "topic": "Password Manager",
-	  "question": "Anil heard about 'password managers'. What is it?",
-	  "options": [
-		"A person who remembers passwords for you",
-		"A notebook you carry",
-		"A safe app that stores your passwords",
-		"A virus protection tool"
-	  ],
-	  "answer": "A safe app that stores your passwords",
-	  "explanation": "Password managers help you safely store all your passwords so you don’t have to remember them all."
-	},
-	{
-	  "id": 7,
-	  "topic": "2FA Mention",
-	  "question": "Rita's bank account now asks for a password and a code sent to her phone. Why?",
-	  "options": [
-		"It’s a new rule",
-		"To make login more difficult",
-		"To double-check it’s really her",
-		"Because her password is weak"
-	  ],
-	  "answer": "To double-check it’s really her",
-	  "explanation": "This is called Two-Factor Authentication — it adds extra safety by using both password and phone verification."
-	},
-	{
-	  "id": 8,
-	  "topic": "Changing Passwords",
-	  "question": "Vikram hasn’t changed his email password in 5 years. What is recommended?",
-	  "options": [
-		"Never change it if it works",
-		"Change it once a decade",
-		"Change it only if hacked",
-		"Change it every few months to stay safe"
-	  ],
-	  "answer": "Change it every few months to stay safe",
-	  "explanation": "Regularly changing your password helps protect you even if old data is stolen."
-	}
-  ]
-  
+  {
+    "id": 1,
+    "topic": "Reusing Passwords",
+    "question": "Neela uses the same password for her bank, email, and shopping apps. Is this safe?",
+    "options": [
+      "Yes, it's easy to remember",
+      "No, if one account is hacked, all are at risk",
+      "Only safe for shopping apps",
+      "Yes, because she writes it down"
+    ],
+    "answer": "No, if one account is hacked, all are at risk",
+    "explanation": "Using the same password everywhere is risky. If one site is broken into, all your accounts can be in danger."
+  },
+  {
+    "id": 2,
+    "topic": "Strong Password Tips",
+    "question": "Sanjay wants to create a new password. Which tip will help him make it stronger?",
+    "options": [
+      "Use your birthdate",
+      "Add your name twice",
+      "Use a mix of letters, numbers, and symbols",
+      "Keep it very short"
+    ],
+    "answer": "Use a mix of letters, numbers, and symbols",
+    "explanation": "A good password uses a variety of characters and is not based on personal information."
+  },
+  {
+    "id": 3,
+    "topic": "Recognizing Weak Passwords",
+    "question": "Which of these passwords chosen by Kanta is the weakest?",
+    "options": ["Kanta@2022", "Hello123", "abcdef", "My$Bank#1"],
+    "answer": "abcdef",
+    "explanation": "Simple letter combinations like 'abcdef' are easy for hackers to guess."
+  },
+  {
+    "id": 4,
+    "topic": "Typing Passwords Safely",
+    "question": "Dilip is entering his password in a café. What should he be careful about?",
+    "options": [
+      "The keyboard color",
+      "The speed of typing",
+      "Who is watching him",
+      "Whether he has glasses on"
+    ],
+    "answer": "Who is watching him",
+    "explanation": "Always make sure no one is looking over your shoulder while you type your password in public."
+  },
+  {
+    "id": 5,
+    "topic": "Avoiding Common Mistakes",
+    "question": "Fatima writes her passwords in a notebook near her computer. Is this a good idea?",
+    "options": [
+      "Yes, it helps her remember",
+      "Only if the notebook is hidden",
+      "No, someone could find and use it",
+      "Yes, if it's in English"
+    ],
+    "answer": "No, someone could find and use it",
+    "explanation": "Passwords written in visible places can be easily misused. Always store them safely."
+  },
+  {
+    "id": 6,
+    "topic": "Password Manager",
+    "question": "Anil heard about 'password managers'. What is it?",
+    "options": [
+      "A person who remembers passwords for you",
+      "A notebook you carry",
+      "A safe app that stores your passwords",
+      "A virus protection tool"
+    ],
+    "answer": "A safe app that stores your passwords",
+    "explanation": "Password managers help you safely store all your passwords so you don’t have to remember them all."
+  },
+  {
+    "id": 7,
+    "topic": "2FA Mention",
+    "question": "Rita's bank account now asks for a password and a code sent to her phone. Why?",
+    "options": [
+      "It’s a new rule",
+      "To make login more difficult",
+      "To double-check it’s really her",
+      "Because her password is weak"
+    ],
+    "answer": "To double-check it’s really her",
+    "explanation": "This is called Two-Factor Authentication — it adds extra safety by using both password and phone verification."
+  },
+  {
+    "id": 8,
+    "topic": "Changing Passwords",
+    "question": "Vikram hasn’t changed his email password in 5 years. What is recommended?",
+    "options": [
+      "Never change it if it works",
+      "Change it once a decade",
+      "Change it only if hacked",
+      "Change it every few months to stay safe"
+    ],
+    "answer": "Change it every few months to stay safe",
+    "explanation": "Regularly changing your password helps protect you even if old data is stolen."
+  }
+]

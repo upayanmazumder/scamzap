@@ -1,107 +1,106 @@
 [
-	{
-	  "id": 1,
-	  "topic": "App Store Safety",
-	  "question": "Suresh wants to install a weather app. Where should he look first?",
-	  "options": [
-		"Google Play Store or Apple App Store",
-		"Random websites on the internet",
-		"His friend’s phone",
-		"Any link sent in a message"
-	  ],
-	  "answer": "Google Play Store or Apple App Store",
-	  "explanation": "Official app stores check apps for safety before listing them."
-	},
-	{
-	  "id": 2,
-	  "topic": "Avoiding Unknown Websites",
-	  "question": "Maya finds a game on a website not related to Google Play or App Store. What should she do?",
-	  "options": [
-		"Avoid downloading it from there",
-		"Download quickly before it disappears",
-		"Tell all friends to download it",
-		"Click any links inside the website"
-	  ],
-	  "answer": "Avoid downloading it from there",
-	  "explanation": "Apps from unknown sites may contain viruses or harmful software."
-	},
-	{
-	  "id": 3,
-	  "topic": "Checking App Names",
-	  "question": "Rajesh sees two apps named 'Fast Chat' and 'FastChatt'. Which one should he trust more?",
-	  "options": [
-		"The one from the official app store with good reviews",
-		"The one with a funny name",
-		"The one with fewer downloads",
-		"The first one he finds"
-	  ],
-	  "answer": "The one from the official app store with good reviews",
-	  "explanation": "Official apps usually have many downloads and good reviews."
-	},
-	{
-	  "id": 4,
-	  "topic": "App Updates",
-	  "question": "Kamala sees an update available for her banking app in the official store. What should she do?",
-	  "options": [
-		"Update the app from the official store",
-		"Ignore the update",
-		"Download an update from an unknown website",
-		"Uninstall the app"
-	  ],
-	  "answer": "Update the app from the official store",
-	  "explanation": "Updates fix bugs and improve app security."
-	},
-	{
-	  "id": 5,
-	  "topic": "Permissions Check",
-	  "question": "While installing a photo app, Hari sees it asks for camera and microphone access. What should he do?",
-	  "options": [
-		"Check if the app really needs those permissions before allowing",
-		"Allow all permissions without reading",
-		"Deny everything to be safe",
-		"Ask a stranger for advice"
-	  ],
-	  "answer": "Check if the app really needs those permissions before allowing",
-	  "explanation": "Only allow permissions necessary for the app to work."
-	},
-	{
-	  "id": 6,
-	  "topic": "Beware of Pop-Up Links",
-	  "question": "Leela receives a pop-up message on her phone asking to install a new app. What should she do?",
-	  "options": [
-		"Close the pop-up and use the app store instead",
-		"Click the pop-up to install quickly",
-		"Share the pop-up with friends",
-		"Ignore all app stores"
-	  ],
-	  "answer": "Close the pop-up and use the app store instead",
-	  "explanation": "Pop-ups can be fake and unsafe; always use official stores."
-	},
-	{
-	  "id": 7,
-	  "topic": "Reading Reviews",
-	  "question": "Manju finds an app with very few reviews and low ratings. What is a smart choice?",
-	  "options": [
-		"Avoid installing it",
-		"Install it immediately",
-		"Ignore reviews",
-		"Ask a friend to install it first"
-	  ],
-	  "answer": "Avoid installing it",
-	  "explanation": "Low ratings and few reviews may mean the app is not safe."
-	},
-	{
-	  "id": 8,
-	  "topic": "Using Search Bar",
-	  "question": "Ramesh wants to find a news app. What is the safest way?",
-	  "options": [
-		"Use the search bar in the official app store",
-		"Click on ads on websites",
-		"Download from a pop-up link",
-		"Ask friends to send the app"
-	  ],
-	  "answer": "Use the search bar in the official app store",
-	  "explanation": "Searching inside the official store helps find safe apps."
-	}
-  ]
-  
+  {
+    "id": 1,
+    "topic": "App Store Safety",
+    "question": "Suresh wants to install a weather app. Where should he look first?",
+    "options": [
+      "Google Play Store or Apple App Store",
+      "Random websites on the internet",
+      "His friend’s phone",
+      "Any link sent in a message"
+    ],
+    "answer": "Google Play Store or Apple App Store",
+    "explanation": "Official app stores check apps for safety before listing them."
+  },
+  {
+    "id": 2,
+    "topic": "Avoiding Unknown Websites",
+    "question": "Maya finds a game on a website not related to Google Play or App Store. What should she do?",
+    "options": [
+      "Avoid downloading it from there",
+      "Download quickly before it disappears",
+      "Tell all friends to download it",
+      "Click any links inside the website"
+    ],
+    "answer": "Avoid downloading it from there",
+    "explanation": "Apps from unknown sites may contain viruses or harmful software."
+  },
+  {
+    "id": 3,
+    "topic": "Checking App Names",
+    "question": "Rajesh sees two apps named 'Fast Chat' and 'FastChatt'. Which one should he trust more?",
+    "options": [
+      "The one from the official app store with good reviews",
+      "The one with a funny name",
+      "The one with fewer downloads",
+      "The first one he finds"
+    ],
+    "answer": "The one from the official app store with good reviews",
+    "explanation": "Official apps usually have many downloads and good reviews."
+  },
+  {
+    "id": 4,
+    "topic": "App Updates",
+    "question": "Kamala sees an update available for her banking app in the official store. What should she do?",
+    "options": [
+      "Update the app from the official store",
+      "Ignore the update",
+      "Download an update from an unknown website",
+      "Uninstall the app"
+    ],
+    "answer": "Update the app from the official store",
+    "explanation": "Updates fix bugs and improve app security."
+  },
+  {
+    "id": 5,
+    "topic": "Permissions Check",
+    "question": "While installing a photo app, Hari sees it asks for camera and microphone access. What should he do?",
+    "options": [
+      "Check if the app really needs those permissions before allowing",
+      "Allow all permissions without reading",
+      "Deny everything to be safe",
+      "Ask a stranger for advice"
+    ],
+    "answer": "Check if the app really needs those permissions before allowing",
+    "explanation": "Only allow permissions necessary for the app to work."
+  },
+  {
+    "id": 6,
+    "topic": "Beware of Pop-Up Links",
+    "question": "Leela receives a pop-up message on her phone asking to install a new app. What should she do?",
+    "options": [
+      "Close the pop-up and use the app store instead",
+      "Click the pop-up to install quickly",
+      "Share the pop-up with friends",
+      "Ignore all app stores"
+    ],
+    "answer": "Close the pop-up and use the app store instead",
+    "explanation": "Pop-ups can be fake and unsafe; always use official stores."
+  },
+  {
+    "id": 7,
+    "topic": "Reading Reviews",
+    "question": "Manju finds an app with very few reviews and low ratings. What is a smart choice?",
+    "options": [
+      "Avoid installing it",
+      "Install it immediately",
+      "Ignore reviews",
+      "Ask a friend to install it first"
+    ],
+    "answer": "Avoid installing it",
+    "explanation": "Low ratings and few reviews may mean the app is not safe."
+  },
+  {
+    "id": 8,
+    "topic": "Using Search Bar",
+    "question": "Ramesh wants to find a news app. What is the safest way?",
+    "options": [
+      "Use the search bar in the official app store",
+      "Click on ads on websites",
+      "Download from a pop-up link",
+      "Ask friends to send the app"
+    ],
+    "answer": "Use the search bar in the official app store",
+    "explanation": "Searching inside the official store helps find safe apps."
+  }
+]

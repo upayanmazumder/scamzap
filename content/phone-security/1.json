@@ -1,107 +1,101 @@
 [
-	{
-	  "id": 1,
-	  "topic": "Why Use a Screen Lock?",
-	  "question": "Meena forgot to put a screen lock on her phone. If she loses it, what could happen?",
-	  "options": [
-		"Someone can look at her photos and messages",
-		"The phone will lock itself automatically",
-		"Her phone will call her family by itself",
-		"Nothing, it’s safe without a lock"
-	  ],
-	  "answer": "Someone can look at her photos and messages",
-	  "explanation": "Without a screen lock, anyone who finds Meena’s phone can see her personal information."
-	},
-	{
-	  "id": 2,
-	  "topic": "Choosing a Lock Type",
-	  "question": "Ramesh wants to unlock his phone quickly every day. Which lock should he try?",
-	  "options": [
-		"PIN code like 1234",
-		"Fingerprint scanner",
-		"Drawing a pattern",
-		"No lock at all"
-	  ],
-	  "answer": "Fingerprint scanner",
-	  "explanation": "Using a fingerprint is fast and easy, especially if you unlock your phone many times a day."
-	},
-	{
-	  "id": 3,
-	  "topic": "Strong vs Weak PINs",
-	  "question": "Kusum uses '0000' as her PIN because it’s easy to remember. What’s the problem with this?",
-	  "options": [
-		"It’s a very common PIN and easy to guess",
-		"It’s a secret code only Kusum knows",
-		"It makes the phone faster",
-		"It’s the safest option"
-	  ],
-	  "answer": "It’s a very common PIN and easy to guess",
-	  "explanation": "'0000' is one of the easiest PINs to guess, so it’s not safe."
-	},
-	{
-	  "id": 4,
-	  "topic": "Pattern Lock Risks",
-	  "question": "Sohan always draws a 'Z' shape for his pattern lock. Why might this be risky?",
-	  "options": [
-		"The 'Z' shape is easy for others to guess",
-		"The phone doesn’t like the letter 'Z'",
-		"It takes too long to draw",
-		"It makes the screen dirty"
-	  ],
-	  "answer": "The 'Z' shape is easy for others to guess",
-	  "explanation": "Many people use simple shapes like 'Z', so it’s not very secure."
-	},
-	{
-	  "id": 5,
-	  "topic": "Easier Locks for Everyone",
-	  "question": "Rekha has shaky hands and finds it hard to type a PIN. What lock might be better for her?",
-	  "options": [
-		"Pattern lock",
-		"Fingerprint or face recognition",
-		"Long password",
-		"No lock at all"
-	  ],
-	  "answer": "Fingerprint or face recognition",
-	  "explanation": "Fingerprint or face unlock is easier for people who find typing difficult."
-	},
-	{
-	  "id": 6,
-	  "topic": "Protecting Your Data",
-	  "question": "Amit lost his phone, but it had a PIN and fingerprint lock. What does this mean for his personal information?",
-	  "options": [
-		"Strangers cannot open his phone easily",
-		"His phone will send a message to his friends",
-		"The phone will unlock by itself",
-		"Anyone can reset the phone"
-	  ],
-	  "answer": "Strangers cannot open his phone easily",
-	  "explanation": "Strong locks keep your personal data safe if the phone is lost."
-	},
-	{
-		"id": 7,
-		"topic": "Why Lock Your Phone?",
-		"question": "Sunita leaves her phone unlocked in the living room. What could happen?",
-		"options": [
-		  "Anyone can open her phone and see private messages",
-		  "The phone will lock automatically",
-		  "Nothing, it’s safe at home",
-		  "The phone battery will last longer"
-		],
-		"answer": "Anyone can open her phone and see private messages",
-		"explanation": "Leaving your phone unlocked lets anyone access your personal information."
-	  },
-	  {
-		"id": 8,
-		"topic": "Choosing a Good PIN",
-		"question": "Raju wants to create a PIN for his phone. Which is a better PIN?",
-		"options": [
-		  "1234",
-		  "0000",
-		  "6789",
-		  "8524"
-		],
-		"answer": "8524",
-		"explanation": "Avoid simple or common PINs like 1234 or 0000; use a less obvious number to stay safe."
-	  }	  
-  ]
-  
+  {
+    "id": 1,
+    "topic": "Why Use a Screen Lock?",
+    "question": "Meena forgot to put a screen lock on her phone. If she loses it, what could happen?",
+    "options": [
+      "Someone can look at her photos and messages",
+      "The phone will lock itself automatically",
+      "Her phone will call her family by itself",
+      "Nothing, it’s safe without a lock"
+    ],
+    "answer": "Someone can look at her photos and messages",
+    "explanation": "Without a screen lock, anyone who finds Meena’s phone can see her personal information."
+  },
+  {
+    "id": 2,
+    "topic": "Choosing a Lock Type",
+    "question": "Ramesh wants to unlock his phone quickly every day. Which lock should he try?",
+    "options": [
+      "PIN code like 1234",
+      "Fingerprint scanner",
+      "Drawing a pattern",
+      "No lock at all"
+    ],
+    "answer": "Fingerprint scanner",
+    "explanation": "Using a fingerprint is fast and easy, especially if you unlock your phone many times a day."
+  },
+  {
+    "id": 3,
+    "topic": "Strong vs Weak PINs",
+    "question": "Kusum uses '0000' as her PIN because it’s easy to remember. What’s the problem with this?",
+    "options": [
+      "It’s a very common PIN and easy to guess",
+      "It’s a secret code only Kusum knows",
+      "It makes the phone faster",
+      "It’s the safest option"
+    ],
+    "answer": "It’s a very common PIN and easy to guess",
+    "explanation": "'0000' is one of the easiest PINs to guess, so it’s not safe."
+  },
+  {
+    "id": 4,
+    "topic": "Pattern Lock Risks",
+    "question": "Sohan always draws a 'Z' shape for his pattern lock. Why might this be risky?",
+    "options": [
+      "The 'Z' shape is easy for others to guess",
+      "The phone doesn’t like the letter 'Z'",
+      "It takes too long to draw",
+      "It makes the screen dirty"
+    ],
+    "answer": "The 'Z' shape is easy for others to guess",
+    "explanation": "Many people use simple shapes like 'Z', so it’s not very secure."
+  },
+  {
+    "id": 5,
+    "topic": "Easier Locks for Everyone",
+    "question": "Rekha has shaky hands and finds it hard to type a PIN. What lock might be better for her?",
+    "options": [
+      "Pattern lock",
+      "Fingerprint or face recognition",
+      "Long password",
+      "No lock at all"
+    ],
+    "answer": "Fingerprint or face recognition",
+    "explanation": "Fingerprint or face unlock is easier for people who find typing difficult."
+  },
+  {
+    "id": 6,
+    "topic": "Protecting Your Data",
+    "question": "Amit lost his phone, but it had a PIN and fingerprint lock. What does this mean for his personal information?",
+    "options": [
+      "Strangers cannot open his phone easily",
+      "His phone will send a message to his friends",
+      "The phone will unlock by itself",
+      "Anyone can reset the phone"
+    ],
+    "answer": "Strangers cannot open his phone easily",
+    "explanation": "Strong locks keep your personal data safe if the phone is lost."
+  },
+  {
+    "id": 7,
+    "topic": "Why Lock Your Phone?",
+    "question": "Sunita leaves her phone unlocked in the living room. What could happen?",
+    "options": [
+      "Anyone can open her phone and see private messages",
+      "The phone will lock automatically",
+      "Nothing, it’s safe at home",
+      "The phone battery will last longer"
+    ],
+    "answer": "Anyone can open her phone and see private messages",
+    "explanation": "Leaving your phone unlocked lets anyone access your personal information."
+  },
+  {
+    "id": 8,
+    "topic": "Choosing a Good PIN",
+    "question": "Raju wants to create a PIN for his phone. Which is a better PIN?",
+    "options": ["1234", "0000", "6789", "8524"],
+    "answer": "8524",
+    "explanation": "Avoid simple or common PINs like 1234 or 0000; use a less obvious number to stay safe."
+  }
+]

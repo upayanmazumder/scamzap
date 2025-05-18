@@ -1,211 +1,210 @@
 [
-	{
-	  "id": 1,
-	  "topic": "Screen Lock Basics",
-	  "question": "Rajesh wants to keep his phone safe from others. What is a screen lock for?",
-	  "options": [
-		"To stop strangers from opening his phone",
-		"To make the phone faster",
-		"To charge the phone",
-		"To make calls"
-	  ],
-	  "answer": "To stop strangers from opening his phone",
-	  "explanation": "Screen locks protect your phone from unwanted access."
-	},
-	{
-	  "id": 2,
-	  "topic": "Screen Lock Importance",
-	  "question": "Sita forgets to use any lock on her phone. What could happen?",
-	  "options": [
-		"Someone else can easily use her phone",
-		"Her phone will turn off",
-		"Her phone will work better",
-		"Nothing happens"
-	  ],
-	  "answer": "Someone else can easily use her phone",
-	  "explanation": "Without a lock, anyone can access your phone and data."
-	},
-	{
-	  "id": 3,
-	  "topic": "App Store Safety",
-	  "question": "Kiran wants to install a health app. Where should he download it from?",
-	  "options": [
-		"Google Play Store or App Store",
-		"Any website",
-		"From friends' phones",
-		"Unknown sources"
-	  ],
-	  "answer": "Google Play Store or App Store",
-	  "explanation": "Official stores check apps for safety."
-	},
-	{
-	  "id": 4,
-	  "topic": "App Store Safety",
-	  "question": "Lata downloads a game from a website, not from the official store. What is a risk?",
-	  "options": [
-		"The game might contain harmful software",
-		"The game will be better",
-		"The phone will charge faster",
-		"No risk at all"
-	  ],
-	  "answer": "The game might contain harmful software",
-	  "explanation": "Apps outside official stores can carry viruses."
-	},
-	{
-	  "id": 5,
-	  "topic": "Setting Screen Lock",
-	  "question": "Mohit sets a PIN to lock his phone. What else can he use for locking?",
-	  "options": [
-		"Fingerprint or face lock",
-		"Only PIN works",
-		"Voice call",
-		"Watching TV"
-	  ],
-	  "answer": "Fingerprint or face lock",
-	  "explanation": "Phones offer multiple ways to lock for convenience and security."
-	},
-	{
-	  "id": 6,
-	  "topic": "Screen Lock Setup",
-	  "question": "Nisha wants to set a screen lock. What should she do first?",
-	  "options": [
-		"Go to phone settings and find security options",
-		"Call a friend",
-		"Turn off the phone",
-		"Delete all apps"
-	  ],
-	  "answer": "Go to phone settings and find security options",
-	  "explanation": "Screen lock settings are found in the phone’s security or lock screen menu."
-	},
-	{
-	  "id": 7,
-	  "topic": "Third-Party Apps",
-	  "question": "Gopal installs an app from a website he found online. Why might this be unsafe?",
-	  "options": [
-		"The app may steal his data or harm the phone",
-		"It will make the phone faster",
-		"It will cost less money",
-		"It’s always safe"
-	  ],
-	  "answer": "The app may steal his data or harm the phone",
-	  "explanation": "Apps outside official stores can be unsafe or malicious."
-	},
-	{
-	  "id": 8,
-	  "topic": "Third-Party Apps",
-	  "question": "Rekha wants to avoid bad apps. What is the safest way to install apps?",
-	  "options": [
-		"Only use Google Play Store or App Store",
-		"Download from random websites",
-		"Install apps from friends’ phones",
-		"Click links in text messages"
-	  ],
-	  "answer": "Only use Google Play Store or App Store",
-	  "explanation": "Official stores verify apps for safety."
-	},
-	{
-	  "id": 9,
-	  "topic": "Screen Lock Importance",
-	  "question": "Why does Vijay use face lock on his phone instead of no lock?",
-	  "options": [
-		"It keeps his phone safe and is easy to use",
-		"It slows down the phone",
-		"It uses more battery",
-		"It makes calls automatically"
-	  ],
-	  "answer": "It keeps his phone safe and is easy to use",
-	  "explanation": "Face lock is secure and convenient."
-	},
-	{
-	  "id": 10,
-	  "topic": "App Safety",
-	  "question": "Mala sees an app that asks for many permissions, like access to messages and contacts. What should she do?",
-	  "options": [
-		"Check if the app really needs these permissions before installing",
-		"Install without checking",
-		"Ignore and uninstall later",
-		"Share the app with friends"
-	  ],
-	  "answer": "Check if the app really needs these permissions before installing",
-	  "explanation": "Some apps ask for too much access; it’s safer to avoid them."
-	},
-	{
-	  "id": 11,
-	  "topic": "Safe Apps",
-	  "question": "Pankaj downloads a weather app only from the official store. What is the benefit?",
-	  "options": [
-		"The app is likely safe and updates regularly",
-		"The app is free forever",
-		"The app will never need updates",
-		"The app will use less battery"
-	  ],
-	  "answer": "The app is likely safe and updates regularly",
-	  "explanation": "Official apps get regular security and feature updates."
-	},
-	{
-	  "id": 12,
-	  "topic": "Screen Lock Setup",
-	  "question": "Anita wants to add fingerprint lock but doesn’t know how. What is a good first step?",
-	  "options": [
-		"Look in settings under security or biometrics",
-		"Buy a new phone",
-		"Ask a friend to do it",
-		"Ignore and not use locks"
-	  ],
-	  "answer": "Look in settings under security or biometrics",
-	  "explanation": "Fingerprint options are usually under security or biometric settings."
-	},
-	{
-	  "id": 13,
-	  "topic": "Dangers of Third-Party Apps",
-	  "question": "Deepak installs an app from a third-party store. His phone becomes slow and shows many ads. Why?",
-	  "options": [
-		"The app is unsafe and may have unwanted ads or malware",
-		"His phone is broken",
-		"The app is working fine",
-		"The phone needs charging"
-	  ],
-	  "answer": "The app is unsafe and may have unwanted ads or malware",
-	  "explanation": "Unsafe apps can harm your phone or show annoying ads."
-	},
-	{
-	  "id": 14,
-	  "topic": "App Permissions",
-	  "question": "When installing an app, what should Raj check carefully?",
-	  "options": [
-		"Permissions the app asks for",
-		"The color of the app icon",
-		"The size of the app",
-		"The app price"
-	  ],
-	  "answer": "Permissions the app asks for",
-	  "explanation": "Checking permissions helps avoid apps that ask for too much access."
-	},
-	{
-	  "id": 15,
-	  "topic": "Screen Lock Importance",
-	  "question": "If a phone is lost, what does having a screen lock help with?",
-	  "options": [
-		"It stops strangers from using personal data",
-		"The phone can be found easily",
-		"It makes the phone ring louder",
-		"Nothing happens"
-	  ],
-	  "answer": "It stops strangers from using personal data",
-	  "explanation": "A screen lock protects your personal information if the phone is lost."
-	},
-	{
-	  "id": 16,
-	  "topic": "Safe Apps",
-	  "question": "Before installing an app, what is a good way to check if it’s safe?",
-	  "options": [
-		"Read reviews and check the number of downloads on the official store",
-		"Install it quickly",
-		"Ask friends to send the APK",
-		"Ignore safety and install"
-	  ],
-	  "answer": "Read reviews and check the number of downloads on the official store",
-	  "explanation": "Reviews and download numbers help confirm app reliability."
-	}
-  ]
-  
+  {
+    "id": 1,
+    "topic": "Screen Lock Basics",
+    "question": "Rajesh wants to keep his phone safe from others. What is a screen lock for?",
+    "options": [
+      "To stop strangers from opening his phone",
+      "To make the phone faster",
+      "To charge the phone",
+      "To make calls"
+    ],
+    "answer": "To stop strangers from opening his phone",
+    "explanation": "Screen locks protect your phone from unwanted access."
+  },
+  {
+    "id": 2,
+    "topic": "Screen Lock Importance",
+    "question": "Sita forgets to use any lock on her phone. What could happen?",
+    "options": [
+      "Someone else can easily use her phone",
+      "Her phone will turn off",
+      "Her phone will work better",
+      "Nothing happens"
+    ],
+    "answer": "Someone else can easily use her phone",
+    "explanation": "Without a lock, anyone can access your phone and data."
+  },
+  {
+    "id": 3,
+    "topic": "App Store Safety",
+    "question": "Kiran wants to install a health app. Where should he download it from?",
+    "options": [
+      "Google Play Store or App Store",
+      "Any website",
+      "From friends' phones",
+      "Unknown sources"
+    ],
+    "answer": "Google Play Store or App Store",
+    "explanation": "Official stores check apps for safety."
+  },
+  {
+    "id": 4,
+    "topic": "App Store Safety",
+    "question": "Lata downloads a game from a website, not from the official store. What is a risk?",
+    "options": [
+      "The game might contain harmful software",
+      "The game will be better",
+      "The phone will charge faster",
+      "No risk at all"
+    ],
+    "answer": "The game might contain harmful software",
+    "explanation": "Apps outside official stores can carry viruses."
+  },
+  {
+    "id": 5,
+    "topic": "Setting Screen Lock",
+    "question": "Mohit sets a PIN to lock his phone. What else can he use for locking?",
+    "options": [
+      "Fingerprint or face lock",
+      "Only PIN works",
+      "Voice call",
+      "Watching TV"
+    ],
+    "answer": "Fingerprint or face lock",
+    "explanation": "Phones offer multiple ways to lock for convenience and security."
+  },
+  {
+    "id": 6,
+    "topic": "Screen Lock Setup",
+    "question": "Nisha wants to set a screen lock. What should she do first?",
+    "options": [
+      "Go to phone settings and find security options",
+      "Call a friend",
+      "Turn off the phone",
+      "Delete all apps"
+    ],
+    "answer": "Go to phone settings and find security options",
+    "explanation": "Screen lock settings are found in the phone’s security or lock screen menu."
+  },
+  {
+    "id": 7,
+    "topic": "Third-Party Apps",
+    "question": "Gopal installs an app from a website he found online. Why might this be unsafe?",
+    "options": [
+      "The app may steal his data or harm the phone",
+      "It will make the phone faster",
+      "It will cost less money",
+      "It’s always safe"
+    ],
+    "answer": "The app may steal his data or harm the phone",
+    "explanation": "Apps outside official stores can be unsafe or malicious."
+  },
+  {
+    "id": 8,
+    "topic": "Third-Party Apps",
+    "question": "Rekha wants to avoid bad apps. What is the safest way to install apps?",
+    "options": [
+      "Only use Google Play Store or App Store",
+      "Download from random websites",
+      "Install apps from friends’ phones",
+      "Click links in text messages"
+    ],
+    "answer": "Only use Google Play Store or App Store",
+    "explanation": "Official stores verify apps for safety."
+  },
+  {
+    "id": 9,
+    "topic": "Screen Lock Importance",
+    "question": "Why does Vijay use face lock on his phone instead of no lock?",
+    "options": [
+      "It keeps his phone safe and is easy to use",
+      "It slows down the phone",
+      "It uses more battery",
+      "It makes calls automatically"
+    ],
+    "answer": "It keeps his phone safe and is easy to use",
+    "explanation": "Face lock is secure and convenient."
+  },
+  {
+    "id": 10,
+    "topic": "App Safety",
+    "question": "Mala sees an app that asks for many permissions, like access to messages and contacts. What should she do?",
+    "options": [
+      "Check if the app really needs these permissions before installing",
+      "Install without checking",
+      "Ignore and uninstall later",
+      "Share the app with friends"
+    ],
+    "answer": "Check if the app really needs these permissions before installing",
+    "explanation": "Some apps ask for too much access; it’s safer to avoid them."
+  },
+  {
+    "id": 11,
+    "topic": "Safe Apps",
+    "question": "Pankaj downloads a weather app only from the official store. What is the benefit?",
+    "options": [
+      "The app is likely safe and updates regularly",
+      "The app is free forever",
+      "The app will never need updates",
+      "The app will use less battery"
+    ],
+    "answer": "The app is likely safe and updates regularly",
+    "explanation": "Official apps get regular security and feature updates."
+  },
+  {
+    "id": 12,
+    "topic": "Screen Lock Setup",
+    "question": "Anita wants to add fingerprint lock but doesn’t know how. What is a good first step?",
+    "options": [
+      "Look in settings under security or biometrics",
+      "Buy a new phone",
+      "Ask a friend to do it",
+      "Ignore and not use locks"
+    ],
+    "answer": "Look in settings under security or biometrics",
+    "explanation": "Fingerprint options are usually under security or biometric settings."
+  },
+  {
+    "id": 13,
+    "topic": "Dangers of Third-Party Apps",
+    "question": "Deepak installs an app from a third-party store. His phone becomes slow and shows many ads. Why?",
+    "options": [
+      "The app is unsafe and may have unwanted ads or malware",
+      "His phone is broken",
+      "The app is working fine",
+      "The phone needs charging"
+    ],
+    "answer": "The app is unsafe and may have unwanted ads or malware",
+    "explanation": "Unsafe apps can harm your phone or show annoying ads."
+  },
+  {
+    "id": 14,
+    "topic": "App Permissions",
+    "question": "When installing an app, what should Raj check carefully?",
+    "options": [
+      "Permissions the app asks for",
+      "The color of the app icon",
+      "The size of the app",
+      "The app price"
+    ],
+    "answer": "Permissions the app asks for",
+    "explanation": "Checking permissions helps avoid apps that ask for too much access."
+  },
+  {
+    "id": 15,
+    "topic": "Screen Lock Importance",
+    "question": "If a phone is lost, what does having a screen lock help with?",
+    "options": [
+      "It stops strangers from using personal data",
+      "The phone can be found easily",
+      "It makes the phone ring louder",
+      "Nothing happens"
+    ],
+    "answer": "It stops strangers from using personal data",
+    "explanation": "A screen lock protects your personal information if the phone is lost."
+  },
+  {
+    "id": 16,
+    "topic": "Safe Apps",
+    "question": "Before installing an app, what is a good way to check if it’s safe?",
+    "options": [
+      "Read reviews and check the number of downloads on the official store",
+      "Install it quickly",
+      "Ask friends to send the APK",
+      "Ignore safety and install"
+    ],
+    "answer": "Read reviews and check the number of downloads on the official store",
+    "explanation": "Reviews and download numbers help confirm app reliability."
+  }
+]

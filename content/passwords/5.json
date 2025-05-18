@@ -1,211 +1,210 @@
 [
-	{
-	  "id": 1,
-	  "topic": "Reusing Passwords",
-	  "question": "Suresh uses 'Mango2023' for his email, bank, and Facebook account. What's the biggest risk?",
-	  "options": [
-		"It's okay because it's a long password",
-		"He only needs to remember one password",
-		"If one account is hacked, others are in danger",
-		"Websites will block him"
-	  ],
-	  "answer": "If one account is hacked, others are in danger",
-	  "explanation": "Reusing passwords increases risk—one stolen password can unlock everything."
-	},
-	{
-	  "id": 2,
-	  "topic": "Common Patterns",
-	  "question": "Padma uses 'abcd1234' as her Wi-Fi password. Is this safe?",
-	  "options": [
-		"Yes, because it has numbers and letters",
-		"No, it follows a guessable pattern",
-		"Yes, because she didn’t tell anyone",
-		"No, because it’s not her birthday"
-	  ],
-	  "answer": "No, it follows a guessable pattern",
-	  "explanation": "Attackers can easily guess simple, common sequences like 'abcd1234'."
-	},
-	{
-	  "id": 3,
-	  "topic": "Personal Info in Passwords",
-	  "question": "Geeta uses 'Geeta1980' as her password. Why is this risky?",
-	  "options": [
-		"It includes her name and birth year, which others can guess",
-		"It’s too short",
-		"It has letters and numbers",
-		"It’s too long"
-	  ],
-	  "answer": "It includes her name and birth year, which others can guess",
-	  "explanation": "Avoid personal details in passwords—they can be easily guessed or found online."
-	},
-	{
-	  "id": 4,
-	  "topic": "Passphrases",
-	  "question": "Rita wants a password that's strong and easy to remember. Which is best?",
-	  "options": [
-		"'Rita123'",
-		"'LetTheRainSing2024!'",
-		"'Password1'",
-		"'1980Happy'"
-	  ],
-	  "answer": "'LetTheRainSing2024!'",
-	  "explanation": "Passphrases with random words are easier to remember and harder to guess."
-	},
-	{
-	  "id": 5,
-	  "topic": "Auto-Save on Public Devices",
-	  "question": "Amit logs into his bank account at his cousin's house. The browser offers to save the password. What should he do?",
-	  "options": [
-		"Click Yes",
-		"Click No, because it’s not his device",
-		"Ignore it",
-		"Let the cousin decide"
-	  ],
-	  "answer": "Click No, because it’s not his device",
-	  "explanation": "Never save passwords on shared or public devices—they can be accessed later."
-	},
-	{
-	  "id": 6,
-	  "topic": "Login Safety",
-	  "question": "Iqbal uses a computer at a library. Before leaving, what’s most important?",
-	  "options": [
-		"Close the browser",
-		"Log out of his account",
-		"Shut down the computer",
-		"Erase browsing history"
-	  ],
-	  "answer": "Log out of his account",
-	  "explanation": "Logging out ensures your account isn’t left open for the next user."
-	},
-	{
-	  "id": 7,
-	  "topic": "Password Manager Basics",
-	  "question": "Ravi stores all his passwords in a password manager with a strong master password. Is that safe?",
-	  "options": [
-		"Yes, if the master password is strong",
-		"No, it’s risky to store anything",
-		"Only if it's offline",
-		"No, he should write them down"
-	  ],
-	  "answer": "Yes, if the master password is strong",
-	  "explanation": "Password managers are secure and helpful when protected by a strong master password."
-	},
-	{
-	  "id": 8,
-	  "topic": "Typing Errors",
-	  "question": "Bhavna keeps typing her password wrong. What can she do?",
-	  "options": [
-		"Use '1234'",
-		"Use a passphrase that's easier to type",
-		"Write it on her hand",
-		"Ask someone else to type"
-	  ],
-	  "answer": "Use a passphrase that's easier to type",
-	  "explanation": "Passphrases reduce typing mistakes and are easier to remember."
-	},
-	{
-	  "id": 9,
-	  "topic": "Password Length",
-	  "question": "Anil uses 'Cat99' as a password. How can he make it stronger?",
-	  "options": [
-		"Add more words or symbols, like 'Cat99RainBow!'",
-		"Change it to 'Dog88'",
-		"Just use numbers",
-		"Remove the numbers"
-	  ],
-	  "answer": "Add more words or symbols, like 'Cat99RainBow!'",
-	  "explanation": "Longer passwords with mixed words and symbols are harder to guess."
-	},
-	{
-	  "id": 10,
-	  "topic": "2FA Basics",
-	  "question": "Salim enables 2-step verification. Now, after his password, he gets a phone code. What does this do?",
-	  "options": [
-		"Adds a second layer of security",
-		"Makes login slower",
-		"Saves the password forever",
-		"Replaces his password"
-	  ],
-	  "answer": "Adds a second layer of security",
-	  "explanation": "2FA protects your account even if your password is stolen."
-	},
-	{
-	  "id": 11,
-	  "topic": "Password Recovery",
-	  "question": "Fatima forgot her password. What should she do?",
-	  "options": [
-		"Click 'Forgot Password?' and follow steps",
-		"Make a new account",
-		"Keep guessing",
-		"Stop using the service"
-	  ],
-	  "answer": "Click 'Forgot Password?' and follow steps",
-	  "explanation": "The safest way to recover a password is through the official recovery link."
-	},
-	{
-	  "id": 12,
-	  "topic": "Saving Passwords",
-	  "question": "Jagdish uses his son’s phone to check his pension website. It asks to save the password. What’s safest?",
-	  "options": [
-		"Save it—it’s just once",
-		"Never save on someone else’s device",
-		"Ask the son",
-		"Print the password"
-	  ],
-	  "answer": "Never save on someone else’s device",
-	  "explanation": "Passwords saved on shared devices can be accessed by others later."
-	},
-	{
-	  "id": 13,
-	  "topic": "Password Change Habits",
-	  "question": "Usha changes her password every month but reuses old ones. Is this secure?",
-	  "options": [
-		"Yes, it’s regular",
-		"No, reusing old passwords still puts her at risk",
-		"Only if she notes it down",
-		"Only if no one sees"
-	  ],
-	  "answer": "No, reusing old passwords still puts her at risk",
-	  "explanation": "Old passwords may already be leaked. Use new, unique ones."
-	},
-	{
-	  "id": 14,
-	  "topic": "Safe Storage",
-	  "question": "Prakash keeps his passwords written on a paper under his keyboard. Is that safe?",
-	  "options": [
-		"Yes, it’s hidden",
-		"No, someone could find and use it",
-		"Yes, if the handwriting is unclear",
-		"No, only if he travels"
-	  ],
-	  "answer": "No, someone could find and use it",
-	  "explanation": "Physical notes should be hidden very securely or avoided altogether."
-	},
-	{
-	  "id": 15,
-	  "topic": "Understanding Strength",
-	  "question": "Nisha's password is 'nisha@2020'. Why is this weak?",
-	  "options": [
-		"It includes her name and a common year",
-		"It has a symbol",
-		"It's too long",
-		"It’s difficult to guess"
-	  ],
-	  "answer": "It includes her name and a common year",
-	  "explanation": "Using your own name and a popular year makes a password predictable."
-	},
-	{
-	  "id": 16,
-	  "topic": "Combining Best Practices",
-	  "question": "Ramesh wants to be very secure. Which option is best?",
-	  "options": [
-		"Use long passphrases, enable 2FA, and avoid saving passwords on public devices",
-		"Use one password everywhere and write it down",
-		"Change passwords weekly",
-		"Only use symbols like @#$%"
-	  ],
-	  "answer": "Use long passphrases, enable 2FA, and avoid saving passwords on public devices",
-	  "explanation": "Combining good habits gives the best protection for your online accounts."
-	}
-  ]
-  
+  {
+    "id": 1,
+    "topic": "Reusing Passwords",
+    "question": "Suresh uses 'Mango2023' for his email, bank, and Facebook account. What's the biggest risk?",
+    "options": [
+      "It's okay because it's a long password",
+      "He only needs to remember one password",
+      "If one account is hacked, others are in danger",
+      "Websites will block him"
+    ],
+    "answer": "If one account is hacked, others are in danger",
+    "explanation": "Reusing passwords increases risk—one stolen password can unlock everything."
+  },
+  {
+    "id": 2,
+    "topic": "Common Patterns",
+    "question": "Padma uses 'abcd1234' as her Wi-Fi password. Is this safe?",
+    "options": [
+      "Yes, because it has numbers and letters",
+      "No, it follows a guessable pattern",
+      "Yes, because she didn’t tell anyone",
+      "No, because it’s not her birthday"
+    ],
+    "answer": "No, it follows a guessable pattern",
+    "explanation": "Attackers can easily guess simple, common sequences like 'abcd1234'."
+  },
+  {
+    "id": 3,
+    "topic": "Personal Info in Passwords",
+    "question": "Geeta uses 'Geeta1980' as her password. Why is this risky?",
+    "options": [
+      "It includes her name and birth year, which others can guess",
+      "It’s too short",
+      "It has letters and numbers",
+      "It’s too long"
+    ],
+    "answer": "It includes her name and birth year, which others can guess",
+    "explanation": "Avoid personal details in passwords—they can be easily guessed or found online."
+  },
+  {
+    "id": 4,
+    "topic": "Passphrases",
+    "question": "Rita wants a password that's strong and easy to remember. Which is best?",
+    "options": [
+      "'Rita123'",
+      "'LetTheRainSing2024!'",
+      "'Password1'",
+      "'1980Happy'"
+    ],
+    "answer": "'LetTheRainSing2024!'",
+    "explanation": "Passphrases with random words are easier to remember and harder to guess."
+  },
+  {
+    "id": 5,
+    "topic": "Auto-Save on Public Devices",
+    "question": "Amit logs into his bank account at his cousin's house. The browser offers to save the password. What should he do?",
+    "options": [
+      "Click Yes",
+      "Click No, because it’s not his device",
+      "Ignore it",
+      "Let the cousin decide"
+    ],
+    "answer": "Click No, because it’s not his device",
+    "explanation": "Never save passwords on shared or public devices—they can be accessed later."
+  },
+  {
+    "id": 6,
+    "topic": "Login Safety",
+    "question": "Iqbal uses a computer at a library. Before leaving, what’s most important?",
+    "options": [
+      "Close the browser",
+      "Log out of his account",
+      "Shut down the computer",
+      "Erase browsing history"
+    ],
+    "answer": "Log out of his account",
+    "explanation": "Logging out ensures your account isn’t left open for the next user."
+  },
+  {
+    "id": 7,
+    "topic": "Password Manager Basics",
+    "question": "Ravi stores all his passwords in a password manager with a strong master password. Is that safe?",
+    "options": [
+      "Yes, if the master password is strong",
+      "No, it’s risky to store anything",
+      "Only if it's offline",
+      "No, he should write them down"
+    ],
+    "answer": "Yes, if the master password is strong",
+    "explanation": "Password managers are secure and helpful when protected by a strong master password."
+  },
+  {
+    "id": 8,
+    "topic": "Typing Errors",
+    "question": "Bhavna keeps typing her password wrong. What can she do?",
+    "options": [
+      "Use '1234'",
+      "Use a passphrase that's easier to type",
+      "Write it on her hand",
+      "Ask someone else to type"
+    ],
+    "answer": "Use a passphrase that's easier to type",
+    "explanation": "Passphrases reduce typing mistakes and are easier to remember."
+  },
+  {
+    "id": 9,
+    "topic": "Password Length",
+    "question": "Anil uses 'Cat99' as a password. How can he make it stronger?",
+    "options": [
+      "Add more words or symbols, like 'Cat99RainBow!'",
+      "Change it to 'Dog88'",
+      "Just use numbers",
+      "Remove the numbers"
+    ],
+    "answer": "Add more words or symbols, like 'Cat99RainBow!'",
+    "explanation": "Longer passwords with mixed words and symbols are harder to guess."
+  },
+  {
+    "id": 10,
+    "topic": "2FA Basics",
+    "question": "Salim enables 2-step verification. Now, after his password, he gets a phone code. What does this do?",
+    "options": [
+      "Adds a second layer of security",
+      "Makes login slower",
+      "Saves the password forever",
+      "Replaces his password"
+    ],
+    "answer": "Adds a second layer of security",
+    "explanation": "2FA protects your account even if your password is stolen."
+  },
+  {
+    "id": 11,
+    "topic": "Password Recovery",
+    "question": "Fatima forgot her password. What should she do?",
+    "options": [
+      "Click 'Forgot Password?' and follow steps",
+      "Make a new account",
+      "Keep guessing",
+      "Stop using the service"
+    ],
+    "answer": "Click 'Forgot Password?' and follow steps",
+    "explanation": "The safest way to recover a password is through the official recovery link."
+  },
+  {
+    "id": 12,
+    "topic": "Saving Passwords",
+    "question": "Jagdish uses his son’s phone to check his pension website. It asks to save the password. What’s safest?",
+    "options": [
+      "Save it—it’s just once",
+      "Never save on someone else’s device",
+      "Ask the son",
+      "Print the password"
+    ],
+    "answer": "Never save on someone else’s device",
+    "explanation": "Passwords saved on shared devices can be accessed by others later."
+  },
+  {
+    "id": 13,
+    "topic": "Password Change Habits",
+    "question": "Usha changes her password every month but reuses old ones. Is this secure?",
+    "options": [
+      "Yes, it’s regular",
+      "No, reusing old passwords still puts her at risk",
+      "Only if she notes it down",
+      "Only if no one sees"
+    ],
+    "answer": "No, reusing old passwords still puts her at risk",
+    "explanation": "Old passwords may already be leaked. Use new, unique ones."
+  },
+  {
+    "id": 14,
+    "topic": "Safe Storage",
+    "question": "Prakash keeps his passwords written on a paper under his keyboard. Is that safe?",
+    "options": [
+      "Yes, it’s hidden",
+      "No, someone could find and use it",
+      "Yes, if the handwriting is unclear",
+      "No, only if he travels"
+    ],
+    "answer": "No, someone could find and use it",
+    "explanation": "Physical notes should be hidden very securely or avoided altogether."
+  },
+  {
+    "id": 15,
+    "topic": "Understanding Strength",
+    "question": "Nisha's password is 'nisha@2020'. Why is this weak?",
+    "options": [
+      "It includes her name and a common year",
+      "It has a symbol",
+      "It's too long",
+      "It’s difficult to guess"
+    ],
+    "answer": "It includes her name and a common year",
+    "explanation": "Using your own name and a popular year makes a password predictable."
+  },
+  {
+    "id": 16,
+    "topic": "Combining Best Practices",
+    "question": "Ramesh wants to be very secure. Which option is best?",
+    "options": [
+      "Use long passphrases, enable 2FA, and avoid saving passwords on public devices",
+      "Use one password everywhere and write it down",
+      "Change passwords weekly",
+      "Only use symbols like @#$%"
+    ],
+    "answer": "Use long passphrases, enable 2FA, and avoid saving passwords on public devices",
+    "explanation": "Combining good habits gives the best protection for your online accounts."
+  }
+]
