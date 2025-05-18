@@ -93,68 +93,75 @@ export default function Users() {
 
   if (loading)
     return (
-      <main>
+      <main className="flex items-center justify-center h-screen">
         <Loader />
       </main>
     );
 
   return (
-    <main>
-      <div className="page-header">
-        <h1>Users</h1>
-        <p>List of registered users.</p>
+    <main className="flex flex-col w-full px-4">
+      <div className="page-header flex justify-center items-center mt-6 mb-4">
+        <h1 className="text-2xl md:text-3xl font-bold">Search Users</h1>
       </div>
 
-      <input
-        type="text"
-        placeholder="Search by name..."
-        value={searchQuery}
-        onChange={(e) => setSearchQuery(e.target.value)}
-        className="mb-6 w-full px-4 py-2 rounded-md border border-gray-400 text-black"
-      />
+      <div className="flex flex-col items-center w-full max-w-4xl mx-auto">
+        <input
+          type="text"
+          placeholder="Search by name..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="mb-6 px-4 py-2 rounded-md border border-gray-400 text-black w-full"
+        />
 
-      <ul className="space-y-4">
-        {filteredUsers.map((user) => {
-          const isCurrentUser = user.id === currentUserId;
-          const isFollowing = following.includes(user.id);
+        <ul className="space-y-4 w-full">
+          {filteredUsers.map((user) => {
+            const isCurrentUser = user.id === currentUserId;
+            const isFollowing = following.includes(user.id);
 
-          return (
-            <li
-              key={user.id}
-              className="border p-4 rounded-md flex justify-between items-center transition hover:shadow-md hover:bg-gray-600"
-              style={{ borderColor: "var(--foreground)" }}
-            >
-              <Link href={`/search/${user.id}`} className="block flex-grow">
-                <h2 className="text-xl font-semibold text-[var(--foreground)]">
-                  {user.name}
-                </h2>
-                <div className="text-sm text-[var(--foreground)] mt-1 flex space-x-4">
-                  <span>Followers: {user.followers?.length ?? 0}</span>
-                  <span>Following: {user.following?.length ?? 0}</span>
-                </div>
-              </Link>
-
-              {!isCurrentUser && (
-                <button
-                  disabled={processing === user.id}
-                  onClick={() => handleFollowToggle(user.id, isFollowing)}
-                  className={`ml-4 px-4 py-2 rounded-md font-semibold transition ${
-                    isFollowing
-                      ? "bg-red-500 text-white hover:bg-red-600"
-                      : "bg-blue-500 text-white hover:bg-blue-600"
-                  }`}
+            return (
+              <li
+                key={user.id}
+                className="border rounded-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 p-4 transition hover:shadow-md hover:bg-gray-600 w-full"
+                style={{ borderColor: "var(--foreground)" }}
+              >
+                <Link
+                  href={`/search/${user.id}`}
+                  className="flex-1 block"
                 >
-                  {processing === user.id
-                    ? "Processing..."
-                    : isFollowing
-                    ? "Unfollow"
-                    : "Follow"}
-                </button>
-              )}
-            </li>
-          );
-        })}
-      </ul>
+                  <h2 className="text-lg sm:text-xl font-semibold text-[var(--foreground)]">
+                    {user.name}
+                  </h2>
+                  <div className="text-sm text-[var(--foreground)] mt-1 flex space-x-4 flex-wrap">
+                    <span>Followers: {user.followers?.length ?? 0}</span>
+                    <span>Following: {user.following?.length ?? 0}</span>
+                  </div>
+                </Link>
+
+                {!isCurrentUser && (
+                  <button
+                    disabled={processing === user.id}
+                    onClick={() => handleFollowToggle(user.id, isFollowing)}
+                    className={`px-4 py-2 w-full sm:w-auto font-semibold transition text-white rounded-none ${
+                      isFollowing
+                        ? "bg-red-500 hover:bg-red-600"
+                        : "bg-blue-500 hover:bg-blue-600"
+                    }`}
+                    style={{
+                      borderRadius: "0.375rem",
+                    }}
+                  >
+                    {processing === user.id
+                      ? "Processing..."
+                      : isFollowing
+                      ? "Unfollow"
+                      : "Follow"}
+                  </button>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
     </main>
   );
 }

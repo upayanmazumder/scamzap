@@ -4,11 +4,14 @@ import AuthProvider from "../components/auth/authprovider/AuthProvider";
 import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWorkerRegister";
 import { BottomBar } from "../components/bottombar/Bottombar";
 import AdminRedirect from "../components/admin/redirect/Redirect";
+import DynamicWrapper from "../components/DynamicWrapper/DynamicWrapper";
+
 
 export const metadata = {
   title: "Scamzap",
   description: "Protect yourself from scams",
 };
+
 
 export default function RootLayout({ children }) {
   return (
@@ -26,11 +29,13 @@ export default function RootLayout({ children }) {
         <meta property="og:url" content="https://scamzap.upayan.dev" />
         <meta property="og:type" content="website" />
       </head>
-      <body className={`antialiased`}>
+      <body className="antialiased">
         <AuthProvider>
           <BottomBar />
           <AdminRedirect />
-          {children}
+          <DynamicWrapper>
+            {children}
+          </DynamicWrapper>
           <ServiceWorkerRegister />
         </AuthProvider>
       </body>
