@@ -63,20 +63,26 @@ export default function LessonDetail() {
   };
 
   return (
-    <main className="p-6 mx-auto">
+    <>
+    <div className="w-full h-4 bg-gray-300 rounded mb-6">
+  <div
+    className="h-full bg-green-600 transition-all duration-300 rounded"
+    style={{ width: `${((currentIndex + (showAnswer ? 1 : 0)) / quiz.length) * 100}%` }}
+  ></div>
+</div>
+    <div className="px-6 h-[calc(100vh-4rem)] overflow-y-auto">
       {/* Lesson content */}
-      <motion.div
+      {/* <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <h1 className="text-4xl font-bold mb-4">{lesson.topic}</h1>
         <p className="text-gray-700 leading-relaxed">{lesson.content}</p>
-      </motion.div>
+      </motion.div> */}
 
       {/* Quiz Section */}
-      <section>
-        <h2 className="text-3xl font-semibold mb-6 border-b pb-2">Quiz</h2>
+      <section className="h-full">
 
         {quizCompleted ? (
           <motion.div
@@ -95,13 +101,15 @@ export default function LessonDetail() {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -20 }}
                 transition={{ duration: 0.4 }}
-                className="mb-8 p-6 border border-gray-300 rounded-lg shadow-sm"
+                className="mb-8 h-full w-full flex flex-col justify-center"
               >
+                <div className="mb-6">
                 <h3 className="text-xl font-semibold mb-3">
                   Q{currentIndex + 1}: {currentQuiz.question}
                 </h3>
+                </div>
 
-                <ul className="space-y-3">
+                <ul className="space-y-3 mb-16">
                   {currentQuiz.options.map((option, idx) => {
                     const isSelected = selectedOption === option;
                     const isCorrect = option === currentQuiz.answer;
@@ -146,25 +154,28 @@ export default function LessonDetail() {
 
                 {/* Show explanation and next button only after answer */}
                 {showAnswer && (
-                  <>
-                    <p className="mt-4 italic text-gray-700">
-                      {currentQuiz.explanation}
-                    </p>
+                  <motion.div
+                    initial={{ y: 50, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.4 }}
+                    className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] sm:w-[30rem] bg-white shadow-lg border border-gray-300 rounded-2xl px-6 py-4 z-50"
+                  >
+                    <p className="text-gray-800 mb-4">{currentQuiz.explanation}</p>
                     <button
                       onClick={handleNextQuestion}
-                      className="mt-6 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400"
+                      className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
-                      {currentIndex + 1 < quiz.length
-                        ? "Next Question"
-                        : "Finish Quiz"}
+                      {currentIndex + 1 < quiz.length ? "Next Question" : "Finish Quiz"}
                     </button>
-                  </>
-                )}
+                  </motion.div>
+      )}
+
               </motion.div>
             )}
           </AnimatePresence>
         )}
       </section>
-    </main>
+    </div>
+    </>
   );
 }

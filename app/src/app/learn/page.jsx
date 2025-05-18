@@ -5,6 +5,7 @@ import Link from "next/link";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
+import { BottomBar } from "../../components/bottombar/Bottombar";
 
 export default function Learn() {
   const [lessons, setLessons] = useState([]);
@@ -59,6 +60,7 @@ export default function Learn() {
           ))}
         </AnimatePresence>
       </ul>
+      <BottomBar />
     </main>
   );
 }
