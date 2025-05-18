@@ -124,7 +124,7 @@ export default function Users() {
               className="border p-4 rounded-md flex justify-between items-center transition hover:shadow-md hover:bg-gray-600"
               style={{ borderColor: "var(--foreground)" }}
             >
-              <Link href={`/users/${user.id}`} className="block flex-grow">
+              <Link href={`/search/${user.id}`} className="block flex-grow">
                 <h2 className="text-xl font-semibold text-[var(--foreground)]">
                   {user.name}
                 </h2>
