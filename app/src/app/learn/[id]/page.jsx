@@ -152,7 +152,7 @@ export default function LessonDetail() {
                       initial={{ y: 50, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ duration: 0.4 }}
-                      className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] sm:w-[30rem] bg-white shadow-lg border border-gray-300 rounded-2xl px-6 py-4 z-50"
+                      className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] sm:w-[30rem] bg-gray-700 shadow-lg border border-gray-300 rounded-2xl px-6 py-4 z-50"
                     >
                       <p className="text-[var(--theme-black)] mb-4">
                         {currentQuiz.explanation}
