@@ -28,13 +28,20 @@ export const BottomBar = () => {
       "
     >
       <div className="hidden lg:flex items-center justify-start gap-2 mb-6 w-full">
-        <Image src="/favicon.ico" alt="Logo" width={32} height={32} />
-        <h1
-          className="text-2xl font-bold text-[var(--foreground)]"
-          style={{ margin: 0 }}
+        <a
+          href="https://github.com/upayanmazumder/scamzap"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-2"
         >
-          Scamzap
-        </h1>
+          <Image src="/favicon.ico" alt="Logo" width={32} height={32} />
+          <h1
+            className="text-2xl font-bold text-[var(--foreground)]"
+            style={{ margin: 0 }}
+          >
+            Scamzap
+          </h1>
+        </a>
       </div>
 
       <div className="grid w-full h-full grid-cols-4 lg:grid-cols-1 lg:gap-2">
