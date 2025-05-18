@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function Learn() {
   const [lessons, setLessons] = useState([]);
@@ -39,16 +40,24 @@ export default function Learn() {
         <p className="text-gray-600">Select a lesson to start learning.</p>
       </div>
       <ul className="space-y-4">
-        {lessons.map((lesson) => (
-          <li key={lesson._id}>
-            <Link
-              href={`/learn/${lesson._id}`}
-              className="text-blue-600 hover:text-blue-800 font-medium underline"
+        <AnimatePresence>
+          {lessons.map((lesson) => (
+            <motion.li
+              key={lesson._id}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
             >
-              {lesson.topic}
-            </Link>
-          </li>
-        ))}
+              <Link
+                href={`/learn/${lesson._id}`}
+                className="text-blue-600 hover:text-blue-800 font-medium underline"
+              >
+                {lesson.topic}
+              </Link>
+            </motion.li>
+          ))}
+        </AnimatePresence>
       </ul>
     </main>
   );
