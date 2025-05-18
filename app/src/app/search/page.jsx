@@ -121,13 +121,10 @@ export default function Users() {
             return (
               <li
                 key={user.id}
-                className="border rounded-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 p-4 transition hover:shadow-md hover:bg-gray-600 w-full"
+                className="border rounded-md flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 p-4 transition bg-gray-800 hover:shadow-md hover:bg-gray-700 w-full"
                 style={{ borderColor: "var(--foreground)" }}
               >
-                <Link
-                  href={`/search/${user.id}`}
-                  className="flex-1 block"
-                >
+                <Link href={`/search/${user.id}`} className="flex-1 block">
                   <h2 className="text-lg sm:text-xl font-semibold text-[var(--foreground)]">
                     {user.name}
                   </h2>
