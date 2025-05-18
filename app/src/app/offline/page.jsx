@@ -1,17 +1,17 @@
 "use client";
 import { motion } from "framer-motion";
 
-export default function NotFound() {
+export default function Offline() {
   return (
     <motion.div
-      className="flex flex-col items-center justify-center text-center p-3"
+      className="flex flex-col items-center justify-center text-center p-4"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <h1 className="text-4xl font-bold mb-4">404 Not Found</h1>
+      <h1 className="text-4xl font-bold mb-4">You are offline</h1>
       <p className="mb-6 text-lg text-gray-600">
-        The page you are looking for does not exist!
+        Pages will now be served from the cache.
       </p>
       <motion.img
         src="/mascot/expressionless.svg"

@@ -26,7 +26,8 @@
     "**/*.ts",
     "**/*.tsx",
     "src/app/[...catchall]/page.jsx",
-    "src/components/404/404.jsx"
+    "src/components/404/404.jsx",
+    "src/app/offline/page.jsx"
   ],
   "exclude": ["node_modules"]
 }
