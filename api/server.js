@@ -5,6 +5,7 @@ import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import scamRoutes from './routes/scamRoutes.js';
 import lessonRoutes from './routes/lessonRoutes.js';
+import followRoutes from "./routes/followRoutes.js";
 import path from 'path';
 import { fileURLToPath } from 'url';
 
@@ -28,6 +29,8 @@ app.get('/ping', (req, res) => {
 app.use('/users', userRoutes);
 app.use('/scams', scamRoutes);
 app.use('/lessons', lessonRoutes);
+app.use("/users", followRoutes);
+
 app.use((req, res, next) => {
     res.status(404).json({ error: 'Not Found' });
 });
