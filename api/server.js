@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import userRoutes from './routes/userRoutes.js';
 import scamRouters from './routes/scamRoutes.js';
+import lessonRoutes from './routes/lessonRoutes.js';
 
 dotenv.config({ path: '../.env' });
 
@@ -18,7 +19,7 @@ app.get('/ping', (req, res) => {
 });
 app.use('/users', userRoutes);
 app.use('/scams', scamRouters);
-
+app.use('/lessons', lessonRoutes);
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         console.log('MongoDB connected');
