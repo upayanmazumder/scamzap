@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('/fonts/Montserrat-Bold.ttf') format('truetype');
+    font-weight: bold;
+    font-style: normal;
+}
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    padding: 2rem;
+    background-color: #121212;
+    color: #f0f0f0;
+    line-height: 1.6;
+}
+
+h1 {
+    color: #00bfff;
+}
+
+h2 {
+    color: #f0f0f0;
+}
+
+code {
+    background: #1e1e1e;
+    color: #ffd700;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-family: monospace;
+}
+
+ul {
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+a {
+    color: #00bfff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}

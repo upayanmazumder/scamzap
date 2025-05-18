@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {
-    res.status(200).json({ message: 'Welcome to the Scamzap API' });
+    res.sendFile(path.join(__dirname, 'public', 'home.html'));
 });
 app.get('/ping', (req, res) => {
     res.status(200).json({ message: 'API is online' });
