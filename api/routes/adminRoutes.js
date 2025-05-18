@@ -17,9 +17,9 @@ router.get("/users", isAdmin, async (req, res) => {
   res.json(users);
 });
 
-// router.delete('/users/:id', isAdmin, async (req, res) => {
+// router.delete("/users/:id", isAdmin, async (req, res) => {
 //   await User.findByIdAndDelete(req.params.id);
-//   res.json({ message: 'User deleted' });
+//   res.json({ message: "User deleted" });
 // });
 
 router.post("/promote/:id", isAdmin, async (req, res) => {
@@ -82,6 +82,32 @@ router.put("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
   Object.assign(quiz, req.body);
   await lesson.save();
   res.json(quiz);
+});
+
+router.delete("/lessons/:lessonId", isAdmin, async (req, res) => {
+  try {
+    await Lesson.findByIdAndDelete(req.params.lessonId);
+    res.json({ message: "Lesson deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+router.delete("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
+  try {
+    const lesson = await Lesson.findById(req.params.lessonId);
+    if (!lesson) return res.status(404).json({ error: "Lesson not found" });
+
+    const quiz = lesson.quiz.id(req.params.quizId);
+    if (!quiz) return res.status(404).json({ error: "Quiz not found" });
+
+    quiz.remove();
+    await lesson.save();
+
+    res.json({ message: "Quiz deleted" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 router.get("/scams", isAdmin, async (req, res) => {
