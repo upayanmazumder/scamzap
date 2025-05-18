@@ -36,7 +36,7 @@ export default function Redirect() {
   if (loading) return <p>Loading...</p>;
 
   if (!session) {
-    return <p>Please log in to access the dashboard.</p>;
+    return null;
   }
 
   return (
