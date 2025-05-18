@@ -26,7 +26,12 @@ export default function LessonDetail() {
     if (id) fetchLesson();
   }, [id]);
 
-  if (loading) return <Loader />;
+  if (loading)
+    return (
+      <main>
+        <Loader />
+      </main>
+    );
   if (!lesson || lesson.error)
     return <p className="text-center text-red-600 mt-10">Lesson not found.</p>;
 

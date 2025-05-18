@@ -25,7 +25,12 @@ export default function Learn() {
     fetchLessons();
   }, []);
 
-  if (loading) return <Loader />;
+  if (loading)
+    return (
+      <main>
+        <Loader />
+      </main>
+    );
 
   return (
     <main className="p-6 max-w-4xl mx-auto">
