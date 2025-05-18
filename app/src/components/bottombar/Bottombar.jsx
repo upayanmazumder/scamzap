@@ -4,6 +4,7 @@ import React from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Home, Search, User, Settings } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
   { href: "/", label: "Home", icon: Home },
@@ -52,27 +53,42 @@ export const BottomBar = () => {
             pathname === href;
 
           return (
-            <button
+            <motion.button
               key={href}
               onClick={() => router.push(href)}
               className={`
-        appearance-none bg-transparent border-none outline-none
-        group inline-flex items-center justify-center p-2 rounded-md transition
-        flex-col lg:flex-row lg:justify-center lg:items-center lg:w-full
-        hover:!text-[var(--theme-red)] hover:bg-muted
-        ${
-          isActive
-            ? "!text-[var(--theme-orange)]"
-            : "!text-[var(--theme-yellow)]"
-        }
-      `}
+                appearance-none bg-transparent border-none outline-none
+                group inline-flex items-center justify-center p-2 rounded-md transition
+                flex-col lg:flex-row lg:justify-center lg:items-center lg:w-full
+                hover:!text-[var(--theme-red)] hover:bg-muted
+                ${
+                  isActive
+                    ? "!text-[var(--theme-orange)]"
+                    : "!text-[var(--theme-yellow)]"
+                }
+              `}
               style={{ backgroundColor: "transparent", boxShadow: "none" }}
+              whileTap={{ scale: 0.92 }}
+              whileHover={{ scale: 1.08 }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
             >
+              <AnimatePresence>
+                {isActive && (
+                  <motion.div
+                    layoutId="active-nav"
+                    className="absolute inset-0 rounded-md bg-[var(--input)] opacity-20 z-[-1]"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 0.2 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  />
+                )}
+              </AnimatePresence>
               <Icon className="w-6 h-6" />
               <span className="sr-only lg:not-sr-only lg:ml-3 lg:text-sm">
                 {label}
               </span>
-            </button>
+            </motion.button>
           );
         })}
       </div>
