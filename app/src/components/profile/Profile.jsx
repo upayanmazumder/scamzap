@@ -3,7 +3,7 @@
 import { useSession, signOut } from "next-auth/react";
 import Loader from "../loader/Loader";
 import React, { useEffect, useState } from "react";
-import { FaUserCircle, FaSignOutAlt } from "react-icons/fa";
+import { FaUserCircle, FaSignOutAlt, FaShareAlt } from "react-icons/fa";
 import API from "../../utils/api";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
@@ -13,8 +13,9 @@ export default function Profile() {
   const [createdAt, setCreatedAt] = useState(null);
   const [loadingCreatedAt, setLoadingCreatedAt] = useState(false);
   const [error, setError] = useState(null);
-  const [followingCount, setFollowingCount] = useState(3); // Example data
-  const [followersCount, setFollowersCount] = useState(5); // Example data
+  const [followingCount, setFollowingCount] = useState(0);
+  const [followersCount, setFollowersCount] = useState(0);
+  const [copySuccess, setCopySuccess] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -29,6 +30,8 @@ export default function Profile() {
           }
           const data = await res.json();
           setCreatedAt(data.createdAt);
+          setFollowersCount(data.followers?.length || 0);
+          setFollowingCount(data.following?.length || 0);
         })
         .catch((err) => {
           setError(err.message || "Failed to fetch user data");
@@ -46,6 +49,16 @@ export default function Profile() {
       return () => clearTimeout(timeout);
     }
   }, [status, router]);
+
+  const handleShare = () => {
+    if (session?.user?.sub) {
+      const url = `${window.location.origin}/users/${session.user.sub}`;
+      navigator.clipboard.writeText(url).then(() => {
+        setCopySuccess(true);
+        setTimeout(() => setCopySuccess(false), 10000);
+      });
+    }
+  };
 
   if (status === "loading") {
     return (
@@ -145,15 +158,29 @@ export default function Profile() {
             Followers
           </p>
         </motion.div>
-        <motion.button
-          onClick={() => signOut()}
-          className="items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200 shadow-md mt-4"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+
+        <motion.div
+          className="flex flex-col sm:flex-row justify-center items-center gap-4 mt-4"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.8 }}
         >
-          <FaSignOutAlt />
-          Logout
-        </motion.button>
+          <button
+            onClick={handleShare}
+            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 shadow-md"
+            disabled={copySuccess}
+          >
+            <FaShareAlt />
+            {copySuccess ? "Copied" : "Share Profile"}
+          </button>
+          <button
+            onClick={() => signOut()}
+            className="flex items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200 shadow-md"
+          >
+            <FaSignOutAlt />
+            Logout
+          </button>
+        </motion.div>
       </motion.div>
     </motion.div>
   );
