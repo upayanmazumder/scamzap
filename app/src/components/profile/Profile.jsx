@@ -1,9 +1,19 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
+import Loader from "../loader/Loader";
+import React from "react";
 
 export default function Profile() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  if (status === "loading") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <Loader />
+      </div>
+    );
+  }
 
   if (!session) {
     return (
@@ -13,21 +23,28 @@ export default function Profile() {
     );
   }
 
-  const { name, email } = session.user;
+  const { name, email, image, sub } = session.user || {};
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] ">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] text-center px-4">
       <img
-        src={session.user.image}
-        alt="Profile"
-        className="w-24 h-24 rounded-full mb-4"
+        src={image || "/default-avatar.png"}
+        alt={`${name || "User"}'s profile picture`}
+        className="w-24 h-24 rounded-full mb-4 border border-gray-300 object-cover"
         loading="lazy"
       />
-      <h2 className="text-2xl font-bold mb-1">{name}</h2>
-      <p className="text-gray-600 mb-6">{email}</p>
+      <h2 className="text-2xl font-semibold mb-1">
+        {name || "Anonymous User"}
+      </h2>
+      {email && <p className="text-gray-600 mb-2">{email}</p>}
+      {sub && (
+        <p className="text-sm text-gray-500 mb-6">
+          User ID: <strong>{sub}</strong>
+        </p>
+      )}
       <button
         onClick={() => signOut()}
-        className="px-6 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+        className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors duration-200"
       >
         Log out
       </button>

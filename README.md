@@ -33,5 +33,6 @@ Check out the design for scamzap:  [Figma](https://www.figma.com/design/tQrLAmu1
 
 scamzap is built by **Indecisive Folks**.  
 
-- **[Upayan Mazumder](https://upayan.dev)** - [LinkedIn](https://www.linkedin.com/in/upayanmazumder/)  
+- **[Upayan Mazumder](https://upayan.dev)** - [LinkedIn](https://www.linkedin.com/in/upayanmazumder/)
+- **Monica Srinivas** - [LinkedIn](https://www.linkedin.com/in/monicasrinivas/)
 <todo>
