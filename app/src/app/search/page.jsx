@@ -14,6 +14,7 @@ export default function Users() {
   const [following, setFollowing] = useState([]);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const fetchUsersAndFollowing = async () => {
@@ -73,6 +74,23 @@ export default function Users() {
     }
   };
 
+  const normalize = (str) => str.toLowerCase().trim();
+
+  const filteredUsers = users
+    .filter((user) => normalize(user.name).includes(normalize(searchQuery)))
+    .sort((a, b) => {
+      const query = normalize(searchQuery);
+      const nameA = normalize(a.name);
+      const nameB = normalize(b.name);
+
+      const aStarts = nameA.startsWith(query);
+      const bStarts = nameB.startsWith(query);
+
+      if (aStarts && !bStarts) return -1;
+      if (!aStarts && bStarts) return 1;
+      return nameA.localeCompare(nameB);
+    });
+
   if (loading)
     return (
       <main>
@@ -86,8 +104,17 @@ export default function Users() {
         <h1>Users</h1>
         <p>List of registered users.</p>
       </div>
+
+      <input
+        type="text"
+        placeholder="Search by name..."
+        value={searchQuery}
+        onChange={(e) => setSearchQuery(e.target.value)}
+        className="mb-6 w-full px-4 py-2 rounded-md border border-gray-400 text-black"
+      />
+
       <ul className="space-y-4">
-        {users.map((user) => {
+        {filteredUsers.map((user) => {
           const isCurrentUser = user.id === currentUserId;
           const isFollowing = following.includes(user.id);
 
@@ -97,7 +124,7 @@ export default function Users() {
               className="border p-4 rounded-md flex justify-between items-center transition hover:shadow-md hover:bg-gray-600"
               style={{ borderColor: "var(--foreground)" }}
             >
-              <Link href={`/users/${user.id}`} className="block flex-grow">
+              <Link href={`/search/${user.id}`} className="block flex-grow">
                 <h2 className="text-xl font-semibold text-[var(--foreground)]">
                   {user.name}
                 </h2>
