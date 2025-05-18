@@ -1,57 +1,29 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
+import gsap from "gsap";
 import Authenticate from "../auth/authenticate/Authenticate";
-
-const containerVariants = {
-  initial: { opacity: 0, y: 40, scale: 0.85 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      type: "spring",
-      stiffness: 200,
-      damping: 25,
-      when: "beforeChildren",
-      staggerChildren: 0.15,
-    },
-  },
-  exit: {
-    opacity: 0,
-    y: -40,
-    scale: 0.9,
-    transition: { duration: 0.5, ease: "easeInOut" },
-  },
-};
-
-const childFadeUp = {
-  initial: { opacity: 0, y: 20 },
-  animate: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.5, ease: "easeOut" },
-  },
-  exit: {
-    opacity: 0,
-    y: -20,
-    transition: { duration: 0.4, ease: "easeIn" },
-  },
-};
 
 export default function Hero() {
   const { data: session } = useSession();
   const router = useRouter();
   const [stage, setStage] = useState(-1);
 
+  const stage0Ref = useRef(null);
+  const stage1Ref = useRef(null);
+  const stage2Ref = useRef(null);
+
+  // Redirect if session exists
   useEffect(() => {
     if (session) {
       router.push("/learn");
-      return;
     }
+  }, [session, router]);
+
+  useEffect(() => {
+    if (session) return;
 
     let timer;
     if (stage === -1) {
@@ -62,90 +34,109 @@ export default function Hero() {
       timer = setTimeout(() => setStage(2), 5000);
     }
     return () => clearTimeout(timer);
-  }, [stage, session, router]);
+  }, [stage, session]);
+
+  // Animate stage visibility
+  useLayoutEffect(() => {
+    const tl = gsap.timeline();
+
+    // Fade out all stages first
+    tl.to([stage0Ref.current, stage1Ref.current, stage2Ref.current], {
+      opacity: 0,
+      y: -20,
+      scale: 0.9,
+      pointerEvents: "none",
+      duration: 0.4,
+      ease: "power1.inOut",
+    });
+
+    // Fade in active stage
+    let activeStageRef = null;
+    if (stage === 0) activeStageRef = stage0Ref.current;
+    else if (stage === 1) activeStageRef = stage1Ref.current;
+    else if (stage === 2 && !session) activeStageRef = stage2Ref.current;
+
+    if (activeStageRef) {
+      tl.to(
+        activeStageRef,
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          pointerEvents: "auto",
+          duration: 0.8,
+          ease: "power3.out",
+        },
+        "+=0.1"
+      );
+    }
+
+    return () => {
+      tl.kill();
+    };
+  }, [stage, session]);
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-12 text-center">
-      <div className="flex flex-1 flex-col justify-center items-center w-full max-w-5xl">
-        <AnimatePresence mode="wait" initial={false}>
-          {stage === 0 && (
-            <motion.div
-              key="stage0"
-              variants={containerVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="flex flex-col items-center space-y-6"
-            >
-              <motion.img
-                src="/mascot/face.svg"
-                alt="Face"
-                width={250}
-                height={250}
-                variants={childFadeUp}
-                draggable={false}
-              />
-              <motion.h1
-                className="text-7xl font-extrabold text-white select-none"
-                variants={childFadeUp}
-              >
-                SCAMZAP
-              </motion.h1>
-            </motion.div>
-          )}
+      <div className="flex flex-1 flex-col justify-center items-center w-full max-w-5xl relative">
+        {/* Stage 0 */}
+        <div
+          ref={stage0Ref}
+          style={{ opacity: 0, position: "absolute", width: "100%" }}
+          className="flex flex-col items-center space-y-6 pointer-events-none"
+        >
+          <img
+            src="/mascot/face.svg"
+            alt="Face"
+            width={250}
+            height={250}
+            draggable={false}
+            className="select-none"
+          />
+          <h1 className="text-7xl font-extrabold text-white select-none">
+            SCAMZAP
+          </h1>
+        </div>
 
-          {stage === 1 && (
-            <motion.div
-              key="stage1"
-              variants={containerVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="flex flex-col items-center space-y-6"
-            >
-              <motion.img
-                src="/mascot/smirk.svg"
-                alt="Mascot Smirk"
-                width={250}
-                height={250}
-                variants={childFadeUp}
-                draggable={false}
-              />
-              <motion.p
-                className="whitespace-pre-line text-2xl leading-relaxed max-w-xl text-white select-none"
-                variants={childFadeUp}
-              >
-                {"A simple, safe,\nand fun way\nto learn about\ntoday’s scams"}
-              </motion.p>
-            </motion.div>
-          )}
+        {/* Stage 1 */}
+        <div
+          ref={stage1Ref}
+          style={{ opacity: 0, position: "absolute", width: "100%" }}
+          className="flex flex-col items-center space-y-6 pointer-events-none"
+        >
+          <img
+            src="/mascot/smirk.svg"
+            alt="Mascot Smirk"
+            width={250}
+            height={250}
+            draggable={false}
+            className="select-none"
+          />
+          <p className="whitespace-pre-line text-2xl leading-relaxed max-w-xl text-white select-none">
+            {"A simple, safe,\nand fun way\nto learn about\ntoday’s scams"}
+          </p>
+        </div>
 
-          {stage === 2 && !session && (
-            <motion.div
-              key="stage2"
-              variants={containerVariants}
-              initial="initial"
-              animate="animate"
-              exit="exit"
-              className="p-12 bg-[#164A78cc] backdrop-blur-lg rounded-3xl shadow-2xl space-y-8 flex flex-col items-center justify-center max-w-2xl w-full"
-            >
-              <motion.img
-                src="/mascot/smile.svg"
-                alt="Mascot Smile"
-                width={250}
-                height={250}
-                variants={childFadeUp}
-                draggable={false}
-              />
-              <motion.div
-                className="flex justify-center w-full"
-                variants={childFadeUp}
-              >
-                <Authenticate />
-              </motion.div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Stage 2 */}
+        {!session && (
+          <div
+            ref={stage2Ref}
+            style={{ opacity: 0, position: "absolute", width: "100%" }}
+            className="p-12 bg-[#164A78cc] backdrop-blur-lg rounded-3xl shadow-2xl space-y-8 flex flex-col items-center justify-center max-w-2xl mx-auto pointer-events-none"
+          >
+            <img
+              src="/mascot/smile.svg"
+              alt="Mascot Smile"
+              width={250}
+              height={250}
+              draggable={false}
+              className="select-none"
+            />
+            <div className="flex justify-center w-full">
+              <Authenticate />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
