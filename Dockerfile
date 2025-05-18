@@ -17,13 +17,13 @@ WORKDIR /api
 COPY api/package.json api/package-lock.json* ./
 RUN npm ci
 
-# Copy backend source code (this is the fix)
+# Copy backend source code
 COPY api/ ./
 
 # ---------- Stage 4: Final runtime image ----------
 FROM node:23-alpine AS runner
 
-RUN apk add --no-cache tini
+RUN apk add --no-cache tini && npm install -g pm2
 
 WORKDIR /workspace
 
@@ -32,9 +32,11 @@ COPY --from=build-app /app ./app
 # Copy backend source and node_modules
 COPY --from=deps-api /api ./api
 
+# Add PM2 ecosystem config
+COPY ecosystem.config.js ./
+
 EXPOSE 3000 5000
 
 ENTRYPOINT ["/sbin/tini", "--"]
 
-# Start both frontend and backend concurrently
-CMD ["sh", "-c", "cd app && npm start & cd api && npm start"]
+CMD ["pm2-runtime", "ecosystem.config.js"]
