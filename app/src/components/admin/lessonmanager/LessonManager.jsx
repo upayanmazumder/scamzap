@@ -14,7 +14,7 @@ import {
 } from "react-icons/ai";
 
 const createEmptyQuiz = () => ({
-  id: `${Date.now()}-${Math.random()}`, // unique id per quiz
+  id: `${Date.now()}-${Math.random()}`,
   topic: "",
   question: "",
   options: ["", "", "", ""],
@@ -75,7 +75,11 @@ const LessonManager = () => {
         if (q.id === quizId) {
           const newOptions = [...q.options];
           newOptions[optionIndex] = value;
-          return { ...q, options: newOptions };
+          let newAnswer = q.answer;
+          if (q.answer === q.options[optionIndex]) {
+            newAnswer = value;
+          }
+          return { ...q, options: newOptions, answer: newAnswer };
         }
         return q;
       });
@@ -132,7 +136,6 @@ const LessonManager = () => {
       return;
     }
 
-    // Assign incremental numeric IDs starting from 1 for server
     const lessonToSend = {
       ...newLesson,
       quiz: newLesson.quiz.map((q, i) => ({ ...q, id: i + 1 })),
@@ -189,7 +192,7 @@ const LessonManager = () => {
         Lesson Manager
       </motion.h2>
 
-      {/* Add Lesson Form */}
+      {/* Lesson Create Form */}
       <motion.div
         className="p-6 border rounded-xl shadow-xl bg-white dark:bg-gray-900 space-y-4"
         initial={{ opacity: 0 }}
@@ -294,31 +297,40 @@ const LessonManager = () => {
                     </p>
                   )}
 
-                  {q.options.map((opt, optIndex) => (
-                    <input
-                      key={optIndex}
-                      value={opt}
-                      onChange={(e) =>
-                        handleOptionChange(q.id, optIndex, e.target.value)
-                      }
-                      placeholder={`Option ${optIndex + 1}`}
-                      className="w-full p-2 border rounded"
-                    />
-                  ))}
+                  <div>
+                    <strong>Options:</strong>
+                    <ul className="space-y-2 mt-2">
+                      {q.options.map((opt, optIndex) => (
+                        <li key={optIndex} className="flex items-center gap-2">
+                          <input
+                            type="radio"
+                            name={`correctOption-${q.id}`}
+                            checked={q.answer === opt}
+                            onChange={() =>
+                              handleQuizChange(q.id, "answer", opt)
+                            }
+                            className="accent-green-600"
+                            aria-label={`Mark as correct option ${
+                              optIndex + 1
+                            }`}
+                          />
+                          <input
+                            value={opt}
+                            onChange={(e) =>
+                              handleOptionChange(q.id, optIndex, e.target.value)
+                            }
+                            placeholder={`Option ${optIndex + 1}`}
+                            className="w-full p-2 border rounded"
+                          />
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                   {errors.quiz?.[index]?.options && (
                     <p className="text-red-500 text-sm">
                       {errors.quiz[index].options}
                     </p>
                   )}
-
-                  <input
-                    value={q.answer}
-                    onChange={(e) =>
-                      handleQuizChange(q.id, "answer", e.target.value)
-                    }
-                    placeholder="Correct Answer"
-                    className="w-full p-2 border rounded"
-                  />
                   {errors.quiz?.[index]?.answer && (
                     <p className="text-red-500 text-sm">
                       {errors.quiz[index].answer}
@@ -371,7 +383,7 @@ const LessonManager = () => {
         )}
       </motion.div>
 
-      {/* Existing Lessons List */}
+      {/* Existing Lessons */}
       <div>
         <h3 className="text-3xl font-bold mb-4">Existing Lessons</h3>
         {loading && <p>Loading lessons...</p>}
@@ -425,13 +437,24 @@ const LessonManager = () => {
                             <strong>Options:</strong>
                             <ul className="list-disc list-inside ml-4">
                               {q.options.map((opt, i) => (
-                                <li key={i}>{opt}</li>
+                                <li
+                                  key={i}
+                                  className={
+                                    opt === q.answer
+                                      ? "text-green-700 font-semibold"
+                                      : ""
+                                  }
+                                >
+                                  {opt}
+                                  {opt === q.answer && (
+                                    <span className="ml-2 text-green-600 font-bold">
+                                      (Correct)
+                                    </span>
+                                  )}
+                                </li>
                               ))}
                             </ul>
                           </div>
-                          <p>
-                            <strong>Answer:</strong> {q.answer}
-                          </p>
                           <p>
                             <strong>Explanation:</strong> {q.explanation}
                           </p>
