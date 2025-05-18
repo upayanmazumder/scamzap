@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import API from "../../../utils/api";
 
-export default function Dashboard() {
+export default function Redirect() {
   const { data: session, status } = useSession();
   const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);

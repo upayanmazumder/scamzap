@@ -3,7 +3,7 @@ import "./globals.css";
 import AuthProvider from "../components/auth/authprovider/AuthProvider";
 import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWorkerRegister";
 import { BottomBar } from "../components/bottombar/Bottombar";
-import AdminDashboard from "../components/admin/dashboard/Dashboard";
+import AdminRedirect from "../components/admin/redirect/Redirect";
 
 export const metadata = {
   title: "Scamzap",
@@ -29,7 +29,7 @@ export default function RootLayout({ children }) {
       <body className={`antialiased`}>
         <AuthProvider>
           <BottomBar />
-          <AdminDashboard />
+          <AdminRedirect />
           {children}
           <ServiceWorkerRegister />
         </AuthProvider>
