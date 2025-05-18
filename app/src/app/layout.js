@@ -2,7 +2,6 @@ import "./globals.css";
 
 import AuthProvider from '../components/auth/authprovider/AuthProvider';
 import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWorkerRegister";
-import Header from "../components/header/Header";
 import { BottomBar } from "../components/bottombar/Bottombar";
 
 export const metadata = {
@@ -25,7 +24,7 @@ export default function RootLayout({ children }) {
           property="og:description"
           content="Welcome to Scamzap!"
         />
-        <meta property="og:image" content="/icons/icon-512x512.avif" />
+        <meta property="og:image" content="/icons/icon-512x512.webp" />
         <meta property="og:url" content="https://scamzap.upayan.dev" />
         <meta property="og:type" content="website" />
       </head>
@@ -33,7 +32,6 @@ export default function RootLayout({ children }) {
         className={`antialiased`}
       >
         <AuthProvider>
-          <Header />
           <BottomBar />
           {children}
           <ServiceWorkerRegister />

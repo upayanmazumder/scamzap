@@ -20,6 +20,13 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
+  "include": [
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "src/app/[...catchall]/page.jsx",
+    "src/components/404/404.jsx"
+  ],
   "exclude": ["node_modules"]
 }

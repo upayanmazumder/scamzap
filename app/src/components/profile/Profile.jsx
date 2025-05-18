@@ -1,12 +1,6 @@
 "use client";
 
 import { useSession, signOut } from "next-auth/react";
-import md5 from "md5";
-
-function getGravatarUrl(email, size = 152) {
-  const hash = md5(email.trim().toLowerCase());
-  return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
-}
 
 export default function Profile() {
   const { data: session } = useSession();
@@ -22,11 +16,11 @@ export default function Profile() {
   const { name, email } = session.user;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-[60vh] bg-gray-900">
+    <div className="flex flex-col items-center justify-center min-h-[60vh] ">
       <img
-        src={getGravatarUrl(email)}
+        src={session.user.image}
         alt="Profile"
-        className="w-24 h-24 rounded-fullmb-4"
+        className="w-24 h-24 rounded-full mb-4"
         loading="lazy"
       />
       <h2 className="text-2xl font-bold mb-1">{name}</h2>

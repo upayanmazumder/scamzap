@@ -15,7 +15,7 @@ Protect yourselves from scams!
 
 ## 🎨 UI/UX Design  
 
-Check out the design for kodesphere:  [Figma](https://www.figma.com/design/tQrLAmu1uaEFrbGlglFBKh/internal-hack?node-id=0-1&t=T2LsGBc2X8ZqfUrk-1)
+Check out the design for scamzap:  [Figma](https://www.figma.com/design/tQrLAmu1uaEFrbGlglFBKh/internal-hack?node-id=0-1&t=T2LsGBc2X8ZqfUrk-1)
 
 ## 🚀 Features  
 

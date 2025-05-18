@@ -26,8 +26,8 @@
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: var(--theme-blue);
+  --foreground: var(--theme-white);
 
   --color: var(--foreground);
 
@@ -36,8 +36,8 @@
   --sidebar-background-color: var(--background);
   --card-background: linear-gradient(145deg, rgba(10, 25, 47, 0.7), rgba(2, 12, 27, 0.7));
 
-  --text-link-color: #1C86EE;
-  --text-link-hover-color: rgb(77, 156, 235);
+  --text-link-color: var(--theme-orange);
+  --text-link-hover-color: var(--theme-red);
 
   --padding-tiny: 0.25rem;
   --padding-small: 0.5rem;
@@ -72,20 +72,21 @@
   --transition-slow: 0.8s ease-in-out;
 
   --box-shadow-default: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --theme-blue: #3b82f6;
+  --theme-orange: #fb923c;
+  --theme-yellow: #ffefc0;
+  --theme-white: #f1f5f9;
+  --theme-black: #111827;
+  --theme-green: #10b981;
+  --theme-red: #f97316;
+
 }
 
 * {
   box-sizing: border-box;
   transition: all var(--transition-fast);
   -webkit-tap-highlight-color: transparent;
-
   font-family: 'Bungee-Regular', system-ui, sans-serif;
 }
 
@@ -143,7 +144,7 @@ p {
 
 main {
   margin: 0.5rem 4.5rem;
-  padding: 0.5rem var(--padding-medium);
+  padding: 0.5rem 10rem;
   min-height: 70vh;
   display: flex;
   flex-direction: column;
@@ -218,16 +219,10 @@ button {
   padding: var(--padding-small) var(--padding-medium);
   border: none;
   border-radius: 50dvh;
-  background-color: rgb(36, 36, 36);
   font-size: var(--font-size-medium);
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-}
-
-button:hover {
-  background-color: rgb(22, 22, 22);
-  box-shadow: 0 0 0 6px rgba(255, 255, 255, 0.2);
 }
 
 button svg {

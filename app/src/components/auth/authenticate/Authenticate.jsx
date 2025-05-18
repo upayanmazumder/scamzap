@@ -2,14 +2,8 @@
 
 import { useSession, signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
-import md5 from "md5";
 import API from "../../../utils/api";
 import { useEffect } from "react";
-
-function getGravatarUrl(email, size = 152) {
-  const hash = md5(email.trim().toLowerCase());
-  return `https://www.gravatar.com/avatar/${hash}?s=${size}&d=identicon`;
-}
 
 export default function Authenticate() {
   const { data: session } = useSession();
@@ -38,11 +32,11 @@ export default function Authenticate() {
     <div className="flex flex-col items-center justify-center w-full">
       {session ? (
         <div
-          className="flex items-center gap-2 p-2 sm:p-2 bg-gray-700 rounded-lg w-full max-w-xs sm:max-w-sm cursor-pointer"
+          className="flex items-center gap-2 p-2 sm:p-2 rounded-lg w-full max-w-xs sm:max-w-sm cursor-pointer"
           onClick={() => (window.location.href = "/profile")}
         >
           <img
-            src={getGravatarUrl(session.user.email)}
+            src={session.user.image}
             alt="Profile"
             className="w-8 h-8 sm:w-10 sm:h-10 rounded-full border border-gray-600"
           />
