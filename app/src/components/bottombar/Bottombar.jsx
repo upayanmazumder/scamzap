@@ -3,13 +3,13 @@
 import React from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, Search, User, Settings, Users } from "lucide-react";
+import { Home, Search, User, Settings, Users, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const navItems = [
-  { href: "/", label: "Home", icon: Home },
+  { href: "/learn", label: "Learn", icon: Home },
+  { href: "/feed", label: "Feed", icon: Bell },
   { href: "/search", label: "Search", icon: Search },
-  { href: "/users", label: "Users", icon: Users },
   { href: "/profile", label: "Profile", icon: User },
 ];
 
