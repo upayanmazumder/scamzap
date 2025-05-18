@@ -34,6 +34,152 @@
       <li><code>/users</code> – User-related operations</li>
       <li><code>/scams</code> – Reported scams and lookup</li>
       <li><code>/lessons</code> – Anti-scam educational lessons</li>
+      <li><code>/admin</code> – Admin-only operations</li>
+    </ul>
+
+    <h2>API Guide</h2>
+
+    <h3>/ping</h3>
+    <ul>
+      <li>
+        <strong>GET</strong> <code>/ping</code> – Returns
+        <code>{ message: "API is online" }</code>
+      </li>
+    </ul>
+
+    <h3>/users</h3>
+    <ul>
+      <li><strong>GET</strong> <code>/users</code> – List all users</li>
+      <li>
+        <strong>POST</strong> <code>/users</code> – Create a user. <br /><em
+          >Body:</em
+        >
+        <code>{ id, name, email }</code>
+      </li>
+      <li>
+        <strong>GET</strong> <code>/users/:id</code> – Get user by
+        <code>id</code>
+      </li>
+    </ul>
+
+    <h3>/scams</h3>
+    <ul>
+      <li><strong>GET</strong> <code>/scams</code> – List all scams</li>
+      <li>
+        <strong>POST</strong> <code>/scams</code> – Report a scam. <br /><em
+          >Body:</em
+        >
+        <code>{ ...scam fields }</code>
+      </li>
+      <li>
+        <strong>GET</strong> <code>/scams/categories</code> – List all scam
+        categories
+      </li>
+      <li>
+        <strong>GET</strong> <code>/scams/category/:category</code> – List scams
+        by category
+      </li>
+      <li>
+        <strong>GET</strong> <code>/scams/recent</code> – List scams reported in
+        the last 7 days
+      </li>
+      <li>
+        <strong>GET</strong> <code>/scams/user/:userId</code> – List scams
+        submitted by a user
+      </li>
+      <li>
+        <strong>GET</strong> <code>/scams/:id</code> – Get scam by
+        <code>id</code>
+      </li>
+    </ul>
+
+    <h3>/lessons</h3>
+    <ul>
+      <li><strong>GET</strong> <code>/lessons</code> – List all lessons</li>
+      <li>
+        <strong>GET</strong> <code>/lessons/:id</code> – Get lesson by
+        <code>id</code>
+      </li>
+      <li>
+        <strong>GET</strong> <code>/lessons/:lessonId/quiz/:quizId</code> – Get
+        quiz by <code>quizId</code> in a lesson
+      </li>
+    </ul>
+
+    <h3>/users (Follow System)</h3>
+    <ul>
+      <li>
+        <strong>POST</strong> <code>/users/follow</code> – Follow a user.
+        <br /><em>Body:</em> <code>{ userId, targetId }</code>
+      </li>
+      <li>
+        <strong>POST</strong> <code>/users/unfollow</code> – Unfollow a user.
+        <br /><em>Body:</em> <code>{ userId, targetId }</code>
+      </li>
+      <li>
+        <strong>GET</strong> <code>/users/followers/:userId</code> – List
+        followers of a user
+      </li>
+      <li>
+        <strong>GET</strong> <code>/users/following/:userId</code> – List users
+        followed by a user
+      </li>
+    </ul>
+
+    <h3>/admin</h3>
+    <ul>
+      <li>
+        <strong>GET</strong> <code>/admin/role/:id</code> – Get role of a user
+      </li>
+      <li>
+        <strong>GET</strong> <code>/admin/users?userId=ADMIN_ID</code> – List
+        all users (admin only)
+      </li>
+      <li>
+        <strong>POST</strong> <code>/admin/promote/:id?userId=ADMIN_ID</code> –
+        Promote user to admin
+      </li>
+      <li>
+        <strong>POST</strong> <code>/admin/demote/:id?userId=ADMIN_ID</code> –
+        Demote admin to user
+      </li>
+      <li>
+        <strong>GET</strong> <code>/admin/stats?userId=ADMIN_ID</code> – Get
+        lesson and quiz stats
+      </li>
+      <li>
+        <strong>GET</strong> <code>/admin/scams?userId=ADMIN_ID</code> – List
+        all scams (admin only)
+      </li>
+      <li>
+        <strong>DELETE</strong> <code>/admin/scams/:id?userId=ADMIN_ID</code> –
+        Delete scam (admin only)
+      </li>
+      <li><strong>POST</strong> <code>/admin/lessons</code> – Create lesson</li>
+      <li>
+        <strong>POST</strong>
+        <code>/admin/lessons/:lessonId/quiz?userId=ADMIN_ID</code> – Add quiz to
+        lesson
+      </li>
+      <li>
+        <strong>PUT</strong>
+        <code>/admin/lessons/:lessonId/quiz/:quizId?userId=ADMIN_ID</code> –
+        Edit quiz in lesson
+      </li>
+    </ul>
+
+    <h2>Notes</h2>
+    <ul>
+      <li>
+        Admin routes require <code>userId</code> of an admin as a query
+        parameter.
+      </li>
+      <li>All endpoints return JSON responses.</li>
+      <li>
+        For more details, see the
+        <a href="https://scamzap.upayan.dev" target="_blank">Scamzap platform</a
+        >.
+      </li>
     </ul>
   </body>
 </html>
