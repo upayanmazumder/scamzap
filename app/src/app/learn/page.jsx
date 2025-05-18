@@ -37,7 +37,9 @@ export default function Learn() {
     <main className="p-6 max-w-4xl mx-auto">
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-2">Learn</h1>
-        <p className="text-gray-600">Select a lesson to start learning.</p>
+        <p className="text-[var(--foreground)]">
+          Select a lesson to start learning.
+        </p>
       </div>
       <ul className="space-y-4">
         <AnimatePresence>

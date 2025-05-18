@@ -7,6 +7,7 @@ import { FaUserCircle, FaSignOutAlt, FaShareAlt } from "react-icons/fa";
 import API from "../../utils/api";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import FollowersFollowingList from "../followersfollowinglist/FollowersFollowingList";
 
 export default function Profile() {
   const { data: session, status } = useSession();
@@ -96,18 +97,18 @@ export default function Profile() {
 
   return (
     <motion.div
-      className="py-8 flex flex-col items-center"
+      className="flex flex-col items-center"
       initial={{ opacity: 0, y: 40 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <motion.div
-        className="bg-orange-400 rounded-[40px] relative overflow-hidden shadow-md w-full max-w-md"
+        className="relative overflow-hidden w-full max-w-md"
         initial={{ scale: 0.9, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <div className="flex justify-center p-6">
+        <div className="flex justify-center">
           {image ? (
             <motion.img
               src={image}
@@ -137,10 +138,7 @@ export default function Profile() {
         transition={{ duration: 0.5, delay: 0.5 }}
       >
         <h2 className="text-3xl font-semibold">{name || "Anonymous"}</h2>
-        <p
-          className="text-lg text-blue-200 cursor-help"
-          title={`Joined at ${joinedTime}`}
-        >
+        <p className="text-lg cursor-help" title={`Joined at ${joinedTime}`}>
           Joined {joinedDateFull}
         </p>
         <motion.div
@@ -149,14 +147,20 @@ export default function Profile() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.4, delay: 0.7 }}
         >
-          <p>
-            <strong className="font-semibold">{followingCount}</strong>{" "}
-            Following
-          </p>
-          <p>
-            <strong className="font-semibold">{followersCount}</strong>{" "}
-            Followers
-          </p>
+          <motion.div className="mt-4">
+            <p className="text-white">
+              <strong>{followersCount}</strong> Followers |{" "}
+              <strong>{followingCount}</strong> Following
+            </p>
+            <FollowersFollowingList
+              userId={session.user.sub}
+              type="followers"
+            />
+            <FollowersFollowingList
+              userId={session.user.sub}
+              type="following"
+            />
+          </motion.div>
         </motion.div>
 
         <motion.div

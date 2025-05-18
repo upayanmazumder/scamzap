@@ -2,40 +2,9 @@
 
 import { useSession, signIn } from "next-auth/react";
 import { FaGoogle } from "react-icons/fa";
-import { useEffect } from "react";
-import API from "../../../utils/api";
 
 export default function Authenticate() {
   const { data: session } = useSession();
-
-  useEffect(() => {
-    const registerUser = async () => {
-      if (!session?.user?.email) return;
-
-      try {
-        const res = await fetch(`${API}/users`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            id: session.user.sub,
-            name: session.user.name,
-            email: session.user.email,
-          }),
-        });
-
-        if (!res.ok) {
-          const errorText = await res.text();
-          throw new Error(`Failed to register user: ${errorText}`);
-        }
-
-        console.log("User sync successful");
-      } catch (err) {
-        console.error("User registration failed:", err);
-      }
-    };
-
-    registerUser();
-  }, [session]);
 
   return (
     <div className="flex flex-col items-center justify-center w-full">
