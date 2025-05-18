@@ -11,7 +11,6 @@ const navItems = [
   { href: "/search", label: "Search", icon: Search },
   { href: "/users", label: "Users", icon: Users },
   { href: "/profile", label: "Profile", icon: User },
-  { href: "/settings", label: "Settings", icon: Settings },
 ];
 
 export const BottomBar = () => {
