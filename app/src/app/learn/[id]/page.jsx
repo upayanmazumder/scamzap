@@ -5,8 +5,10 @@ import { useParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Loader from "../../../components/loader/Loader";
 import API from "../../../utils/api";
+import { useSession } from "next-auth/react";
 
 export default function LessonDetail() {
+  const { data: session, status } = useSession();
   const { id } = useParams();
   const router = useRouter();
   const [lesson, setLesson] = useState(null);
@@ -18,6 +20,12 @@ export default function LessonDetail() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
   const [quizCompleted, setQuizCompleted] = useState(false);
+
+  // Track saving progress
+  const [saving, setSaving] = useState(false);
+
+  // Store and reflect progress for this lesson
+  const [lessonProgress, setLessonProgress] = useState(null);
 
   useEffect(() => {
     const fetchLesson = async () => {
@@ -32,8 +40,89 @@ export default function LessonDetail() {
       }
     };
 
+    // Fetch lesson and progress
+    const fetchProgress = async () => {
+      if (!session?.user?.sub) return;
+      try {
+        const res = await fetch(`${API}/users/${session.user.sub}/progress`);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setLessonProgress(data.find((p) => p.lessonId === id) || null);
+        }
+      } catch (err) {
+        setLessonProgress(null);
+      }
+    };
+
     if (id) fetchLesson();
-  }, [id]);
+    if (id && session?.user?.sub) fetchProgress();
+  }, [id, session?.user?.sub]);
+
+  // Save progress to backend and update local state
+  const saveProgress = async (completed = false, quizIdx = null) => {
+    if (!session?.user?.sub || !lesson?._id) return;
+    setSaving(true);
+
+    // Prepare quizzes progress
+    let quizzesProgress = lessonProgress?.quizzes || [];
+    if (quizIdx !== null && lesson.quiz && lesson.quiz[quizIdx]) {
+      // Mark this quiz as completed if needed
+      const quizId =
+        lesson.quiz[quizIdx]._id || lesson.quiz[quizIdx].id || quizIdx;
+      const existingQuiz = quizzesProgress.find((q) => q.quizId === quizId);
+      if (existingQuiz) {
+        existingQuiz.completed = completed;
+      } else {
+        quizzesProgress.push({
+          quizId,
+          completed,
+          score: null,
+          lastQuestion: null,
+        });
+      }
+    }
+
+    try {
+      const res = await fetch(`${API}/users/${session.user.sub}/progress`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          lessonId: lesson._id,
+          completed,
+          quizzes: quizzesProgress,
+          lastAccessed: new Date(),
+        }),
+      });
+      if (res.ok) {
+        // Update local progress state
+        setLessonProgress((prev) => ({
+          ...(prev || {}),
+          lessonId: lesson._id,
+          completed,
+          quizzes: quizzesProgress,
+          lastAccessed: new Date(),
+        }));
+      }
+    } catch (err) {
+      console.error("Failed to save progress:", err);
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  // Save progress when quiz is completed
+  useEffect(() => {
+    if (
+      quizCompleted &&
+      lesson &&
+      lesson._id &&
+      session?.user?.sub &&
+      selectedQuizIndex !== null
+    ) {
+      saveProgress(true, selectedQuizIndex);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [quizCompleted]);
 
   if (loading)
     return (
@@ -57,30 +146,60 @@ export default function LessonDetail() {
       <main className="p-6 max-w-3xl mx-auto">
         <h2 className="text-2xl font-semibold mb-6">Select a Quiz</h2>
         <ul className="space-y-4">
-          {lesson.quiz.map((quiz, idx) => (
-            <motion.li
-              key={quiz.id || idx}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-            >
-              <button
-                onClick={() => {
-                  setSelectedQuizIndex(idx);
-                  setCurrentIndex(0);
-                  setSelectedOption(null);
-                  setShowAnswer(false);
-                  setQuizCompleted(false);
-                }}
-                className="w-full text-left px-4 py-3 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+          {lesson.quiz.map((quiz, idx) => {
+            // Reflect quiz progress
+            let quizStatus = "";
+            if (
+              lessonProgress &&
+              Array.isArray(lessonProgress.quizzes) &&
+              lessonProgress.quizzes.length > 0
+            ) {
+              const quizId = quiz._id || quiz.id || idx;
+              const quizProg = lessonProgress.quizzes.find(
+                (q) => q.quizId === quizId
+              );
+              if (quizProg?.completed) quizStatus = "✅ Completed";
+              else if (quizProg) quizStatus = "🕒 In Progress";
+            }
+            return (
+              <motion.li
+                key={quiz.id || quiz._id || idx}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
               >
-                {quiz.topic} ({quiz.questions ? quiz.questions.length : 0}{" "}
-                questions)
-              </button>
-            </motion.li>
-          ))}
+                <button
+                  onClick={() => {
+                    setSelectedQuizIndex(idx);
+                    setCurrentIndex(0);
+                    setSelectedOption(null);
+                    setShowAnswer(false);
+                    setQuizCompleted(false);
+                    // Save "in progress" when quiz starts
+                    saveProgress(false, idx);
+                  }}
+                  className="w-full text-left px-4 py-3 rounded-md bg-blue-600 text-white hover:bg-blue-700 flex items-center justify-between"
+                >
+                  <span>
+                    {quiz.topic} ({quiz.questions ? quiz.questions.length : 0}{" "}
+                    questions)
+                  </span>
+                  {quizStatus && (
+                    <span className="ml-4 text-xs text-gray-200">
+                      {quizStatus}
+                    </span>
+                  )}
+                </button>
+              </motion.li>
+            );
+          })}
         </ul>
+        {lessonProgress && lessonProgress.completed && (
+          <div className="mt-6 text-green-700 text-center font-semibold">
+            Lesson Completed!
+          </div>
+        )}
       </main>
     );
   }
@@ -135,7 +254,6 @@ export default function LessonDetail() {
               🎉 You have completed the quiz! Great job!
               <button
                 onClick={() => {
-                  // Reset to quiz selection screen after completing quiz
                   setSelectedQuizIndex(null);
                 }}
                 className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
