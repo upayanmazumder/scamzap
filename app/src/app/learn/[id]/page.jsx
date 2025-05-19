@@ -12,8 +12,8 @@ export default function LessonDetail() {
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  // For quiz navigation
-  const [flatQuestions, setFlatQuestions] = useState([]);
+  // Quiz selection & navigation state
+  const [selectedQuizIndex, setSelectedQuizIndex] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -25,28 +25,8 @@ export default function LessonDetail() {
         const res = await fetch(`${API}/lessons/${id}`);
         const data = await res.json();
         setLesson(data);
-
-        // Flatten all questions from all quizzes into a single array
-        if (data && Array.isArray(data.quiz)) {
-          const allQuestions = [];
-          data.quiz.forEach((quiz, quizIdx) => {
-            if (Array.isArray(quiz.questions)) {
-              quiz.questions.forEach((q) => {
-                allQuestions.push({
-                  ...q,
-                  quizTopic: quiz.topic,
-                  quizIdx,
-                });
-              });
-            }
-          });
-          setFlatQuestions(allQuestions);
-        } else {
-          setFlatQuestions([]);
-        }
       } catch (err) {
         console.error("Failed to fetch lesson:", err);
-        setFlatQuestions([]);
       } finally {
         setLoading(false);
       }
@@ -65,8 +45,53 @@ export default function LessonDetail() {
   if (!lesson || lesson.error)
     return <p className="text-center text-red-600 mt-10">Lesson not found.</p>;
 
-  const quizLength = flatQuestions.length;
-  const currentQuestion = flatQuestions[currentIndex];
+  // If no quizzes available
+  if (!lesson.quiz || lesson.quiz.length === 0)
+    return (
+      <p className="text-center mt-10">No quizzes available for this lesson.</p>
+    );
+
+  // If quiz is not selected, show quiz selection list
+  if (selectedQuizIndex === null) {
+    return (
+      <main className="p-6 max-w-3xl mx-auto">
+        <h2 className="text-2xl font-semibold mb-6">Select a Quiz</h2>
+        <ul className="space-y-4">
+          {lesson.quiz.map((quiz, idx) => (
+            <motion.li
+              key={quiz.id || idx}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.3 }}
+            >
+              <button
+                onClick={() => {
+                  setSelectedQuizIndex(idx);
+                  setCurrentIndex(0);
+                  setSelectedOption(null);
+                  setShowAnswer(false);
+                  setQuizCompleted(false);
+                }}
+                className="w-full text-left px-4 py-3 rounded-md bg-blue-600 text-white hover:bg-blue-700"
+              >
+                {quiz.topic} ({quiz.questions ? quiz.questions.length : 0}{" "}
+                questions)
+              </button>
+            </motion.li>
+          ))}
+        </ul>
+      </main>
+    );
+  }
+
+  // Quiz selected, get questions of that quiz
+  const currentQuiz = lesson.quiz[selectedQuizIndex];
+  const questions = Array.isArray(currentQuiz.questions)
+    ? currentQuiz.questions
+    : [];
+  const quizLength = questions.length;
+  const currentQuestion = questions[currentIndex];
 
   const handleOptionClick = (option) => {
     if (showAnswer) return;
@@ -108,7 +133,21 @@ export default function LessonDetail() {
               className="text-center text-[var(--foreground)] text-xl font-semibold flex flex-col items-center gap-6 mt-10 h-full justify-center"
             >
               🎉 You have completed the quiz! Great job!
-              <button onClick={() => router.push("/learn")}>Complete</button>
+              <button
+                onClick={() => {
+                  // Reset to quiz selection screen after completing quiz
+                  setSelectedQuizIndex(null);
+                }}
+                className="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+              >
+                Back to Quizzes
+              </button>
+              <button
+                onClick={() => router.push("/learn")}
+                className="mt-4 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700"
+              >
+                Back to Lessons
+              </button>
             </motion.div>
           ) : (
             <AnimatePresence mode="wait">
@@ -125,12 +164,6 @@ export default function LessonDetail() {
                     <h3 className="text-xl font-semibold mb-3">
                       Q{currentIndex + 1}: {currentQuestion.question}
                     </h3>
-                    {currentQuestion.quizTopic && (
-                      <div className="text-sm text-gray-500 mb-2">
-                        <span className="font-medium">Quiz:</span>{" "}
-                        {currentQuestion.quizTopic}
-                      </div>
-                    )}
                   </div>
 
                   <ul className="space-y-3 mb-16">
