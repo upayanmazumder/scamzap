@@ -47,13 +47,16 @@ export default function ScamFeed() {
             </p>
             {scam.submittedBy ? (
               <p>
-                Submitted by: <Link href={`/search/${scam.submittedBy}`}>This user</Link>
+                Submitted by:{" "}
+                <Link href={`/search/${scam.submittedBy}`}>This user</Link>
               </p>
             ) : (
               <p>Submitted by: Unknown user</p>
             )}
             <p>
-              <small>Reported on: {new Date(scam.createdAt).toLocaleString()}</small>
+              <small>
+                Reported on: {new Date(scam.createdAt).toLocaleString()}
+              </small>
             </p>
           </li>
         ))}

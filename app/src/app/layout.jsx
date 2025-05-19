@@ -6,12 +6,10 @@ import { BottomBar } from "../components/bottombar/Bottombar";
 import AdminRedirect from "../components/admin/redirect/Redirect";
 import DynamicWrapper from "../components/DynamicWrapper/DynamicWrapper";
 
-
 export const metadata = {
   title: "Scamzap",
   description: "Protect yourself from scams",
 };
-
 
 export default function RootLayout({ children }) {
   return (
@@ -33,9 +31,7 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <BottomBar />
           <AdminRedirect />
-          <DynamicWrapper>
-            {children}
-          </DynamicWrapper>
+          <DynamicWrapper>{children}</DynamicWrapper>
           <ServiceWorkerRegister />
         </AuthProvider>
       </body>

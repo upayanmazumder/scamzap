@@ -7,7 +7,8 @@ export default function ReportPage() {
   const { data: session, status } = useSession();
 
   if (status === "loading") return <p>Loading...</p>;
-  if (status === "unauthenticated") return <p>You must be signed in to report a scam.</p>;
+  if (status === "unauthenticated")
+    return <p>You must be signed in to report a scam.</p>;
 
   const userId = session?.user?.sub;
 

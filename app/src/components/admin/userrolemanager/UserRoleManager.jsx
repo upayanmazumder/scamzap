@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import API from "../../../utils/api";
 import { useSession } from "next-auth/react";
+import Loader from "../../loader/Loader";
 
 export default function UserRoleManager() {
   const { data: session } = useSession();
@@ -57,7 +58,7 @@ export default function UserRoleManager() {
 
       <div className="overflow-y-auto max-h-[calc(100vh-6rem)] space-y-4 pr-2">
         {loading ? (
-          <p>Loading users...</p>
+          <Loader />
         ) : users.length === 0 ? (
           <p>No other users found.</p>
         ) : (

@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
 import API from "../../../utils/api";
+import Loader from "../../loader/Loader";
 
 import {
   AiOutlinePlus,
@@ -695,7 +696,7 @@ const LessonManager = () => {
       {/* Existing Lessons */}
       <div>
         <h3 className="text-3xl font-bold mb-4">Existing Lessons</h3>
-        {loading && <p>Loading lessons...</p>}
+        {loading && <Loader />}
 
         {!loading && lessons.length === 0 && <p>No lessons found.</p>}
 
