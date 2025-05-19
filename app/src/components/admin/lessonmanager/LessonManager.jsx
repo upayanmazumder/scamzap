@@ -34,6 +34,21 @@ const initialLessonState = {
   quiz: [createEmptyQuiz()],
 };
 
+// Helper: Convert flat array of questions to quiz array
+function convertFlatQuestionsToQuiz(flatQuestions, quizTopic = "Passwords") {
+  return [
+    {
+      topic: quizTopic,
+      questions: flatQuestions.map((q) => ({
+        question: q.question,
+        options: q.options,
+        answer: q.answer,
+        explanation: q.explanation,
+      })),
+    },
+  ];
+}
+
 const LessonManager = () => {
   const { data: session } = useSession();
   const [lessons, setLessons] = useState([]);
@@ -41,6 +56,30 @@ const LessonManager = () => {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
+
+  // Per-quiz JSON mode states
+  const [quizInputModes, setQuizInputModes] = useState(["form"]);
+  const [quizJsons, setQuizJsons] = useState([""]);
+  const [quizJsonErrors, setQuizJsonErrors] = useState([""]);
+
+  // Keep per-quiz states in sync with quizzes
+  useEffect(() => {
+    setQuizInputModes((prev) =>
+      Array(newLesson.quiz.length)
+        .fill("form")
+        .map((_, i) => prev[i] || "form")
+    );
+    setQuizJsons((prev) =>
+      Array(newLesson.quiz.length)
+        .fill("")
+        .map((_, i) => prev[i] || "")
+    );
+    setQuizJsonErrors((prev) =>
+      Array(newLesson.quiz.length)
+        .fill("")
+        .map((_, i) => prev[i] || "")
+    );
+  }, [newLesson.quiz.length]);
 
   const adminId = session?.user?.sub;
 
@@ -308,19 +347,19 @@ const LessonManager = () => {
           )}
         </div>
 
+        {/* Quizzes */}
         <div className="space-y-4">
           <h4 className="text-xl font-semibold flex items-center gap-2">
-            Quizzes{" "}
-            <button
-              onClick={addQuiz}
-              className="ml-auto bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 flex items-center gap-1"
-              type="button"
-              aria-label="Add Quiz"
-            >
-              <AiOutlinePlus size={18} /> Add Quiz
-            </button>
+            Quizzes
           </h4>
-
+          <button
+            onClick={addQuiz}
+            className="bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 flex items-center gap-1"
+            type="button"
+            aria-label="Add Quiz"
+          >
+            <AiOutlinePlus size={18} /> Add Quiz
+          </button>
           {newLesson.quiz.map((quiz, quizIdx) => (
             <motion.div
               key={quizIdx}
@@ -349,145 +388,280 @@ const LessonManager = () => {
                   )}
                 </summary>
 
-                <div className="mt-3 space-y-2">
-                  <input
-                    value={quiz.topic}
-                    onChange={(e) =>
-                      handleQuizChange(quizIdx, "topic", e.target.value)
+                {/* Per-quiz Form/JSON toggle */}
+                <div className="flex gap-2 mt-2 mb-2">
+                  <button
+                    type="button"
+                    className={`px-2 py-1 rounded ${
+                      quizInputModes[quizIdx] === "form"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200"
+                    }`}
+                    onClick={() =>
+                      setQuizInputModes((prev) =>
+                        prev.map((mode, i) => (i === quizIdx ? "form" : mode))
+                      )
                     }
-                    placeholder="Quiz Topic"
-                    className="w-full p-2 border rounded"
-                  />
-                  {errors.quiz?.[quizIdx]?.topic && (
-                    <p className="text-red-500 text-sm">
-                      {errors.quiz[quizIdx].topic}
-                    </p>
-                  )}
-
-                  {/* Questions for this quiz */}
-                  <div className="space-y-4 mt-4">
-                    <div className="flex items-center gap-2">
-                      <strong>Questions</strong>
-                      <button
-                        onClick={() => addQuestion(quizIdx)}
-                        className="ml-auto bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 flex items-center gap-1"
-                        type="button"
-                        aria-label="Add Question"
-                      >
-                        <AiOutlinePlus size={16} /> Add Question
-                      </button>
-                    </div>
-                    {quiz.questions.map((q, qIdx) => (
-                      <div
-                        key={q.id}
-                        className="bg-gray-50 dark:bg-gray-700 p-3 rounded space-y-2 relative"
-                      >
-                        {quiz.questions.length > 1 && (
-                          <button
-                            onClick={() => deleteQuestion(quizIdx, qIdx)}
-                            className="absolute top-2 right-2 text-red-500 hover:text-red-700"
-                            type="button"
-                            aria-label="Remove Question"
-                          >
-                            <AiOutlineClose size={14} />
-                          </button>
-                        )}
-                        <input
-                          value={q.question}
-                          onChange={(e) =>
-                            handleQuestionChange(
-                              quizIdx,
-                              qIdx,
-                              "question",
-                              e.target.value
-                            )
-                          }
-                          placeholder="Question"
-                          className="w-full p-2 border rounded"
-                        />
-                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]
-                          ?.question && (
-                          <p className="text-red-500 text-sm">
-                            {errors.quiz[quizIdx].questions[qIdx].question}
-                          </p>
-                        )}
-
-                        <div>
-                          <strong>Options:</strong>
-                          <ul className="space-y-2 mt-2">
-                            {q.options.map((opt, optIndex) => (
-                              <li
-                                key={optIndex}
-                                className="flex items-center gap-2"
-                              >
-                                <input
-                                  type="radio"
-                                  name={`correctOption-${quizIdx}-${q.id}`}
-                                  checked={q.answer === opt}
-                                  onChange={() =>
-                                    handleQuestionChange(
-                                      quizIdx,
-                                      qIdx,
-                                      "answer",
-                                      opt
-                                    )
-                                  }
-                                  className="accent-green-600"
-                                  aria-label={`Mark as correct option ${
-                                    optIndex + 1
-                                  }`}
-                                />
-                                <input
-                                  value={opt}
-                                  onChange={(e) =>
-                                    handleOptionChange(
-                                      quizIdx,
-                                      qIdx,
-                                      optIndex,
-                                      e.target.value
-                                    )
-                                  }
-                                  placeholder={`Option ${optIndex + 1}`}
-                                  className="w-full p-2 border rounded"
-                                />
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]?.options && (
-                          <p className="text-red-500 text-sm">
-                            {errors.quiz[quizIdx].questions[qIdx].options}
-                          </p>
-                        )}
-                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]?.answer && (
-                          <p className="text-red-500 text-sm">
-                            {errors.quiz[quizIdx].questions[qIdx].answer}
-                          </p>
-                        )}
-
-                        <textarea
-                          value={q.explanation}
-                          onChange={(e) =>
-                            handleQuestionChange(
-                              quizIdx,
-                              qIdx,
-                              "explanation",
-                              e.target.value
-                            )
-                          }
-                          placeholder="Explanation"
-                          className="w-full p-2 border rounded"
-                        />
-                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]
-                          ?.explanation && (
-                          <p className="text-red-500 text-sm">
-                            {errors.quiz[quizIdx].questions[qIdx].explanation}
-                          </p>
-                        )}
-                      </div>
-                    ))}
-                  </div>
+                  >
+                    Form
+                  </button>
+                  <button
+                    type="button"
+                    className={`px-2 py-1 rounded ${
+                      quizInputModes[quizIdx] === "json"
+                        ? "bg-blue-600 text-white"
+                        : "bg-gray-200"
+                    }`}
+                    onClick={() => {
+                      setQuizInputModes((prev) =>
+                        prev.map((mode, i) => (i === quizIdx ? "json" : mode))
+                      );
+                      setQuizJsons((prev) =>
+                        prev.map((json, i) =>
+                          i === quizIdx ? JSON.stringify([quiz], null, 2) : json
+                        )
+                      );
+                      setQuizJsonErrors((prev) =>
+                        prev.map((err, i) => (i === quizIdx ? "" : err))
+                      );
+                    }}
+                  >
+                    JSON
+                  </button>
                 </div>
+
+                {quizInputModes[quizIdx] === "json" ? (
+                  <div>
+                    <textarea
+                      value={quizJsons[quizIdx]}
+                      onChange={(e) =>
+                        setQuizJsons((prev) =>
+                          prev.map((json, i) =>
+                            i === quizIdx ? e.target.value : json
+                          )
+                        )
+                      }
+                      rows={10}
+                      className="w-full p-2 border rounded font-mono"
+                      placeholder='Paste quiz JSON here. Example: [{"topic":"...","questions":[...]}]'
+                    />
+                    {quizJsonErrors[quizIdx] && (
+                      <p className="text-red-500 text-sm">
+                        {quizJsonErrors[quizIdx]}
+                      </p>
+                    )}
+                    <button
+                      type="button"
+                      className="mt-2 bg-green-600 text-white px-4 py-1 rounded hover:bg-green-700"
+                      onClick={() => {
+                        try {
+                          const parsed = JSON.parse(quizJsons[quizIdx]);
+                          let quizArray;
+                          if (
+                            Array.isArray(parsed) &&
+                            parsed.length > 0 &&
+                            parsed[0].question &&
+                            parsed[0].options
+                          ) {
+                            quizArray = convertFlatQuestionsToQuiz(
+                              parsed,
+                              quiz.topic
+                            );
+                          } else if (
+                            Array.isArray(parsed) &&
+                            parsed.length > 0 &&
+                            parsed[0].questions
+                          ) {
+                            quizArray = parsed;
+                          } else {
+                            throw new Error(
+                              "JSON must be an array of questions or quizzes."
+                            );
+                          }
+                          quizArray.forEach((quiz, idx) => {
+                            if (typeof quiz.topic !== "string")
+                              throw new Error(`Quiz #${idx + 1} missing topic`);
+                            if (!Array.isArray(quiz.questions))
+                              throw new Error(
+                                `Quiz #${idx + 1} missing questions array`
+                              );
+                          });
+                          setNewLesson((prev) => {
+                            const updatedQuiz = prev.quiz.map((q, i) =>
+                              i === quizIdx ? quizArray[0] : q
+                            );
+                            return { ...prev, quiz: updatedQuiz };
+                          });
+                          setQuizJsonErrors((prev) =>
+                            prev.map((err, i) => (i === quizIdx ? "" : err))
+                          );
+                          setQuizInputModes((prev) =>
+                            prev.map((mode, i) =>
+                              i === quizIdx ? "form" : mode
+                            )
+                          );
+                        } catch (err) {
+                          setQuizJsonErrors((prev) =>
+                            prev.map((error, i) =>
+                              i === quizIdx
+                                ? "Invalid JSON: " + err.message
+                                : error
+                            )
+                          );
+                        }
+                      }}
+                    >
+                      Apply JSON
+                    </button>
+                  </div>
+                ) : (
+                  <div className="mt-3 space-y-2">
+                    <input
+                      value={quiz.topic}
+                      onChange={(e) =>
+                        handleQuizChange(quizIdx, "topic", e.target.value)
+                      }
+                      placeholder="Quiz Topic"
+                      className="w-full p-2 border rounded mb-2"
+                    />
+                    {errors.quiz?.[quizIdx]?.topic && (
+                      <p className="text-red-500 text-sm">
+                        {errors.quiz[quizIdx].topic}
+                      </p>
+                    )}
+                    {errors.quiz?.[quizIdx]?.topic && (
+                      <p className="text-red-500 text-sm">
+                        {errors.quiz[quizIdx].topic}
+                      </p>
+                    )}
+
+                    {/* Questions for this quiz */}
+                    <div className="space-y-4 mt-4">
+                      <div className="flex items-center gap-2">
+                        <strong>Questions</strong>
+                        <button
+                          onClick={() => addQuestion(quizIdx)}
+                          className="ml-auto bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 flex items-center gap-1"
+                          type="button"
+                          aria-label="Add Question"
+                        >
+                          <AiOutlinePlus size={16} /> Add Question
+                        </button>
+                      </div>
+                      {quiz.questions.map((q, qIdx) => (
+                        <div
+                          key={q.id}
+                          className="bg-gray-50 dark:bg-gray-700 p-3 rounded space-y-2 relative"
+                        >
+                          {quiz.questions.length > 1 && (
+                            <button
+                              onClick={() => deleteQuestion(quizIdx, qIdx)}
+                              className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                              type="button"
+                              aria-label="Remove Question"
+                            >
+                              <AiOutlineClose size={14} />
+                            </button>
+                          )}
+                          <input
+                            value={q.question}
+                            onChange={(e) =>
+                              handleQuestionChange(
+                                quizIdx,
+                                qIdx,
+                                "question",
+                                e.target.value
+                              )
+                            }
+                            placeholder="Question"
+                            className="w-full p-2 border rounded"
+                          />
+                          {errors.quiz?.[quizIdx]?.questions?.[qIdx]
+                            ?.question && (
+                            <p className="text-red-500 text-sm">
+                              {errors.quiz[quizIdx].questions[qIdx].question}
+                            </p>
+                          )}
+
+                          <div>
+                            <strong>Options:</strong>
+                            <ul className="space-y-2 mt-2">
+                              {q.options.map((opt, optIndex) => (
+                                <li
+                                  key={optIndex}
+                                  className="flex items-center gap-2"
+                                >
+                                  <input
+                                    type="radio"
+                                    name={`correctOption-${quizIdx}-${q.id}`}
+                                    checked={q.answer === opt}
+                                    onChange={() =>
+                                      handleQuestionChange(
+                                        quizIdx,
+                                        qIdx,
+                                        "answer",
+                                        opt
+                                      )
+                                    }
+                                    className="accent-green-600"
+                                    aria-label={`Mark as correct option ${
+                                      optIndex + 1
+                                    }`}
+                                  />
+                                  <input
+                                    value={opt}
+                                    onChange={(e) =>
+                                      handleOptionChange(
+                                        quizIdx,
+                                        qIdx,
+                                        optIndex,
+                                        e.target.value
+                                      )
+                                    }
+                                    placeholder={`Option ${optIndex + 1}`}
+                                    className="w-full p-2 border rounded"
+                                  />
+                                </li>
+                              ))}
+                            </ul>
+                          </div>
+                          {errors.quiz?.[quizIdx]?.questions?.[qIdx]
+                            ?.options && (
+                            <p className="text-red-500 text-sm">
+                              {errors.quiz[quizIdx].questions[qIdx].options}
+                            </p>
+                          )}
+                          {errors.quiz?.[quizIdx]?.questions?.[qIdx]
+                            ?.answer && (
+                            <p className="text-red-500 text-sm">
+                              {errors.quiz[quizIdx].questions[qIdx].answer}
+                            </p>
+                          )}
+
+                          <textarea
+                            value={q.explanation}
+                            onChange={(e) =>
+                              handleQuestionChange(
+                                quizIdx,
+                                qIdx,
+                                "explanation",
+                                e.target.value
+                              )
+                            }
+                            placeholder="Explanation"
+                            className="w-full p-2 border rounded"
+                          />
+                          {errors.quiz?.[quizIdx]?.questions?.[qIdx]
+                            ?.explanation && (
+                            <p className="text-red-500 text-sm">
+                              {errors.quiz[quizIdx].questions[qIdx].explanation}
+                            </p>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </details>
             </motion.div>
           ))}
