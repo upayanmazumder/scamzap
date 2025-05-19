@@ -5,6 +5,7 @@ import Link from "next/link";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
+import { FaBookOpen } from "react-icons/fa";
 
 export default function Learn() {
   const [lessons, setLessons] = useState([]);
@@ -15,7 +16,6 @@ export default function Learn() {
       try {
         const res = await fetch(`${API}/lessons`);
         const data = await res.json();
-        // Ensure each lesson has quizzes and questions arrays
         const normalized = Array.isArray(data)
           ? data.map((lesson) => ({
               ...lesson,
@@ -33,22 +33,24 @@ export default function Learn() {
     fetchLessons();
   }, []);
 
-  if (loading)
+  if (loading) {
     return (
-      <main>
+      <main className="flex items-center justify-center h-screen">
         <Loader />
       </main>
     );
+  }
 
   return (
-    <main className="p-6 max-w-4xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold mb-2">Learn</h1>
-        <p className="text-[var(--foreground)]">
-          Select a lesson to start learning.
+    <main className="p-6 max-w-5xl mx-auto">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-bold mb-2">📘 Learn</h1>
+        <p className="text-lg text-gray-600">
+          Select a lesson to begin your journey.
         </p>
       </div>
-      <ul className="space-y-4">
+
+      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence>
           {lessons.map((lesson) => (
             <motion.li
@@ -57,20 +59,20 @@ export default function Learn() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all p-5"
             >
-              <Link
-                href={`/learn/${lesson._id}`}
-                className="text-blue-600 hover:text-blue-800 font-medium underline"
-              >
-                {lesson.topic}
+              <Link href={`/learn/${lesson._id}`} className="block space-y-2">
+                <h2 className="text-xl font-semibold text-blue-600 hover:underline">
+                  <FaBookOpen className="inline-block mr-2" />
+                  {lesson.topic}
+                </h2>
+                {lesson.quiz.length > 0 && (
+                  <p className="text-sm text-gray-500">
+                    {lesson.quiz.length} quiz
+                    {lesson.quiz.length > 1 ? "zes" : ""}
+                  </p>
+                )}
               </Link>
-              {/* Show quiz count if available */}
-              {lesson.quiz && lesson.quiz.length > 0 && (
-                <span className="ml-2 text-sm text-gray-500">
-                  ({lesson.quiz.length} quiz
-                  {lesson.quiz.length > 1 ? "zes" : ""})
-                </span>
-              )}
             </motion.li>
           ))}
         </AnimatePresence>
