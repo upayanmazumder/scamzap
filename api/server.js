@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const corsOptions =
   process.env.NEXT_PUBLIC_ENV === "production"
-    ? { origin: "https://scamzap.upayan.dev" }
+    ? { origin: process.env.NEXTAUTH_URL }
     : {};
 
 app.use(cors(corsOptions));
