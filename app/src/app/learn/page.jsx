@@ -1,18 +1,22 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBookOpen } from "react-icons/fa";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
-export default function Learn() {
+export default function LearnJourney() {
   const { data: session, status } = useSession();
   const [lessons, setLessons] = useState([]);
   const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // For quiz modal/section
+  const [selectedLessonId, setSelectedLessonId] = useState(null);
+  const [selectedQuizIdx, setSelectedQuizIdx] = useState(null);
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -47,8 +51,65 @@ export default function Learn() {
     fetchLessonsAndProgress();
   }, [session, status]);
 
+  // Helpers
   const getLessonProgress = (lessonId) =>
     progress.find((p) => p.lessonId === lessonId);
+
+  const getQuizProgress = (lessonId, quizId) => {
+    const lessonProg = getLessonProgress(lessonId);
+    if (!lessonProg || !lessonProg.quizzes) return null;
+    return lessonProg.quizzes.find((q) => q.quizId === quizId);
+  };
+
+  // Quiz modal open/close
+  const openQuiz = (lessonId, quizIdx) => {
+    setSelectedLessonId(lessonId);
+    setSelectedQuizIdx(quizIdx);
+  };
+  const closeQuiz = () => {
+    setSelectedLessonId(null);
+    setSelectedQuizIdx(null);
+  };
+
+  // Dummy quiz section (replace with your real quiz logic)
+  function QuizSection({ lesson, quizIdx, onClose }) {
+    const quiz = lesson.quiz[quizIdx];
+    return (
+      <motion.div
+        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
+        <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-lg w-full shadow-2xl relative">
+          <button
+            className="absolute top-3 right-4 text-gray-400 hover:text-gray-700"
+            onClick={onClose}
+          >
+            ✖
+          </button>
+          <h3 className="text-2xl font-bold mb-2 text-blue-600 flex items-center gap-2">
+            <FaBookOpen /> {lesson.topic}
+          </h3>
+          <div className="mb-4">
+            <span className="font-semibold text-gray-700">
+              Quiz: {quiz.topic}
+            </span>
+          </div>
+          <div className="text-gray-600 mb-4">
+            {/* Replace with real quiz content */}
+            <p>This is a placeholder for the quiz content.</p>
+          </div>
+          <button
+            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+            onClick={onClose}
+          >
+            Finish Quiz
+          </button>
+        </div>
+      </motion.div>
+    );
+  }
 
   if (loading) {
     return (
@@ -71,93 +132,126 @@ export default function Learn() {
   return (
     <main className="p-6 max-w-5xl mx-auto">
       <div className="mb-10 text-center">
-        <h1 className="text-4xl font-bold mb-2">📘 Learn</h1>
+        <h1 className="text-4xl font-bold mb-2">📘 Learn Journey</h1>
         <p className="text-lg text-gray-600">
-          Select a lesson to begin your journey.
+          Embark on your learning journey! Click on a quiz to begin.
         </p>
       </div>
-
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        <AnimatePresence>
-          {lessons.map((lesson) => {
-            const lessonProgress = getLessonProgress(lesson._id);
-            // Calculate progress percentage if quizzes exist
-            let progressPercent = 0;
-            if (
-              lesson.quiz.length > 0 &&
-              lessonProgress &&
-              lessonProgress.quizzes &&
-              lessonProgress.quizzes.length > 0
-            ) {
-              const completedQuizzes = lessonProgress.quizzes.filter(
-                (q) => q.completed
-              ).length;
-              progressPercent = Math.round(
-                (completedQuizzes / lesson.quiz.length) * 100
-              );
-            }
-
-            return (
-              <motion.li
-                key={lesson._id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-all p-5"
-              >
-                <Link href={`/learn/${lesson._id}`} className="block space-y-2">
-                  <h2 className="text-xl font-semibold text-blue-600 hover:underline">
-                    <FaBookOpen className="inline-block mr-2" />
-                    {lesson.topic}
-                  </h2>
-                  {lesson.quiz.length > 0 && (
-                    <p className="text-sm text-gray-500">
-                      {lesson.quiz.length} quiz
-                      {lesson.quiz.length > 1 ? "zes" : ""}
-                    </p>
-                  )}
-                  {lessonProgress && (
-                    <div className="mt-2 flex items-center gap-2">
-                      <span
-                        className={`inline-block px-2 py-1 rounded text-xs ${
-                          lessonProgress.completed === true
-                            ? "bg-green-200 text-green-800"
-                            : "bg-yellow-100 text-yellow-800"
-                        }`}
-                      >
-                        {/* Only show "Completed" if all quizzes are completed or completed flag is true */}
-                        {lesson.quiz.length > 0 &&
-                        lessonProgress.quizzes &&
-                        lessonProgress.quizzes.length > 0
-                          ? lessonProgress.quizzes.filter((q) => q.completed)
-                              .length === lesson.quiz.length
-                            ? "Completed"
-                            : "In Progress"
-                          : lessonProgress.completed
-                          ? "Completed"
-                          : "In Progress"}
-                      </span>
-                      {lesson.quiz.length > 0 && (
-                        <span className="text-xs text-gray-500">
-                          {progressPercent}% done
-                        </span>
-                      )}
-                    </div>
-                  )}
-                  {!lessonProgress && lesson.quiz.length > 0 && (
-                    <div className="mt-2">
-                      <span className="inline-block px-2 py-1 rounded text-xs bg-gray-100 text-gray-600">
-                        Not started
-                      </span>
-                    </div>
-                  )}
-                </Link>
-              </motion.li>
+      <div>
+        {lessons.map((lesson, lessonIdx) => {
+          const lessonProgress = getLessonProgress(lesson._id);
+          // Calculate progress percentage if quizzes exist
+          let progressPercent = 0;
+          if (
+            lesson.quiz.length > 0 &&
+            lessonProgress &&
+            lessonProgress.quizzes &&
+            lessonProgress.quizzes.length > 0
+          ) {
+            const completedQuizzes = lessonProgress.quizzes.filter(
+              (q) => q.completed
+            ).length;
+            progressPercent = Math.round(
+              (completedQuizzes / lesson.quiz.length) * 100
             );
-          })}
-        </AnimatePresence>
-      </ul>
+          }
+          return (
+            <section
+              key={lesson._id}
+              className="mb-20 flex flex-col items-center"
+            >
+              <h2 className="text-2xl font-bold mb-2 text-center flex items-center gap-2">
+                <FaBookOpen className="text-blue-500" /> {lesson.topic}
+              </h2>
+              <div className="flex items-center justify-center mb-4">
+                <span className="text-sm text-gray-500">
+                  {lesson.quiz.length} quiz
+                  {lesson.quiz.length > 1 ? "zes" : ""}
+                </span>
+                {lessonProgress && (
+                  <span
+                    className={`ml-4 px-2 py-1 rounded text-xs ${
+                      lessonProgress.completed === true
+                        ? "bg-green-200 text-green-800"
+                        : "bg-yellow-100 text-yellow-800"
+                    }`}
+                  >
+                    {lesson.quiz.length > 0 &&
+                    lessonProgress.quizzes &&
+                    lessonProgress.quizzes.length > 0
+                      ? lessonProgress.quizzes.filter((q) => q.completed)
+                          .length === lesson.quiz.length
+                        ? "Completed"
+                        : "In Progress"
+                      : lessonProgress.completed
+                      ? "Completed"
+                      : "In Progress"}
+                  </span>
+                )}
+                {!lessonProgress && lesson.quiz.length > 0 && (
+                  <span className="ml-4 px-2 py-1 rounded text-xs bg-gray-100 text-gray-600">
+                    Not started
+                  </span>
+                )}
+                {lesson.quiz.length > 0 && (
+                  <span className="ml-4 text-xs text-gray-500">
+                    {progressPercent}% done
+                  </span>
+                )}
+              </div>
+              {/* Journey Path */}
+<div className="relative">
+  <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-blue-200" />
+  <div className="flex flex-col gap-20">
+  {lesson.quiz.map((quiz, quizIdx) => {
+  const quizProgress = getQuizProgress(lesson._id, quiz._id);
+  const isLeft = quizIdx % 2 === 0;
+
+  return (
+    <div
+      key={quiz._id}
+      className={`w-full flex ${isLeft ? "justify-start" : "justify-end"}`}
+    >
+      <motion.button
+        whileHover={{ scale: 1.08 }}
+        whileTap={{ scale: 0.97 }}
+        className={`
+          w-20 h-20 rounded-full flex items-center justify-center
+          text-2xl font-bold shadow-lg border-2 transition-all
+          relative z-10
+          ${
+            quizProgress?.completed
+              ? "bg-green-200 border-green-400 text-green-900"
+              : quizProgress
+              ? "bg-yellow-100 border-yellow-400 text-yellow-900"
+              : "bg-gray-100 border-gray-400 text-gray-700"
+          }
+        `}
+        onClick={() => openQuiz(lesson._id, quizIdx)}
+      >
+        {quizProgress?.completed ? "✅" : quizProgress ? "🕒" : "❓"}
+      </motion.button>
+    </div>
+  );
+})}
+  </div>
+  </div>
+
+              {/* Quiz Modal */}
+              <AnimatePresence>
+                {selectedLessonId === lesson._id &&
+                  selectedQuizIdx !== null && (
+                    <QuizSection
+                      lesson={lesson}
+                      quizIdx={selectedQuizIdx}
+                      onClose={closeQuiz}
+                    />
+                  )}
+              </AnimatePresence>
+            </section>
+          );
+        })}
+      </div>
     </main>
   );
 }
