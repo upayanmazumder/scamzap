@@ -31,6 +31,9 @@ export default function LearnJourney() {
         const lessonsData = await lessonsRes.json();
         const progressData = await progressRes.json();
 
+        console.log("Lessons data:", lessonsData);
+        console.log("Progress data:", progressData);
+
         const normalized = Array.isArray(lessonsData)
           ? lessonsData.map((lesson) => ({
               ...lesson,
