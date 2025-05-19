@@ -56,9 +56,9 @@ export default function LearnJourney() {
     progress.find((p) => p.lessonId === lessonId);
 
   const getQuizProgress = (lessonId, quizId) => {
-    const lessonProg = getLessonProgress(lessonId);
-    if (!lessonProg || !lessonProg.quizzes) return null;
-    return lessonProg.quizzes.find((q) => q.quizId === quizId);
+    const lessonProgress = getLessonProgress(lessonId);
+    if (!lessonProgress) return null;
+    return lessonProgress.quizzes.find((q) => q.quizId === quizId);
   };
 
   if (loading) {
@@ -136,6 +136,7 @@ export default function LearnJourney() {
                 <div className="flex flex-col gap-20">
                   {lesson.quiz.map((quiz, quizIdx) => {
                     const quizProgress = getQuizProgress(lesson._id, quiz._id);
+                    console.log("Quiz progress:", quizProgress);
                     const isLeft = quizIdx % 2 === 0;
                     return (
                       <div
@@ -157,14 +158,13 @@ export default function LearnJourney() {
                                   w-20 h-20 rounded-full flex items-center justify-center
                                   shadow-lg border-2 transition-all
                                   relative z-10
-                                  ${
-                                    quizProgress?.completed
-                                      ? "bg-green-200 border-green-400"
-                                      : quizProgress
-                                      ? "bg-yellow-100 border-yellow-400"
-                                      : "bg-gray-100 border-gray-400"
-                                  }
+                                  
                                 `}
+                                style={{
+                                  backgroundColor: quizProgress?.completed
+                                    ? "#2ECC71"
+                                    : "#F89C3B",
+                                }}
                                 onClick={() =>
                                   router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
                                 }
@@ -196,14 +196,13 @@ export default function LearnJourney() {
                                   w-20 h-20 rounded-full flex items-center justify-center
                                   shadow-lg border-2 transition-all
                                   relative z-10
-                                  ${
-                                    quizProgress?.completed
-                                      ? "bg-green-200 border-green-400"
-                                      : quizProgress
-                                      ? "bg-yellow-100 border-yellow-400"
-                                      : "bg-gray-100 border-gray-400"
-                                  }
+                                  
                                 `}
+                                style={{
+                                  backgroundColor: quizProgress?.completed
+                                    ? "#2ECC71"
+                                    : "#F89C3B",
+                                }}
                                 onClick={() =>
                                   router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
                                 }
