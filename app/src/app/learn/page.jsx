@@ -4,11 +4,9 @@ import { useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
 import { motion } from "framer-motion";
-import { FaBookOpen } from "react-icons/fa";
+import { FaBookOpen, FaStar } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { FaStar } from "react-icons/fa";
-
 
 export default function LearnJourney() {
   const { data: session, status } = useSession();
@@ -18,30 +16,11 @@ export default function LearnJourney() {
   const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  const StarIcon = () => (
-  <svg
-    className="w-24 h-24 text-[#164A78]"
-    fill="currentColor"
-    viewBox="0 0 20 20"
-  >
-    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.179c.969 0 1.371 1.24.588 1.81l-3.384 2.46a1 1 0 00-.364 1.118l1.286 3.966c.3.922-.755 1.688-1.538 1.118l-3.384-2.46a1 1 0 00-1.176 0l-3.384 2.46c-.783.57-1.838-.196-1.538-1.118l1.286-3.966a1 1 0 00-.364-1.118L2.046 9.394c-.783-.57-.38-1.81.588-1.81h4.18a1 1 0 00.95-.69l1.285-3.967z" />
-  </svg>
-);
-
-
   useEffect(() => {
     if (status !== "authenticated") {
       setLoading(false);
       return;
     }
-
-    // Choose background color based on progress
-const getCircleColor = () => {
-  if (quizProgress?.completed) return "bg-green-500";
-  if (quizProgress) return "bg-yellow-400";
-  return "bg-gray-300";
-};
-
 
     const fetchLessonsAndProgress = async () => {
       try {
@@ -102,7 +81,6 @@ const getCircleColor = () => {
       <div>
         {lessons.map((lesson) => {
           const lessonProgress = getLessonProgress(lesson._id);
-          // Calculate progress percentage if quizzes exist
           let progressPercent = 0;
           if (
             lesson.quiz.length > 0 &&
@@ -164,7 +142,7 @@ const getCircleColor = () => {
               {/* Timeline */}
               <div className="relative w-full max-w-3xl mx-auto py-12">
                 {/* Vertical line - stretches full height */}
-<div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
+                <div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
                 <div className="flex flex-col gap-20">
                   {lesson.quiz.map((quiz, quizIdx) => {
                     const quizProgress = getQuizProgress(lesson._id, quiz._id);
@@ -180,73 +158,74 @@ const getCircleColor = () => {
                         )}
                         {/* Left side */}
                         <div className={`w-1/2 flex ${isLeft ? "justify-end mr-24" : "justify-end"}`}>
-  {isLeft && (
-    <>
-      <motion.button
-  whileHover={{ scale: 1.08 }}
-  whileTap={{ scale: 0.97 }}
-  className={`
-    w-20 h-20 rounded-full flex items-center justify-center
-    shadow-lg border-2 transition-all
-    relative z-10
-    ${
-      quizProgress?.completed
-        ? "bg-green-200 border-green-400"
-        : quizProgress
-        ? "bg-yellow-100 border-yellow-400"
-        : "bg-gray-100 border-gray-400"
-    }
-  `}
-  onClick={() => router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)}
->
-  <FaStar className="text-[#164A78]" 
-    style={{ width: "120px", height: "120px" }}
-  />
-</motion.button>
-
-      {/* horizontal line connecting to center */}
-      <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
-    </>
-  )}
-</div>
-
+                          {isLeft && (
+                            <>
+                              <motion.button
+                                whileHover={{ scale: 1.08 }}
+                                whileTap={{ scale: 0.97 }}
+                                className={`
+                                  w-20 h-20 rounded-full flex items-center justify-center
+                                  shadow-lg border-2 transition-all
+                                  relative z-10
+                                  ${
+                                    quizProgress?.completed
+                                      ? "bg-green-200 border-green-400"
+                                      : quizProgress
+                                      ? "bg-yellow-100 border-yellow-400"
+                                      : "bg-gray-100 border-gray-400"
+                                  }
+                                `}
+                                onClick={() =>
+                                  router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
+                                }
+                              >
+                                <FaStar
+                                  className="text-[#164A78]"
+                                  style={{ width: "120px", height: "120px" }}
+                                />
+                              </motion.button>
+                              {/* horizontal line connecting to center */}
+                              <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
+                            </>
+                          )}
+                        </div>
                         {/* Timeline dot */}
                         <div className="absolute left-1/2 -translate-x-1/2 z-10">
                           <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
                         </div>
                         {/* Right side */}
                         <div className={`w-1/2 flex ${!isLeft ? "justify-start ml-24" : "justify-start"}`}>
-  {!isLeft && (
-    <>
-      {/* horizontal line connecting to center */}
-      <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
-      <motion.button
-  whileHover={{ scale: 1.08 }}
-  whileTap={{ scale: 0.97 }}
-  className={`
-    w-20 h-20 rounded-full flex items-center justify-center
-    shadow-lg border-2 transition-all
-    relative z-10
-    ${
-      quizProgress?.completed
-        ? "bg-green-200 border-green-400"
-        : quizProgress
-        ? "bg-yellow-100 border-yellow-400"
-        : "bg-gray-100 border-gray-400"
-    }
-  `}
-  onClick={() => router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)}
->
-  <FaStar className="text-[#164A78]" 
-    style={{ width: "120px", height: "120px" }}
-  />
-
-</motion.button>
-
-    </>
-  )}
-</div>
-
+                          {!isLeft && (
+                            <>
+                              {/* horizontal line connecting to center */}
+                              <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
+                              <motion.button
+                                whileHover={{ scale: 1.08 }}
+                                whileTap={{ scale: 0.97 }}
+                                className={`
+                                  w-20 h-20 rounded-full flex items-center justify-center
+                                  shadow-lg border-2 transition-all
+                                  relative z-10
+                                  ${
+                                    quizProgress?.completed
+                                      ? "bg-green-200 border-green-400"
+                                      : quizProgress
+                                      ? "bg-yellow-100 border-yellow-400"
+                                      : "bg-gray-100 border-gray-400"
+                                  }
+                                `}
+                                onClick={() =>
+                                  router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
+                                }
+                              >
+                                <FaStar
+                                  className="text-[#164A78]"
+                                  style={{ width: "120px", height: "120px" }}
+                                />
+                              </motion.button>
+                            </>
+                          )}
+                        </div>
                       </div>
                     );
                   })}
