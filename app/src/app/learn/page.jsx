@@ -3,19 +3,18 @@
 import { useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { FaBookOpen } from "react-icons/fa";
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 export default function LearnJourney() {
   const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [lessons, setLessons] = useState([]);
   const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
-
-  // For quiz modal/section
-  const [selectedLessonId, setSelectedLessonId] = useState(null);
-  const [selectedQuizIdx, setSelectedQuizIdx] = useState(null);
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -50,7 +49,6 @@ export default function LearnJourney() {
     fetchLessonsAndProgress();
   }, [session, status]);
 
-  // Helpers
   const getLessonProgress = (lessonId) =>
     progress.find((p) => p.lessonId === lessonId);
 
@@ -59,56 +57,6 @@ export default function LearnJourney() {
     if (!lessonProg || !lessonProg.quizzes) return null;
     return lessonProg.quizzes.find((q) => q.quizId === quizId);
   };
-
-  // Quiz modal open/close
-  const openQuiz = (lessonId, quizIdx) => {
-    setSelectedLessonId(lessonId);
-    setSelectedQuizIdx(quizIdx);
-  };
-  const closeQuiz = () => {
-    setSelectedLessonId(null);
-    setSelectedQuizIdx(null);
-  };
-
-  // Dummy quiz section (replace with your real quiz logic)
-  function QuizSection({ lesson, quizIdx, onClose }) {
-    const quiz = lesson.quiz[quizIdx];
-    return (
-      <motion.div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-40"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-      >
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-8 max-w-lg w-full shadow-2xl relative">
-          <button
-            className="absolute top-3 right-4 text-gray-400 hover:text-gray-700"
-            onClick={onClose}
-          >
-            ✖
-          </button>
-          <h3 className="text-2xl font-bold mb-2 text-blue-600 flex items-center gap-2">
-            <FaBookOpen /> {lesson.topic}
-          </h3>
-          <div className="mb-4">
-            <span className="font-semibold text-gray-700">
-              Quiz: {quiz.topic}
-            </span>
-          </div>
-          <div className="text-gray-600 mb-4">
-            {/* Replace with real quiz content */}
-            <p>This is a placeholder for the quiz content.</p>
-          </div>
-          <button
-            className="mt-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-            onClick={onClose}
-          >
-            Finish Quiz
-          </button>
-        </div>
-      </motion.div>
-    );
-  }
 
   if (loading) {
     return (
@@ -130,8 +78,14 @@ export default function LearnJourney() {
 
   return (
     <main className="p-6 max-w-5xl mx-auto">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-bold mb-2">📘 Learn Journey</h1>
+        <p className="text-lg text-gray-600">
+          Embark on your learning journey! Click on a quiz to begin.
+        </p>
+      </div>
       <div>
-        {lessons.map((lesson, lessonIdx) => {
+        {lessons.map((lesson) => {
           const lessonProgress = getLessonProgress(lesson._id);
           // Calculate progress percentage if quizzes exist
           let progressPercent = 0;
@@ -194,8 +148,8 @@ export default function LearnJourney() {
               </div>
               {/* Timeline */}
               <div className="relative w-full max-w-3xl mx-auto py-12">
-                {/* Vertical line - stretches full height */}
-<div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
+                {/* Vertical line */}
+                <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
                 <div className="flex flex-col gap-20">
                   {lesson.quiz.map((quiz, quizIdx) => {
                     const quizProgress = getQuizProgress(lesson._id, quiz._id);
@@ -203,69 +157,65 @@ export default function LearnJourney() {
                     return (
                       <div
                         key={quiz._id}
-                        className="relative flex items-center min-h-[140px]"
+                        className="relative flex items-center min-h-[120px]"
                       >
-                        {/* Connector line above circle (except first) */}
-                        {quizIdx !== 0 && (
-                          <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
-                        )}
+                        {/* Horizontal connector */}
+                        <div
+                          className={`absolute top-1/2 h-1 bg-blue-200 z-5 ${
+                            isLeft
+                              ? "left-[calc(50%-4px)] right-[calc(50%+88px)]"
+                              : "right-[calc(50%-4px)] left-[calc(50%+88px)]"
+                          }`}
+                        />
                         {/* Left side */}
-                        <div className={`w-1/2 flex ${isLeft ? "justify-end pr-8" : ""}`}>
+                        <div className={`w-1/2 flex ${isLeft ? "justify-end" : ""}`}>
                           {isLeft && (
                             <motion.button
                               whileHover={{ scale: 1.08 }}
                               whileTap={{ scale: 0.97 }}
                               className={`
                                 w-20 h-20 rounded-full flex items-center justify-center
-                                text-2xl font-bold shadow-lg border-2 transition-all
+                                text-2xl font-bold shadow-lg border-4 transition-all
                                 relative z-10
                                 ${
                                   quizProgress?.completed
-                                    ? "bg-green-200 border-green-400 text-green-900"
-                                    : quizProgress
-                                    ? "bg-yellow-100 border-yellow-400 text-yellow-900"
-                                    : "bg-gray-100 border-gray-400 text-gray-700"
+                                    ? "bg-green-200 border-green-400"
+                                    : "bg-orange-400 border-yellow-100"
                                 }
                               `}
-                              onClick={() => openQuiz(lesson._id, quizIdx)}
+                              onClick={() =>
+                                router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
+                              }
                             >
-                              {quizProgress?.completed
-                                ? "✅"
-                                : quizProgress
-                                ? "🕒"
-                                : "❓"}
+                              {quizProgress?.completed ? "✅" : "?"}
                             </motion.button>
                           )}
                         </div>
-                        {/* Timeline dot */}
-                        <div className="absolute left-1/2 -translate-x-1/2 z-10">
-                          <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
+                        {/* Center dot */}
+                        <div className="absolute left-1/2 -translate-x-1/2 z-30">
+                          <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white"></div>
                         </div>
                         {/* Right side */}
-                        <div className={`w-1/2 flex ${!isLeft ? "justify-start pl-8" : ""}`}>
+                        <div className={`w-1/2 flex ${!isLeft ? "justify-start" : ""}`}>
                           {!isLeft && (
                             <motion.button
                               whileHover={{ scale: 1.08 }}
                               whileTap={{ scale: 0.97 }}
                               className={`
                                 w-20 h-20 rounded-full flex items-center justify-center
-                                text-2xl font-bold shadow-lg border-2 transition-all
+                                text-2xl font-bold shadow-lg border-4 transition-all
                                 relative z-10
                                 ${
                                   quizProgress?.completed
-                                    ? "bg-green-200 border-green-400 text-green-900"
-                                    : quizProgress
-                                    ? "bg-yellow-100 border-yellow-400 text-yellow-900"
-                                    : "bg-gray-100 border-gray-400 text-gray-700"
+                                    ? "bg-green-200 border-green-400"
+                                    : "bg-orange-400 border-yellow-100"
                                 }
                               `}
-                              onClick={() => openQuiz(lesson._id, quizIdx)}
+                              onClick={() =>
+                                router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
+                              }
                             >
-                              {quizProgress?.completed
-                                ? "✅"
-                                : quizProgress
-                                ? "🕒"
-                                : "❓"}
+                              {quizProgress?.completed ? "✅" : "?"}
                             </motion.button>
                           )}
                         </div>
@@ -274,17 +224,6 @@ export default function LearnJourney() {
                   })}
                 </div>
               </div>
-              {/* Quiz Modal */}
-              <AnimatePresence>
-                {selectedLessonId === lesson._id &&
-                  selectedQuizIdx !== null && (
-                    <QuizSection
-                      lesson={lesson}
-                      quizIdx={selectedQuizIdx}
-                      onClose={closeQuiz}
-                    />
-                  )}
-              </AnimatePresence>
             </section>
           );
         })}
