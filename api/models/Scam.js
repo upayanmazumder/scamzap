@@ -5,7 +5,7 @@ const ScamSchema = new mongoose.Schema({
   title: String,
   description: String,
   category: String,
-  submittedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  submittedBy: { type: String, ref: "User" },
   createdAt: { type: Date, default: Date.now },
 });
 
