@@ -2,7 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import API from "../../utils/api"; // Your base API URL
+import API from "../../utils/api";
+import Loader from "../../components/loader/Loader";
 
 export default function ScamFeed() {
   const [scams, setScams] = useState([]);
@@ -27,7 +28,7 @@ export default function ScamFeed() {
       });
   }, []);
 
-  if (loading) return <p>Loading scams...</p>;
+  if (loading) return <Loader />;
   if (error) return <p>Error: {error}</p>;
 
   return (

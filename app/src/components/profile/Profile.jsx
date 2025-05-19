@@ -74,6 +74,7 @@ export default function Profile() {
       <div className="flex flex-col items-center justify-center text-white">
         <p className="text-lg mb-4">You are not signed in.</p>
         <p className="text-sm text-gray-300">Redirecting to home...</p>
+        <Loader />
       </div>
     );
   }

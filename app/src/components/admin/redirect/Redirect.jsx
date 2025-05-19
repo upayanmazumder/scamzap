@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import API from "../../../utils/api";
+import Loader from "../../loader/Loader";
 
 export default function Redirect() {
   const { data: session, status } = useSession();
@@ -33,7 +34,7 @@ export default function Redirect() {
     }
   }, [session, status]);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <Loader />;
 
   if (!session) {
     return null;

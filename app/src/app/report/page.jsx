@@ -2,11 +2,12 @@
 
 import { useSession } from "next-auth/react";
 import ScamUploadForm from "../../components/ScamUploadForm/ScamUploadForm";
+import Loader from "../../components/loader/Loader";
 
 export default function ReportPage() {
   const { data: session, status } = useSession();
 
-  if (status === "loading") return <p>Loading...</p>;
+  if (status === "loading") return <Loader />;
   if (status === "unauthenticated")
     return <p>You must be signed in to report a scam.</p>;
 
