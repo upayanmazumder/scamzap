@@ -15,7 +15,14 @@ export default function Learn() {
       try {
         const res = await fetch(`${API}/lessons`);
         const data = await res.json();
-        setLessons(data);
+        // Ensure each lesson has quizzes and questions arrays
+        const normalized = Array.isArray(data)
+          ? data.map((lesson) => ({
+              ...lesson,
+              quiz: Array.isArray(lesson.quiz) ? lesson.quiz : [],
+            }))
+          : [];
+        setLessons(normalized);
       } catch (err) {
         console.error("Failed to fetch lessons:", err);
       } finally {
@@ -57,6 +64,13 @@ export default function Learn() {
               >
                 {lesson.topic}
               </Link>
+              {/* Show quiz count if available */}
+              {lesson.quiz && lesson.quiz.length > 0 && (
+                <span className="ml-2 text-sm text-gray-500">
+                  ({lesson.quiz.length} quiz
+                  {lesson.quiz.length > 1 ? "zes" : ""})
+                </span>
+              )}
             </motion.li>
           ))}
         </AnimatePresence>

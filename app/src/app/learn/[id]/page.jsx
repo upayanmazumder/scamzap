@@ -12,6 +12,8 @@ export default function LessonDetail() {
   const [lesson, setLesson] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // For quiz navigation
+  const [flatQuestions, setFlatQuestions] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -23,8 +25,28 @@ export default function LessonDetail() {
         const res = await fetch(`${API}/lessons/${id}`);
         const data = await res.json();
         setLesson(data);
+
+        // Flatten all questions from all quizzes into a single array
+        if (data && Array.isArray(data.quiz)) {
+          const allQuestions = [];
+          data.quiz.forEach((quiz, quizIdx) => {
+            if (Array.isArray(quiz.questions)) {
+              quiz.questions.forEach((q) => {
+                allQuestions.push({
+                  ...q,
+                  quizTopic: quiz.topic,
+                  quizIdx,
+                });
+              });
+            }
+          });
+          setFlatQuestions(allQuestions);
+        } else {
+          setFlatQuestions([]);
+        }
       } catch (err) {
         console.error("Failed to fetch lesson:", err);
+        setFlatQuestions([]);
       } finally {
         setLoading(false);
       }
@@ -43,8 +65,8 @@ export default function LessonDetail() {
   if (!lesson || lesson.error)
     return <p className="text-center text-red-600 mt-10">Lesson not found.</p>;
 
-  const quiz = lesson.quiz || [];
-  const currentQuiz = quiz[currentIndex];
+  const quizLength = flatQuestions.length;
+  const currentQuestion = flatQuestions[currentIndex];
 
   const handleOptionClick = (option) => {
     if (showAnswer) return;
@@ -55,7 +77,7 @@ export default function LessonDetail() {
   const handleNextQuestion = () => {
     setSelectedOption(null);
     setShowAnswer(false);
-    if (currentIndex + 1 < quiz.length) {
+    if (currentIndex + 1 < quizLength) {
       setCurrentIndex(currentIndex + 1);
     } else {
       setQuizCompleted(true);
@@ -70,7 +92,7 @@ export default function LessonDetail() {
             className="h-full bg-[var(--theme-green)] transition-all duration-300 rounded"
             style={{
               width: `${
-                ((currentIndex + (showAnswer ? 1 : 0)) / quiz.length) * 100
+                ((currentIndex + (showAnswer ? 1 : 0)) / quizLength) * 100
               }%`,
             }}
           ></div>
@@ -90,9 +112,9 @@ export default function LessonDetail() {
             </motion.div>
           ) : (
             <AnimatePresence mode="wait">
-              {currentQuiz && (
+              {currentQuestion && (
                 <motion.div
-                  key={currentQuiz._id}
+                  key={currentQuestion.id || currentIndex}
                   initial={{ opacity: 0, x: 20 }}
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
@@ -101,30 +123,36 @@ export default function LessonDetail() {
                 >
                   <div className="mb-6">
                     <h3 className="text-xl font-semibold mb-3">
-                      Q{currentIndex + 1}: {currentQuiz.question}
+                      Q{currentIndex + 1}: {currentQuestion.question}
                     </h3>
+                    {currentQuestion.quizTopic && (
+                      <div className="text-sm text-gray-500 mb-2">
+                        <span className="font-medium">Quiz:</span>{" "}
+                        {currentQuestion.quizTopic}
+                      </div>
+                    )}
                   </div>
 
                   <ul className="space-y-3 mb-16">
-                    {currentQuiz.options.map((option, idx) => {
+                    {currentQuestion.options.map((option, idx) => {
                       const isSelected = selectedOption === option;
-                      const isCorrect = option === currentQuiz.answer;
+                      const isCorrect = option === currentQuestion.answer;
 
                       let optionClass =
                         "cursor-pointer rounded-md border px-4 py-2 select-none";
                       if (showAnswer) {
                         if (isCorrect) {
                           optionClass +=
-                            "bg-green-200 border-green-500 text-green-900 font-semibold";
+                            " bg-green-200 border-green-500 text-green-900 font-semibold";
                         } else if (isSelected && !isCorrect) {
                           optionClass +=
-                            "bg-red-200 border-red-500 text-red-900 font-semibold line-through";
+                            " bg-red-200 border-red-500 text-red-900 font-semibold line-through";
                         } else {
-                          optionClass += "opacity-70 cursor-default";
+                          optionClass += " opacity-70 cursor-default";
                         }
                       } else {
                         optionClass +=
-                          "hover:bg-blue-100 text-[var(--foreground)]";
+                          " hover:bg-blue-100 text-[var(--foreground)]";
                       }
 
                       return (
@@ -155,10 +183,10 @@ export default function LessonDetail() {
                       className="fixed bottom-4 left-1/2 -translate-x-1/2 w-[90%] sm:w-[30rem] bg-gray-700 shadow-lg border border-gray-300 rounded-2xl px-6 py-4 z-50"
                     >
                       <p className="text-[var(--theme-black)] mb-4">
-                        {currentQuiz.explanation}
+                        {currentQuestion.explanation}
                       </p>
                       <button onClick={handleNextQuestion} className="w-full">
-                        {currentIndex + 1 < quiz.length
+                        {currentIndex + 1 < quizLength
                           ? "Next Question"
                           : "Finish Quiz"}
                       </button>

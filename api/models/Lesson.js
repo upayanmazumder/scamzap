@@ -1,12 +1,16 @@
 import mongoose from "mongoose";
 
-const quizSchema = new mongoose.Schema({
+const questionSchema = new mongoose.Schema({
   id: String,
-  topic: String,
   question: String,
   options: [String],
   answer: String,
   explanation: String,
+});
+
+const quizSchema = new mongoose.Schema({
+  topic: String,
+  questions: [questionSchema],
 });
 
 const lessonSchema = new mongoose.Schema({

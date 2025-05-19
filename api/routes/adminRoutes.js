@@ -69,11 +69,18 @@ router.post("/lessons", isAdmin, async (req, res) => {
 });
 
 router.post("/lessons/:lessonId/quiz", isAdmin, async (req, res) => {
-  const { question, options, answer, explanation } = req.body;
-  const lesson = await Lesson.findById(req.params.lessonId);
-  lesson.quiz.push({ question, options, answer, explanation });
-  await lesson.save();
-  res.json(lesson);
+  const { topic, questions } = req.body;
+  try {
+    const lesson = await Lesson.findById(req.params.lessonId);
+    if (!lesson) return res.status(404).json({ error: "Lesson not found" });
+
+    lesson.quiz.push({ topic, questions });
+    await lesson.save();
+
+    res.status(201).json(lesson);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
 });
 
 router.put("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
@@ -83,6 +90,29 @@ router.put("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
   await lesson.save();
   res.json(quiz);
 });
+
+router.post(
+  "/lessons/:lessonId/quiz/:quizId/question",
+  isAdmin,
+  async (req, res) => {
+    const { question, options, answer, explanation } = req.body;
+
+    try {
+      const lesson = await Lesson.findById(req.params.lessonId);
+      if (!lesson) return res.status(404).json({ error: "Lesson not found" });
+
+      const quiz = lesson.quiz.id(req.params.quizId);
+      if (!quiz) return res.status(404).json({ error: "Quiz not found" });
+
+      quiz.questions.push({ question, options, answer, explanation });
+      await lesson.save();
+
+      res.status(201).json(quiz);
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
 
 router.delete("/lessons/:lessonId", isAdmin, async (req, res) => {
   try {
@@ -109,6 +139,31 @@ router.delete("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
+
+router.delete(
+  "/lessons/:lessonId/quiz/:quizId/question/:questionId",
+  isAdmin,
+  async (req, res) => {
+    try {
+      const lesson = await Lesson.findById(req.params.lessonId);
+      if (!lesson) return res.status(404).json({ error: "Lesson not found" });
+
+      const quiz = lesson.quiz.id(req.params.quizId);
+      if (!quiz) return res.status(404).json({ error: "Quiz not found" });
+
+      const question = quiz.questions.id(req.params.questionId);
+      if (!question)
+        return res.status(404).json({ error: "Question not found" });
+
+      question.remove();
+      await lesson.save();
+
+      res.json({ message: "Question deleted" });
+    } catch (err) {
+      res.status(500).json({ error: err.message });
+    }
+  }
+);
 
 router.get("/scams", isAdmin, async (req, res) => {
   const scams = await Scam.find().populate("submittedBy");

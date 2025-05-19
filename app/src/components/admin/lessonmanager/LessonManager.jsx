@@ -13,13 +13,19 @@ import {
   AiOutlineCloseCircle,
 } from "react-icons/ai";
 
-const createEmptyQuiz = () => ({
+// Create an empty question
+const createEmptyQuestion = () => ({
   id: `${Date.now()}-${Math.random()}`,
-  topic: "",
   question: "",
   options: ["", "", "", ""],
   answer: "",
   explanation: "",
+});
+
+// Create an empty quiz (with one empty question)
+const createEmptyQuiz = () => ({
+  topic: "",
+  questions: [createEmptyQuestion()],
 });
 
 const initialLessonState = {
@@ -60,33 +66,58 @@ const LessonManager = () => {
     setNewLesson((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleQuizChange = (quizId, field, value) => {
+  // Quiz-level changes
+  const handleQuizChange = (quizIdx, field, value) => {
     setNewLesson((prev) => {
-      const updatedQuiz = prev.quiz.map((q) =>
-        q.id === quizId ? { ...q, [field]: value } : q
+      const updatedQuiz = prev.quiz.map((quiz, idx) =>
+        idx === quizIdx ? { ...quiz, [field]: value } : quiz
       );
       return { ...prev, quiz: updatedQuiz };
     });
   };
 
-  const handleOptionChange = (quizId, optionIndex, value) => {
+  // Question-level changes
+  const handleQuestionChange = (quizIdx, questionIdx, field, value) => {
     setNewLesson((prev) => {
-      const updatedQuiz = prev.quiz.map((q) => {
-        if (q.id === quizId) {
-          const newOptions = [...q.options];
-          newOptions[optionIndex] = value;
-          let newAnswer = q.answer;
-          if (q.answer === q.options[optionIndex]) {
-            newAnswer = value;
-          }
-          return { ...q, options: newOptions, answer: newAnswer };
+      const updatedQuiz = prev.quiz.map((quiz, idx) => {
+        if (idx === quizIdx) {
+          const updatedQuestions = quiz.questions.map((q, qIdx) =>
+            qIdx === questionIdx ? { ...q, [field]: value } : q
+          );
+          return { ...quiz, questions: updatedQuestions };
         }
-        return q;
+        return quiz;
       });
       return { ...prev, quiz: updatedQuiz };
     });
   };
 
+  // Option-level changes
+  const handleOptionChange = (quizIdx, questionIdx, optionIdx, value) => {
+    setNewLesson((prev) => {
+      const updatedQuiz = prev.quiz.map((quiz, idx) => {
+        if (idx === quizIdx) {
+          const updatedQuestions = quiz.questions.map((q, qIdx) => {
+            if (qIdx === questionIdx) {
+              const newOptions = [...q.options];
+              newOptions[optionIdx] = value;
+              let newAnswer = q.answer;
+              if (q.answer === q.options[optionIdx]) {
+                newAnswer = value;
+              }
+              return { ...q, options: newOptions, answer: newAnswer };
+            }
+            return q;
+          });
+          return { ...quiz, questions: updatedQuestions };
+        }
+        return quiz;
+      });
+      return { ...prev, quiz: updatedQuiz };
+    });
+  };
+
+  // Add a new quiz
   const addQuiz = () => {
     setNewLesson((prev) => ({
       ...prev,
@@ -94,9 +125,10 @@ const LessonManager = () => {
     }));
   };
 
-  const deleteQuiz = (quizId) => {
+  // Delete a quiz
+  const deleteQuiz = (quizIdx) => {
     setNewLesson((prev) => {
-      const filteredQuiz = prev.quiz.filter((q) => q.id !== quizId);
+      const filteredQuiz = prev.quiz.filter((_, idx) => idx !== quizIdx);
       return {
         ...prev,
         quiz: filteredQuiz.length > 0 ? filteredQuiz : [createEmptyQuiz()],
@@ -104,20 +136,61 @@ const LessonManager = () => {
     });
   };
 
+  // Add a question to a quiz
+  const addQuestion = (quizIdx) => {
+    setNewLesson((prev) => {
+      const updatedQuiz = prev.quiz.map((quiz, idx) =>
+        idx === quizIdx
+          ? { ...quiz, questions: [...quiz.questions, createEmptyQuestion()] }
+          : quiz
+      );
+      return { ...prev, quiz: updatedQuiz };
+    });
+  };
+
+  // Delete a question from a quiz
+  const deleteQuestion = (quizIdx, questionIdx) => {
+    setNewLesson((prev) => {
+      const updatedQuiz = prev.quiz.map((quiz, idx) => {
+        if (idx === quizIdx) {
+          const filteredQuestions = quiz.questions.filter(
+            (_, qIdx) => qIdx !== questionIdx
+          );
+          return {
+            ...quiz,
+            questions:
+              filteredQuestions.length > 0
+                ? filteredQuestions
+                : [createEmptyQuestion()],
+          };
+        }
+        return quiz;
+      });
+      return { ...prev, quiz: updatedQuiz };
+    });
+  };
+
+  // Validation
   const validateLesson = () => {
     const errs = {};
     if (!newLesson.topic.trim()) errs.topic = "Topic is required.";
     if (!newLesson.content.trim()) errs.content = "Content is required.";
 
-    const quizErrors = newLesson.quiz.map((q) => {
-      const qErr = {};
-      if (!q.topic.trim()) qErr.topic = "Topic required";
-      if (!q.question.trim()) qErr.question = "Question required";
-      if (q.options.some((opt) => !opt.trim()))
-        qErr.options = "All 4 options are required";
-      if (!q.answer.trim()) qErr.answer = "Answer required";
-      if (!q.explanation.trim()) qErr.explanation = "Explanation required";
-      return Object.keys(qErr).length > 0 ? qErr : null;
+    const quizErrors = newLesson.quiz.map((quiz) => {
+      const quizErr = {};
+      if (!quiz.topic.trim()) quizErr.topic = "Quiz topic required";
+      const questionErrors = quiz.questions.map((q) => {
+        const qErr = {};
+        if (!q.question.trim()) qErr.question = "Question required";
+        if (q.options.some((opt) => !opt.trim()))
+          qErr.options = "All 4 options are required";
+        if (!q.answer.trim()) qErr.answer = "Answer required";
+        if (!q.explanation.trim()) qErr.explanation = "Explanation required";
+        return Object.keys(qErr).length > 0 ? qErr : null;
+      });
+      if (questionErrors.some((q) => q !== null))
+        quizErr.questions = questionErrors;
+      return Object.keys(quizErr).length > 0 ? quizErr : null;
     });
 
     if (quizErrors.some((q) => q !== null)) errs.quiz = quizErrors;
@@ -126,6 +199,7 @@ const LessonManager = () => {
     return Object.keys(errs).length === 0;
   };
 
+  // Submit
   const submitLesson = async () => {
     if (!adminId) {
       setMessage("❌ You must be logged in as admin.");
@@ -138,7 +212,13 @@ const LessonManager = () => {
 
     const lessonToSend = {
       ...newLesson,
-      quiz: newLesson.quiz.map((q, i) => ({ ...q, id: i + 1 })),
+      quiz: newLesson.quiz.map((quiz) => ({
+        topic: quiz.topic,
+        questions: quiz.questions.map((q, i) => ({
+          ...q,
+          id: i + 1,
+        })),
+      })),
     };
 
     setMessage("Submitting...");
@@ -160,6 +240,7 @@ const LessonManager = () => {
     }
   };
 
+  // Delete lesson
   const deleteLesson = async (lessonId) => {
     if (!adminId) return;
     if (!confirm("Are you sure you want to delete this lesson?")) return;
@@ -229,7 +310,7 @@ const LessonManager = () => {
 
         <div className="space-y-4">
           <h4 className="text-xl font-semibold flex items-center gap-2">
-            Quiz Questions{" "}
+            Quizzes{" "}
             <button
               onClick={addQuiz}
               className="ml-auto bg-blue-600 text-white px-3 py-1 rounded hover:bg-blue-700 flex items-center gap-1"
@@ -240,9 +321,9 @@ const LessonManager = () => {
             </button>
           </h4>
 
-          {newLesson.quiz.map((q, index) => (
+          {newLesson.quiz.map((quiz, quizIdx) => (
             <motion.div
-              key={q.id}
+              key={quizIdx}
               className="relative bg-gray-100 dark:bg-gray-800 p-4 rounded-lg space-y-3"
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
@@ -250,18 +331,18 @@ const LessonManager = () => {
               <details open>
                 <summary className="flex justify-between items-center cursor-pointer">
                   <span className="font-medium text-gray-700 dark:text-gray-300">
-                    Quiz #{index + 1}: {q.topic || "(No topic)"}
+                    Quiz #{quizIdx + 1}: {quiz.topic || "(No topic)"}
                   </span>
                   {newLesson.quiz.length > 1 && (
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        deleteQuiz(q.id);
+                        deleteQuiz(quizIdx);
                       }}
                       className="text-red-600 hover:text-red-800 text-sm ml-4 flex items-center gap-1"
                       title="Remove this quiz"
                       type="button"
-                      aria-label={`Remove Quiz #${index + 1}`}
+                      aria-label={`Remove Quiz #${quizIdx + 1}`}
                     >
                       <AiOutlineClose size={16} /> Remove
                     </button>
@@ -270,86 +351,142 @@ const LessonManager = () => {
 
                 <div className="mt-3 space-y-2">
                   <input
-                    value={q.topic}
+                    value={quiz.topic}
                     onChange={(e) =>
-                      handleQuizChange(q.id, "topic", e.target.value)
+                      handleQuizChange(quizIdx, "topic", e.target.value)
                     }
                     placeholder="Quiz Topic"
                     className="w-full p-2 border rounded"
                   />
-                  {errors.quiz?.[index]?.topic && (
+                  {errors.quiz?.[quizIdx]?.topic && (
                     <p className="text-red-500 text-sm">
-                      {errors.quiz[index].topic}
+                      {errors.quiz[quizIdx].topic}
                     </p>
                   )}
 
-                  <input
-                    value={q.question}
-                    onChange={(e) =>
-                      handleQuizChange(q.id, "question", e.target.value)
-                    }
-                    placeholder="Question"
-                    className="w-full p-2 border rounded"
-                  />
-                  {errors.quiz?.[index]?.question && (
-                    <p className="text-red-500 text-sm">
-                      {errors.quiz[index].question}
-                    </p>
-                  )}
+                  {/* Questions for this quiz */}
+                  <div className="space-y-4 mt-4">
+                    <div className="flex items-center gap-2">
+                      <strong>Questions</strong>
+                      <button
+                        onClick={() => addQuestion(quizIdx)}
+                        className="ml-auto bg-blue-500 text-white px-2 py-1 rounded hover:bg-blue-600 flex items-center gap-1"
+                        type="button"
+                        aria-label="Add Question"
+                      >
+                        <AiOutlinePlus size={16} /> Add Question
+                      </button>
+                    </div>
+                    {quiz.questions.map((q, qIdx) => (
+                      <div
+                        key={q.id}
+                        className="bg-gray-50 dark:bg-gray-700 p-3 rounded space-y-2 relative"
+                      >
+                        {quiz.questions.length > 1 && (
+                          <button
+                            onClick={() => deleteQuestion(quizIdx, qIdx)}
+                            className="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                            type="button"
+                            aria-label="Remove Question"
+                          >
+                            <AiOutlineClose size={14} />
+                          </button>
+                        )}
+                        <input
+                          value={q.question}
+                          onChange={(e) =>
+                            handleQuestionChange(
+                              quizIdx,
+                              qIdx,
+                              "question",
+                              e.target.value
+                            )
+                          }
+                          placeholder="Question"
+                          className="w-full p-2 border rounded"
+                        />
+                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]
+                          ?.question && (
+                          <p className="text-red-500 text-sm">
+                            {errors.quiz[quizIdx].questions[qIdx].question}
+                          </p>
+                        )}
 
-                  <div>
-                    <strong>Options:</strong>
-                    <ul className="space-y-2 mt-2">
-                      {q.options.map((opt, optIndex) => (
-                        <li key={optIndex} className="flex items-center gap-2">
-                          <input
-                            type="radio"
-                            name={`correctOption-${q.id}`}
-                            checked={q.answer === opt}
-                            onChange={() =>
-                              handleQuizChange(q.id, "answer", opt)
-                            }
-                            className="accent-green-600"
-                            aria-label={`Mark as correct option ${
-                              optIndex + 1
-                            }`}
-                          />
-                          <input
-                            value={opt}
-                            onChange={(e) =>
-                              handleOptionChange(q.id, optIndex, e.target.value)
-                            }
-                            placeholder={`Option ${optIndex + 1}`}
-                            className="w-full p-2 border rounded"
-                          />
-                        </li>
-                      ))}
-                    </ul>
+                        <div>
+                          <strong>Options:</strong>
+                          <ul className="space-y-2 mt-2">
+                            {q.options.map((opt, optIndex) => (
+                              <li
+                                key={optIndex}
+                                className="flex items-center gap-2"
+                              >
+                                <input
+                                  type="radio"
+                                  name={`correctOption-${quizIdx}-${q.id}`}
+                                  checked={q.answer === opt}
+                                  onChange={() =>
+                                    handleQuestionChange(
+                                      quizIdx,
+                                      qIdx,
+                                      "answer",
+                                      opt
+                                    )
+                                  }
+                                  className="accent-green-600"
+                                  aria-label={`Mark as correct option ${
+                                    optIndex + 1
+                                  }`}
+                                />
+                                <input
+                                  value={opt}
+                                  onChange={(e) =>
+                                    handleOptionChange(
+                                      quizIdx,
+                                      qIdx,
+                                      optIndex,
+                                      e.target.value
+                                    )
+                                  }
+                                  placeholder={`Option ${optIndex + 1}`}
+                                  className="w-full p-2 border rounded"
+                                />
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]?.options && (
+                          <p className="text-red-500 text-sm">
+                            {errors.quiz[quizIdx].questions[qIdx].options}
+                          </p>
+                        )}
+                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]?.answer && (
+                          <p className="text-red-500 text-sm">
+                            {errors.quiz[quizIdx].questions[qIdx].answer}
+                          </p>
+                        )}
+
+                        <textarea
+                          value={q.explanation}
+                          onChange={(e) =>
+                            handleQuestionChange(
+                              quizIdx,
+                              qIdx,
+                              "explanation",
+                              e.target.value
+                            )
+                          }
+                          placeholder="Explanation"
+                          className="w-full p-2 border rounded"
+                        />
+                        {errors.quiz?.[quizIdx]?.questions?.[qIdx]
+                          ?.explanation && (
+                          <p className="text-red-500 text-sm">
+                            {errors.quiz[quizIdx].questions[qIdx].explanation}
+                          </p>
+                        )}
+                      </div>
+                    ))}
                   </div>
-                  {errors.quiz?.[index]?.options && (
-                    <p className="text-red-500 text-sm">
-                      {errors.quiz[index].options}
-                    </p>
-                  )}
-                  {errors.quiz?.[index]?.answer && (
-                    <p className="text-red-500 text-sm">
-                      {errors.quiz[index].answer}
-                    </p>
-                  )}
-
-                  <textarea
-                    value={q.explanation}
-                    onChange={(e) =>
-                      handleQuizChange(q.id, "explanation", e.target.value)
-                    }
-                    placeholder="Explanation"
-                    className="w-full p-2 border rounded"
-                  />
-                  {errors.quiz?.[index]?.explanation && (
-                    <p className="text-red-500 text-sm">
-                      {errors.quiz[index].explanation}
-                    </p>
-                  )}
                 </div>
               </details>
             </motion.div>
@@ -421,43 +558,52 @@ const LessonManager = () => {
                   <div className="mt-4 space-y-3">
                     <h5 className="font-semibold text-lg">Quizzes:</h5>
 
-                    {lesson.quiz.map((q, idx) => (
+                    {lesson.quiz.map((quiz, quizIdx) => (
                       <details
-                        key={q.id || idx}
+                        key={quizIdx}
                         className="border p-3 rounded bg-gray-50 dark:bg-gray-800"
                       >
                         <summary className="cursor-pointer font-medium">
-                          Quiz #{idx + 1}: {q.topic || "(No topic)"}
+                          Quiz #{quizIdx + 1}: {quiz.topic || "(No topic)"}
                         </summary>
                         <div className="mt-2 space-y-2">
-                          <p>
-                            <strong>Question:</strong> {q.question}
-                          </p>
-                          <div>
-                            <strong>Options:</strong>
-                            <ul className="list-disc list-inside ml-4">
-                              {q.options.map((opt, i) => (
-                                <li
-                                  key={i}
-                                  className={
-                                    opt === q.answer
-                                      ? "text-green-700 font-semibold"
-                                      : ""
-                                  }
-                                >
-                                  {opt}
-                                  {opt === q.answer && (
-                                    <span className="ml-2 text-green-600 font-bold">
-                                      (Correct)
-                                    </span>
-                                  )}
-                                </li>
-                              ))}
-                            </ul>
-                          </div>
-                          <p>
-                            <strong>Explanation:</strong> {q.explanation}
-                          </p>
+                          {quiz.questions && quiz.questions.length > 0 ? (
+                            quiz.questions.map((q, qIdx) => (
+                              <div key={q.id || qIdx} className="mb-4">
+                                <p>
+                                  <strong>Question {qIdx + 1}:</strong>{" "}
+                                  {q.question}
+                                </p>
+                                <div>
+                                  <strong>Options:</strong>
+                                  <ul className="list-disc list-inside ml-4">
+                                    {q.options.map((opt, i) => (
+                                      <li
+                                        key={i}
+                                        className={
+                                          opt === q.answer
+                                            ? "text-green-700 font-semibold"
+                                            : ""
+                                        }
+                                      >
+                                        {opt}
+                                        {opt === q.answer && (
+                                          <span className="ml-2 text-green-600 font-bold">
+                                            (Correct)
+                                          </span>
+                                        )}
+                                      </li>
+                                    ))}
+                                  </ul>
+                                </div>
+                                <p>
+                                  <strong>Explanation:</strong> {q.explanation}
+                                </p>
+                              </div>
+                            ))
+                          ) : (
+                            <p>No questions in this quiz.</p>
+                          )}
                         </div>
                       </details>
                     ))}
