@@ -148,8 +148,8 @@ export default function LearnJourney() {
               </div>
               {/* Timeline */}
               <div className="relative w-full max-w-3xl mx-auto py-12">
-                {/* Vertical line */}
-                <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
+                {/* Vertical line - stretches full height */}
+<div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
                 <div className="flex flex-col gap-20">
                   {lesson.quiz.map((quiz, quizIdx) => {
                     const quizProgress = getQuizProgress(lesson._id, quiz._id);
@@ -157,65 +157,69 @@ export default function LearnJourney() {
                     return (
                       <div
                         key={quiz._id}
-                        className="relative flex items-center min-h-[120px]"
+                        className="relative flex items-center min-h-[140px]"
                       >
-                        {/* Horizontal connector */}
-                        <div
-                          className={`absolute top-1/2 h-1 bg-blue-200 z-5 ${
-                            isLeft
-                              ? "left-[calc(50%-4px)] right-[calc(50%+88px)]"
-                              : "right-[calc(50%-4px)] left-[calc(50%+88px)]"
-                          }`}
-                        />
+                        {/* Connector line above circle (except first) */}
+                        {quizIdx !== 0 && (
+                          <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
+                        )}
                         {/* Left side */}
-                        <div className={`w-1/2 flex ${isLeft ? "justify-end" : ""}`}>
+                        <div className={`w-1/2 flex ${isLeft ? "justify-end pr-8" : ""}`}>
                           {isLeft && (
                             <motion.button
                               whileHover={{ scale: 1.08 }}
                               whileTap={{ scale: 0.97 }}
                               className={`
                                 w-20 h-20 rounded-full flex items-center justify-center
-                                text-2xl font-bold shadow-lg border-4 transition-all
+                                text-2xl font-bold shadow-lg border-2 transition-all
                                 relative z-10
                                 ${
                                   quizProgress?.completed
-                                    ? "bg-green-200 border-green-400"
-                                    : "bg-orange-400 border-yellow-100"
+                                    ? "bg-green-200 border-green-400 text-green-900"
+                                    : quizProgress
+                                    ? "bg-yellow-100 border-yellow-400 text-yellow-900"
+                                    : "bg-gray-100 border-gray-400 text-gray-700"
                                 }
                               `}
-                              onClick={() =>
-                                router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
-                              }
+                              onClick={() => router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)}
                             >
-                              {quizProgress?.completed ? "✅" : "?"}
+                              {quizProgress?.completed
+                                ? "✅"
+                                : quizProgress
+                                ? "🕒"
+                                : "❓"}
                             </motion.button>
                           )}
                         </div>
-                        {/* Center dot */}
-                        <div className="absolute left-1/2 -translate-x-1/2 z-30">
-                          <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white"></div>
+                        {/* Timeline dot */}
+                        <div className="absolute left-1/2 -translate-x-1/2 z-10">
+                          <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
                         </div>
                         {/* Right side */}
-                        <div className={`w-1/2 flex ${!isLeft ? "justify-start" : ""}`}>
+                        <div className={`w-1/2 flex ${!isLeft ? "justify-start pl-8" : ""}`}>
                           {!isLeft && (
                             <motion.button
                               whileHover={{ scale: 1.08 }}
                               whileTap={{ scale: 0.97 }}
                               className={`
                                 w-20 h-20 rounded-full flex items-center justify-center
-                                text-2xl font-bold shadow-lg border-4 transition-all
+                                text-2xl font-bold shadow-lg border-2 transition-all
                                 relative z-10
                                 ${
                                   quizProgress?.completed
-                                    ? "bg-green-200 border-green-400"
-                                    : "bg-orange-400 border-yellow-100"
+                                    ? "bg-green-200 border-green-400 text-green-900"
+                                    : quizProgress
+                                    ? "bg-yellow-100 border-yellow-400 text-yellow-900"
+                                    : "bg-gray-100 border-gray-400 text-gray-700"
                                 }
                               `}
-                              onClick={() =>
-                                router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
-                              }
+                              onClick={() => router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)}
                             >
-                              {quizProgress?.completed ? "✅" : "?"}
+                              {quizProgress?.completed
+                                ? "✅"
+                                : quizProgress
+                                ? "🕒"
+                                : "❓"}
                             </motion.button>
                           )}
                         </div>
