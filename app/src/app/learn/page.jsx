@@ -121,12 +121,22 @@ export default function Learn() {
                     <div className="mt-2 flex items-center gap-2">
                       <span
                         className={`inline-block px-2 py-1 rounded text-xs ${
-                          lessonProgress.completed
+                          lessonProgress.completed === true
                             ? "bg-green-200 text-green-800"
                             : "bg-yellow-100 text-yellow-800"
                         }`}
                       >
-                        {lessonProgress.completed ? "Completed" : "In Progress"}
+                        {/* Only show "Completed" if all quizzes are completed or completed flag is true */}
+                        {lesson.quiz.length > 0 &&
+                        lessonProgress.quizzes &&
+                        lessonProgress.quizzes.length > 0
+                          ? lessonProgress.quizzes.filter((q) => q.completed)
+                              .length === lesson.quiz.length
+                            ? "Completed"
+                            : "In Progress"
+                          : lessonProgress.completed
+                          ? "Completed"
+                          : "In Progress"}
                       </span>
                       {lesson.quiz.length > 0 && (
                         <span className="text-xs text-gray-500">
