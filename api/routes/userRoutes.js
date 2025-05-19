@@ -14,8 +14,15 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    const user = await User.create(req.body);
-    res.status(201).json(user);
+    const { id, name, email } = req.body;
+
+    const user = await User.findOneAndUpdate(
+      { email },
+      { id, name, email },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
+    res.status(200).json(user);
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
