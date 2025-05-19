@@ -103,45 +103,32 @@ export default function LearnJourney() {
               key={lesson._id}
               className="mb-20 flex flex-col items-center w-full"
             >
-              <h2 className="text-2xl font-bold mb-2 text-center flex items-center gap-2">
-                <FaBookOpen className="text-blue-500" /> {lesson.topic}
-              </h2>
-              <div className="flex items-center justify-center mb-4">
-                <span className="text-sm text-gray-500">
-                  {lesson.quiz.length} quiz
-                  {lesson.quiz.length > 1 ? "zes" : ""}
-                </span>
-                {lessonProgress && (
-                  <span
-                    className={`ml-4 px-2 py-1 rounded text-xs ${
-                      lessonProgress.completed === true
-                        ? "bg-green-200 text-green-800"
-                        : "bg-yellow-100 text-yellow-800"
-                    }`}
-                  >
-                    {lesson.quiz.length > 0 &&
-                    lessonProgress.quizzes &&
-                    lessonProgress.quizzes.length > 0
-                      ? lessonProgress.quizzes.filter((q) => q.completed)
-                          .length === lesson.quiz.length
-                        ? "Completed"
-                        : "In Progress"
-                      : lessonProgress.completed
-                      ? "Completed"
-                      : "In Progress"}
-                  </span>
-                )}
-                {!lessonProgress && lesson.quiz.length > 0 && (
-                  <span className="ml-4 px-2 py-1 rounded text-xs bg-gray-100 text-gray-600">
-                    Not started
-                  </span>
-                )}
-                {lesson.quiz.length > 0 && (
-                  <span className="ml-4 text-xs text-gray-500">
-                    {progressPercent}% done
-                  </span>
-                )}
-              </div>
+              <div
+  className="sticky top-6 z-20 bg-[#F89C3B] border border-blue-100 shadow-md rounded-2xl px-6 py-4 mb-0 grid grid-cols-1 gap-2 text-center w-full mx-auto"
+>
+  {/* Title row */}
+  <h1 className="text-xl font-semibold flex justify-center items-center gap-2 text-gray-700]"
+  style={{
+    color: "#164A78",
+  }}
+  >
+     {lesson.topic}
+  </h1>
+
+  {/* Info row with 2 columns */}
+  <div className="grid grid-cols-2 gap-2 text-md text-[#164A78]">
+    <span>
+      {lesson.quiz.length} quiz{lesson.quiz.length > 1 ? "zes" : ""}
+    </span>
+
+
+    {lesson.quiz.length > 0 && (
+      <span>{progressPercent}% done</span>
+    )}
+  </div>
+</div>
+
+
               {/* Timeline */}
               <div className="relative w-full max-w-3xl mx-auto py-12">
                 {/* Vertical line - stretches full height */}
