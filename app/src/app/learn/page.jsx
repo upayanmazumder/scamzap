@@ -99,7 +99,7 @@ export default function LearnJourney() {
   }
 
   return (
-    <main className="p-6 max-w-5xl mx-auto">
+    <main className=" flex flex-col items-center justify-center min-h-screen">
       <div>
         {lessons.map((lesson) => {
           const lessonProgress = getLessonProgress(lesson._id);
