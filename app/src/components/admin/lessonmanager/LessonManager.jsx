@@ -521,14 +521,12 @@ const LessonManager = () => {
                       onChange={(e) =>
                         handleQuizChange(quizIdx, "topic", e.target.value)
                       }
-                      placeholder="Quiz Topic"
+                      placeholder="Quiz Topic (e.g., Password Security)"
                       className="w-full p-2 border rounded mb-2"
+                      aria-label={`Quiz #${quizIdx + 1} Topic`}
+                      autoFocus={quizIdx === 0}
+                      required
                     />
-                    {errors.quiz?.[quizIdx]?.topic && (
-                      <p className="text-red-500 text-sm">
-                        {errors.quiz[quizIdx].topic}
-                      </p>
-                    )}
                     {errors.quiz?.[quizIdx]?.topic && (
                       <p className="text-red-500 text-sm">
                         {errors.quiz[quizIdx].topic}
