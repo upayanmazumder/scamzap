@@ -6,7 +6,6 @@ import API from "../../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaBookOpen } from "react-icons/fa";
 import { useSession } from "next-auth/react";
-import Link from "next/link";
 
 export default function LearnJourney() {
   const { data: session, status } = useSession();
@@ -131,12 +130,6 @@ export default function LearnJourney() {
 
   return (
     <main className="p-6 max-w-5xl mx-auto">
-      <div className="mb-10 text-center">
-        <h1 className="text-4xl font-bold mb-2">📘 Learn Journey</h1>
-        <p className="text-lg text-gray-600">
-          Embark on your learning journey! Click on a quiz to begin.
-        </p>
-      </div>
       <div>
         {lessons.map((lesson, lessonIdx) => {
           const lessonProgress = getLessonProgress(lesson._id);
@@ -158,7 +151,7 @@ export default function LearnJourney() {
           return (
             <section
               key={lesson._id}
-              className="mb-20 flex flex-col items-center"
+              className="mb-20 flex flex-col items-center w-full"
             >
               <h2 className="text-2xl font-bold mb-2 text-center flex items-center gap-2">
                 <FaBookOpen className="text-blue-500" /> {lesson.topic}
@@ -199,44 +192,88 @@ export default function LearnJourney() {
                   </span>
                 )}
               </div>
-              {/* Journey Path */}
-<div className="relative">
-  <div className="absolute left-1/2 top-0 bottom-0 w-1 bg-blue-200" />
-  <div className="flex flex-col gap-20">
-  {lesson.quiz.map((quiz, quizIdx) => {
-  const quizProgress = getQuizProgress(lesson._id, quiz._id);
-  const isLeft = quizIdx % 2 === 0;
-
-  return (
-    <div
-      key={quiz._id}
-      className={`w-full flex ${isLeft ? "justify-start" : "justify-end"}`}
-    >
-      <motion.button
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.97 }}
-        className={`
-          w-20 h-20 rounded-full flex items-center justify-center
-          text-2xl font-bold shadow-lg border-2 transition-all
-          relative z-10
-          ${
-            quizProgress?.completed
-              ? "bg-green-200 border-green-400 text-green-900"
-              : quizProgress
-              ? "bg-yellow-100 border-yellow-400 text-yellow-900"
-              : "bg-gray-100 border-gray-400 text-gray-700"
-          }
-        `}
-        onClick={() => openQuiz(lesson._id, quizIdx)}
-      >
-        {quizProgress?.completed ? "✅" : quizProgress ? "🕒" : "❓"}
-      </motion.button>
-    </div>
-  );
-})}
-  </div>
-  </div>
-
+              {/* Timeline */}
+              <div className="relative w-full max-w-3xl mx-auto py-12">
+                {/* Vertical line - stretches full height */}
+<div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
+                <div className="flex flex-col gap-20">
+                  {lesson.quiz.map((quiz, quizIdx) => {
+                    const quizProgress = getQuizProgress(lesson._id, quiz._id);
+                    const isLeft = quizIdx % 2 === 0;
+                    return (
+                      <div
+                        key={quiz._id}
+                        className="relative flex items-center min-h-[140px]"
+                      >
+                        {/* Connector line above circle (except first) */}
+                        {quizIdx !== 0 && (
+                          <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
+                        )}
+                        {/* Left side */}
+                        <div className={`w-1/2 flex ${isLeft ? "justify-end pr-8" : ""}`}>
+                          {isLeft && (
+                            <motion.button
+                              whileHover={{ scale: 1.08 }}
+                              whileTap={{ scale: 0.97 }}
+                              className={`
+                                w-20 h-20 rounded-full flex items-center justify-center
+                                text-2xl font-bold shadow-lg border-2 transition-all
+                                relative z-10
+                                ${
+                                  quizProgress?.completed
+                                    ? "bg-green-200 border-green-400 text-green-900"
+                                    : quizProgress
+                                    ? "bg-yellow-100 border-yellow-400 text-yellow-900"
+                                    : "bg-gray-100 border-gray-400 text-gray-700"
+                                }
+                              `}
+                              onClick={() => openQuiz(lesson._id, quizIdx)}
+                            >
+                              {quizProgress?.completed
+                                ? "✅"
+                                : quizProgress
+                                ? "🕒"
+                                : "❓"}
+                            </motion.button>
+                          )}
+                        </div>
+                        {/* Timeline dot */}
+                        <div className="absolute left-1/2 -translate-x-1/2 z-10">
+                          <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
+                        </div>
+                        {/* Right side */}
+                        <div className={`w-1/2 flex ${!isLeft ? "justify-start pl-8" : ""}`}>
+                          {!isLeft && (
+                            <motion.button
+                              whileHover={{ scale: 1.08 }}
+                              whileTap={{ scale: 0.97 }}
+                              className={`
+                                w-20 h-20 rounded-full flex items-center justify-center
+                                text-2xl font-bold shadow-lg border-2 transition-all
+                                relative z-10
+                                ${
+                                  quizProgress?.completed
+                                    ? "bg-green-200 border-green-400 text-green-900"
+                                    : quizProgress
+                                    ? "bg-yellow-100 border-yellow-400 text-yellow-900"
+                                    : "bg-gray-100 border-gray-400 text-gray-700"
+                                }
+                              `}
+                              onClick={() => openQuiz(lesson._id, quizIdx)}
+                            >
+                              {quizProgress?.completed
+                                ? "✅"
+                                : quizProgress
+                                ? "🕒"
+                                : "❓"}
+                            </motion.button>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
               {/* Quiz Modal */}
               <AnimatePresence>
                 {selectedLessonId === lesson._id &&
