@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { FaBookOpen } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { FaStar } from "react-icons/fa";
+
 
 export default function LearnJourney() {
   const { data: session, status } = useSession();
@@ -18,7 +20,7 @@ export default function LearnJourney() {
 
   const StarIcon = () => (
   <svg
-    className="w-16 h-16 text-[#164A78]"
+    className="w-24 h-24 text-[#164A78]"
     fill="currentColor"
     viewBox="0 0 20 20"
   >
@@ -197,14 +199,8 @@ const getCircleColor = () => {
   `}
   onClick={() => router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)}
 >
-  <StarIcon
-    className={`w-30 h-30 ${
-      quizProgress?.completed
-        ? "text-green-800"
-        : quizProgress
-        ? "text-yellow-700"
-        : "text-gray-500"
-    }`}
+  <FaStar className="text-[#164A78]" 
+    style={{ width: "120px", height: "120px" }}
   />
 </motion.button>
 
@@ -241,15 +237,10 @@ const getCircleColor = () => {
   `}
   onClick={() => router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)}
 >
-  <StarIcon
-    className={`w-10 h-10 ${
-      quizProgress?.completed
-        ? "text-green-800"
-        : quizProgress
-        ? "text-yellow-700"
-        : "text-gray-500"
-    }`}
+  <FaStar className="text-[#164A78]" 
+    style={{ width: "120px", height: "120px" }}
   />
+
 </motion.button>
 
     </>
