@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { FaBookOpen, FaStar } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
@@ -15,6 +15,10 @@ export default function LearnJourney() {
   const [lessons, setLessons] = useState([]);
   const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Modal state
+  const [modalQuiz, setModalQuiz] = useState(null);
+  const [modalLesson, setModalLesson] = useState(null);
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -30,9 +34,6 @@ export default function LearnJourney() {
         ]);
         const lessonsData = await lessonsRes.json();
         const progressData = await progressRes.json();
-
-        console.log("Lessons data:", lessonsData);
-        console.log("Progress data:", progressData);
 
         const normalized = Array.isArray(lessonsData)
           ? lessonsData.map((lesson) => ({
@@ -59,6 +60,24 @@ export default function LearnJourney() {
     const lessonProgress = getLessonProgress(lessonId);
     if (!lessonProgress) return null;
     return lessonProgress.quizzes.find((q) => q.quizId === quizId);
+  };
+
+  // Modal handlers
+  const handleQuizCircleClick = (lesson, quiz) => {
+    setModalLesson(lesson);
+    setModalQuiz(quiz);
+  };
+
+  const handleModalClose = () => {
+    setModalLesson(null);
+    setModalQuiz(null);
+  };
+
+  const handleStartQuiz = () => {
+    if (modalLesson && modalQuiz) {
+      router.push(`/learn/${modalLesson._id}/quiz/${modalQuiz._id}`);
+      handleModalClose();
+    }
   };
 
   if (loading) {
@@ -103,47 +122,35 @@ export default function LearnJourney() {
               key={lesson._id}
               className="mb-20 flex flex-col items-center w-full"
             >
+              {/* Capsule */}
               <div
-  className="sticky top-6 z-20 bg-[#F89C3B] border border-blue-100 shadow-md rounded-2xl px-6 py-4 mb-0 grid grid-cols-1 gap-2 text-center w-full mx-auto"
->
-  {/* Title row */}
-  <h1 className="text-xl font-semibold flex justify-center items-center gap-2 text-gray-700]"
-  style={{
-    color: "#164A78",
-  }}
-  >
-     {lesson.topic}
-  </h1>
-
-  {/* Info row with 2 columns */}
-  <div className="grid grid-cols-2 gap-2 text-md text-[#164A78]">
-    <span>
-      {lesson.quiz.length} quiz{lesson.quiz.length > 1 ? "zes" : ""}
-    </span>
-
-
-    {lesson.quiz.length > 0 && (
-      <span>{progressPercent}% done</span>
-    )}
-  </div>
-</div>
-
-
+                className="sticky top-6 z-20 bg-[#F89C3B] border border-blue-100 shadow-md rounded-2xl px-6 py-4 mb-0 grid grid-cols-1 gap-2 text-center w-full mx-auto"
+              >
+                <h1 className="text-xl font-semibold flex justify-center items-center gap-2 text-gray-700"
+                  style={{ color: "#164A78" }}>
+                  {lesson.topic}
+                </h1>
+                <div className="grid grid-cols-2 gap-2 text-md text-[#164A78]">
+                  <span>
+                    {lesson.quiz.length} quiz{lesson.quiz.length > 1 ? "zes" : ""}
+                  </span>
+                  {lesson.quiz.length > 0 && (
+                    <span>{progressPercent}% done</span>
+                  )}
+                </div>
+              </div>
               {/* Timeline */}
               <div className="relative w-full max-w-3xl mx-auto py-12">
-                {/* Vertical line - stretches full height */}
                 <div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
                 <div className="flex flex-col gap-20">
                   {lesson.quiz.map((quiz, quizIdx) => {
                     const quizProgress = getQuizProgress(lesson._id, quiz._id);
-                    console.log("Quiz progress:", quizProgress);
                     const isLeft = quizIdx % 2 === 0;
                     return (
                       <div
                         key={quiz._id}
                         className="relative flex items-center min-h-[140px]"
                       >
-                        {/* Connector line above circle (except first) */}
                         {quizIdx !== 0 && (
                           <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
                         )}
@@ -158,23 +165,19 @@ export default function LearnJourney() {
                                   w-20 h-20 rounded-full flex items-center justify-center
                                   shadow-lg border-2 transition-all
                                   relative z-10
-                                  
                                 `}
                                 style={{
                                   backgroundColor: quizProgress?.completed
                                     ? "#2ECC71"
                                     : "#F89C3B",
                                 }}
-                                onClick={() =>
-                                  router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
-                                }
+                                onClick={() => handleQuizCircleClick(lesson, quiz)}
                               >
                                 <FaStar
                                   className="text-[#164A78]"
                                   style={{ width: "120px", height: "120px" }}
                                 />
                               </motion.button>
-                              {/* horizontal line connecting to center */}
                               <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
                             </>
                           )}
@@ -187,7 +190,6 @@ export default function LearnJourney() {
                         <div className={`w-1/2 flex ${!isLeft ? "justify-start ml-24" : "justify-start"}`}>
                           {!isLeft && (
                             <>
-                              {/* horizontal line connecting to center */}
                               <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
                               <motion.button
                                 whileHover={{ scale: 1.08 }}
@@ -196,16 +198,13 @@ export default function LearnJourney() {
                                   w-20 h-20 rounded-full flex items-center justify-center
                                   shadow-lg border-2 transition-all
                                   relative z-10
-                                  
                                 `}
                                 style={{
                                   backgroundColor: quizProgress?.completed
                                     ? "#2ECC71"
                                     : "#F89C3B",
                                 }}
-                                onClick={() =>
-                                  router.push(`/learn/${lesson._id}/quiz/${quiz._id}`)
-                                }
+                                onClick={() => handleQuizCircleClick(lesson, quiz)}
                               >
                                 <FaStar
                                   className="text-[#164A78]"
@@ -224,6 +223,48 @@ export default function LearnJourney() {
           );
         })}
       </div>
+      {/* Modal */}
+      <AnimatePresence>
+        {modalQuiz && modalLesson && (
+          <motion.div
+            key="quiz-modal"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center"
+            onClick={handleModalClose}
+          >
+            <motion.div
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className=" bg-[#164A78] rounded-2xl shadow-2xl p-8 max-w-xs w-full relative"
+              onClick={e => e.stopPropagation()}
+            >
+              <button
+                className="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl"
+                onClick={handleModalClose}
+                aria-label="Close"
+              >
+                ×
+              </button>
+              <h2 className="text-xl font-bold text-blue-700 mb-2 text-center">{modalQuiz.topic}</h2>
+              <div className="text-center mb-6">
+                <span className="block">
+                  {modalQuiz.questions && modalQuiz.questions.length} question
+                  {modalQuiz.questions && modalQuiz.questions.length !== 1 ? "s" : ""}
+                </span>
+              </div>
+              <button
+                className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 font-semibold"
+                onClick={handleStartQuiz}
+              >
+                Start
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
