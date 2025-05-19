@@ -45,6 +45,7 @@ mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
+    console.log("CORS options:", corsOptions);
     app.listen(PORT, () =>
       console.log(
         `Server running on port ${PORT}\nAPI: http://localhost:${PORT}`
