@@ -3,6 +3,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
+// Follow a user
 router.post("/follow", async (req, res) => {
   const { userId, targetId } = req.body;
   if (userId === targetId)
@@ -22,6 +23,7 @@ router.post("/follow", async (req, res) => {
   }
 });
 
+// Unfollow a user
 router.post("/unfollow", async (req, res) => {
   const { userId, targetId } = req.body;
   try {
@@ -39,6 +41,7 @@ router.post("/unfollow", async (req, res) => {
   }
 });
 
+// Get followers
 router.get("/followers/:userId", async (req, res) => {
   try {
     const user = await User.findOne({ id: req.params.userId });
@@ -53,6 +56,7 @@ router.get("/followers/:userId", async (req, res) => {
   }
 });
 
+// Get following
 router.get("/following/:userId", async (req, res) => {
   try {
     const user = await User.findOne({ id: req.params.userId });

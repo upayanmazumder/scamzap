@@ -3,6 +3,7 @@ import Scam from "../models/Scam.js";
 
 const router = express.Router();
 
+// Create a new scam entry
 router.post("/", async (req, res) => {
   try {
     const scam = await Scam.create(req.body);
@@ -12,6 +13,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get all scam entries
 router.get("/", async (req, res) => {
   try {
     const scams = await Scam.find();
@@ -21,6 +23,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get all unique scam categories
 router.get("/categories", async (req, res) => {
   try {
     const categories = await Scam.distinct("category");
@@ -30,6 +33,7 @@ router.get("/categories", async (req, res) => {
   }
 });
 
+// Get all scams by category
 router.get("/category/:category", async (req, res) => {
   try {
     const scams = await Scam.find({ category: req.params.category });
@@ -39,6 +43,7 @@ router.get("/category/:category", async (req, res) => {
   }
 });
 
+// Get scams created in the last 7 days
 router.get("/recent", async (req, res) => {
   try {
     const oneWeekAgo = new Date();
@@ -51,6 +56,7 @@ router.get("/recent", async (req, res) => {
   }
 });
 
+// Get all scams submitted by a specific user
 router.get("/user/:userId", async (req, res) => {
   try {
     const scams = await Scam.find({ submittedBy: req.params.userId });
@@ -60,6 +66,7 @@ router.get("/user/:userId", async (req, res) => {
   }
 });
 
+// Get a scam by its ID
 router.get("/:id", async (req, res) => {
   try {
     const scam = await Scam.findById(req.params.id);
