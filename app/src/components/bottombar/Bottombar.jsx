@@ -105,7 +105,9 @@ export const BottomBar = () => {
                   />
                 )}
               </AnimatePresence>
-              <Icon className="w-6 h-6" />
+              <Icon 
+              style={{ width: "1.8em", height: "1.8em" }}
+              />
               <span className="sr-only lg:not-sr-only lg:ml-3 lg:text-sm">
                 {label}
               </span>
