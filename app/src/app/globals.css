@@ -316,6 +316,10 @@ blockquote {
   color: rgba(255, 255, 255, 0.8);
 }
 
+option {
+  background-color: rgb(250, 92, 35);
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;

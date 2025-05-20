@@ -56,7 +56,7 @@ function ScamUploadForm({ userId }) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-md mx-auto p-6 rounded shadow space-y-4"
+      className="max-w-md mx-auto p-6 rounded space-y-4"
     >
       <h2 className="text-xl font-bold">Report a Scam</h2>
 
