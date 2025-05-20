@@ -1,6 +1,6 @@
 /// <reference lib="webworker" />
 
-const CACHE_NAME = "SCAMZAP-V0.1.2";
+const CACHE_NAME = "SCAMZAP-V1.0.0";
 const CORE_ASSETS = [
   "/",
   "/offline",
