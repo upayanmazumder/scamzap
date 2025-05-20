@@ -3,6 +3,7 @@ import User from "../models/User.js";
 
 const router = express.Router();
 
+// Get all users
 router.get("/", async (req, res) => {
   try {
     const users = await User.find();
@@ -12,6 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Create or update a user by email (upsert)
 router.post("/", async (req, res) => {
   try {
     const { id, name, email } = req.body;
@@ -28,6 +30,7 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Get a user by id
 router.get("/:id", async (req, res) => {
   try {
     const user = await User.findOne({ id: req.params.id });
@@ -38,6 +41,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Get a user's progress by id
 router.get("/:id/progress", async (req, res) => {
   try {
     const user = await User.findOne({ id: req.params.id }, "progress");
@@ -48,6 +52,7 @@ router.get("/:id/progress", async (req, res) => {
   }
 });
 
+// Update a user's progress for a lesson
 router.post("/:id/progress", async (req, res) => {
   try {
     const { lessonId, completed, quizzes, lastAccessed } = req.body;
@@ -60,6 +65,7 @@ router.post("/:id/progress", async (req, res) => {
     let progress = user.progress || [];
     const idx = progress.findIndex((p) => p.lessonId === lessonId);
     if (idx > -1) {
+      // Update existing progress entry
       progress[idx] = {
         ...progress[idx],
         lessonId,
@@ -68,6 +74,7 @@ router.post("/:id/progress", async (req, res) => {
         lastAccessed: lastAccessed ?? progress[idx].lastAccessed,
       };
     } else {
+      // Add new progress entry
       progress.push({
         lessonId,
         completed: !!completed,

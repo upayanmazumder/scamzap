@@ -1,9 +1,11 @@
 {
   "colorWheel.settings.workspaceColor": "hsl(97,87%,41%)",
   "cSpell.words": [
+    "admindashboard",
     "authprovider",
     "Bottombar",
     "elif",
+    "floatingmascot",
     "followersfollowinglist",
     "fullmb",
     "gsap",
@@ -11,6 +13,8 @@
     "lessonmanager",
     "Mazumder",
     "NEXTAUTH",
+    "protectedroute",
+    "scamuploadform",
     "Scamzap",
     "serviceworkerregister",
     "Srinivas",

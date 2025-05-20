@@ -6,12 +6,7 @@
   "display": "fullscreen",
   "background_color": "#184e79",
   "theme_color": "#184e79",
-  "categories": [
-    "scam",
-    "fraud",
-    "protection",
-    "security"
-  ],
+  "categories": ["scam", "fraud", "protection", "security"],
   "icons": [
     {
       "src": "/icons/icon-16x16.webp",

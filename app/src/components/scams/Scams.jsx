@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Flag } from "lucide-react";
 import API from "../../utils/api";
-import Loader from "../../components/loader/Loader";
+import Loader from "../loader/Loader";
 
 export default function ScamFeed() {
   const [scams, setScams] = useState([]);
@@ -113,7 +113,7 @@ export default function ScamFeed() {
           filteredScams.map((scam) => (
             <div
               key={scam.id}
-              className="p-4 border border-[var(--input)] rounded-xl shadow-md bg-[var(--card)]  bg-gray-800 hover:shadow-md hover:bg-gray-700 "
+              className="p-4 border border-[var(--input)] rounded-xl shadow-md  bg-gray-800 hover:shadow-md hover:bg-gray-700 "
             >
               <h2 className="text-lg font-semibold text-[var(--foreground)]">
                 {scam.title}

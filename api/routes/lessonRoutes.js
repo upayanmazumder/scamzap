@@ -3,6 +3,7 @@ import Lesson from "../models/Lesson.js";
 
 const router = express.Router();
 
+// Get all lessons
 router.get("/", async (req, res) => {
   try {
     const lessons = await Lesson.find();
@@ -12,6 +13,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// Get a lesson by ID
 router.get("/:id", async (req, res) => {
   try {
     const lesson = await Lesson.findById(req.params.id);
@@ -22,6 +24,7 @@ router.get("/:id", async (req, res) => {
   }
 });
 
+// Get a specific quiz from a lesson by lessonId and quizId
 router.get("/:lessonId/quiz/:quizId", async (req, res) => {
   try {
     const lesson = await Lesson.findById(req.params.lessonId);
