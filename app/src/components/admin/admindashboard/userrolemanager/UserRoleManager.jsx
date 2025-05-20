@@ -19,7 +19,7 @@ export default function UserRoleManager() {
     try {
       const res = await fetch(`${API}/admin/users?userId=${currentAdminId}`);
       const data = await res.json();
-      // Exclude self
+
       setUsers(data.filter((user) => user.id !== currentAdminId));
     } catch (err) {
       console.error("Failed to fetch users:", err);

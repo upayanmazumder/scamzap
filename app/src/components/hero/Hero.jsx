@@ -15,7 +15,6 @@ export default function Hero() {
   const stage1Ref = useRef(null);
   const stage2Ref = useRef(null);
 
-  // Redirect if session exists
   useEffect(() => {
     if (session) {
       router.push("/learn");
@@ -36,11 +35,9 @@ export default function Hero() {
     return () => clearTimeout(timer);
   }, [stage, session]);
 
-  // Animate stage visibility
   useLayoutEffect(() => {
     const tl = gsap.timeline();
 
-    // Fade out all stages first
     tl.to([stage0Ref.current, stage1Ref.current, stage2Ref.current], {
       opacity: 0,
       y: -20,
@@ -50,7 +47,6 @@ export default function Hero() {
       ease: "power1.inOut",
     });
 
-    // Fade in active stage
     let activeStageRef = null;
     if (stage === 0) activeStageRef = stage0Ref.current;
     else if (stage === 1) activeStageRef = stage1Ref.current;
@@ -79,7 +75,6 @@ export default function Hero() {
   return (
     <div className="min-h-screen flex flex-col justify-center items-center px-12 text-center">
       <div className="flex flex-1 flex-col justify-center items-center w-full max-w-5xl relative">
-        {/* Stage 0 */}
         <div
           ref={stage0Ref}
           style={{ opacity: 0, position: "absolute", width: "100%" }}
@@ -98,7 +93,6 @@ export default function Hero() {
           </h1>
         </div>
 
-        {/* Stage 1 */}
         <div
           ref={stage1Ref}
           style={{ opacity: 0, position: "absolute", width: "100%" }}
@@ -117,7 +111,6 @@ export default function Hero() {
           </p>
         </div>
 
-        {/* Stage 2 */}
         {!session && (
           <div
             ref={stage2Ref}

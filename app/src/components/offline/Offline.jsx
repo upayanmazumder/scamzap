@@ -12,7 +12,7 @@ export default function Offline() {
       <motion.img
         src="/mascot/expressionless.svg"
         alt="Not Found Image"
-        className=" max-w-xs"
+        className="max-w-[160px] w-120 h-120"
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.3, duration: 0.5 }}

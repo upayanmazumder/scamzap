@@ -3,8 +3,6 @@
 import { SessionProvider, useSession } from "next-auth/react";
 import { useEffect } from "react";
 import API from "../../../utils/api";
-import Loader from "../../loader/Loader";
-import Authenticate from "../authenticate/Authenticate";
 
 function SyncUser() {
   const { data: session } = useSession();

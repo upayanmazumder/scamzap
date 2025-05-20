@@ -69,16 +69,6 @@ export default function Profile() {
     );
   }
 
-  if (!session) {
-    return (
-      <div className="flex flex-col items-center justify-center text-white">
-        <p className="text-lg mb-4">You are not signed in.</p>
-        <p className="text-sm text-gray-300">Redirecting to home...</p>
-        <Loader />
-      </div>
-    );
-  }
-
   const { name, email, image } = session.user || {};
   const joinedDateFull = createdAt
     ? new Date(createdAt).toLocaleDateString(undefined, {

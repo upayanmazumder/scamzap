@@ -3,7 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-import { Home, Search, User, Settings, Users, Bell } from "lucide-react";
+import { Home, Search, User, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { FloatingMascot } from "../floatingmascot/FloatingMascot";
 
@@ -18,7 +18,11 @@ export const BottomBar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  if (pathname === "/" || pathname.startsWith("/learn/")) {
+  if (pathname === "/") {
+    return null;
+  }
+
+  if (pathname.startsWith("/learn/")) {
     return (
       <div
         className="
@@ -37,7 +41,7 @@ export const BottomBar = () => {
         fixed z-50 w-full h-16 max-w-lg bg-[var(--background)] px-2 py-2
         bottom-0 left-1/2 -translate-x-1/2
         border-t-2 border-[var(--input)]
-        lg:top-0 lg:left-0 lg:h-screen lg:w-60 lg:max-w-none lg:translate-x-0 lg:translate-y-0
+        lg:top-0 lg:left-0 lg:h-screen lg:w-56 lg:max-w-none lg:translate-x-0 lg:translate-y-0
         lg:flex lg:flex-col lg:items-start lg:justify-start lg:rounded-none lg:py-4 lg:px-3
         lg:border-t-0 lg:border-r-2
       "
@@ -54,8 +58,8 @@ export const BottomBar = () => {
         >
           <Image src="/favicon.ico" alt="Logo" width={32} height={32} />
           <h1
-            className="text-2xl font-bold text-[var(--foreground)]"
-            style={{ margin: 0 }}
+            className="text-xl font-bold text-[var(--foreground)]"
+            style={{ margin: 0, fontSize: "1.5em" }}
           >
             Scamzap
           </h1>

@@ -14,7 +14,6 @@ import {
   AiOutlineCloseCircle,
 } from "react-icons/ai";
 
-// Create an empty question
 const createEmptyQuestion = () => ({
   id: `${Date.now()}-${Math.random()}`,
   question: "",
@@ -23,7 +22,6 @@ const createEmptyQuestion = () => ({
   explanation: "",
 });
 
-// Create an empty quiz (with one empty question)
 const createEmptyQuiz = () => ({
   topic: "",
   questions: [createEmptyQuestion()],
@@ -35,7 +33,6 @@ const initialLessonState = {
   quiz: [createEmptyQuiz()],
 };
 
-// Helper: Convert flat array of questions to quiz array
 function convertFlatQuestionsToQuiz(flatQuestions, quizTopic = "Passwords") {
   return [
     {
@@ -58,12 +55,10 @@ const LessonManager = () => {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
 
-  // Per-quiz JSON mode states
   const [quizInputModes, setQuizInputModes] = useState(["form"]);
   const [quizJsons, setQuizJsons] = useState([""]);
   const [quizJsonErrors, setQuizJsonErrors] = useState([""]);
 
-  // Keep per-quiz states in sync with quizzes
   useEffect(() => {
     setQuizInputModes((prev) =>
       Array(newLesson.quiz.length)
@@ -106,7 +101,6 @@ const LessonManager = () => {
     setNewLesson((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Quiz-level changes
   const handleQuizChange = (quizIdx, field, value) => {
     setNewLesson((prev) => {
       const updatedQuiz = prev.quiz.map((quiz, idx) =>
@@ -116,7 +110,6 @@ const LessonManager = () => {
     });
   };
 
-  // Question-level changes
   const handleQuestionChange = (quizIdx, questionIdx, field, value) => {
     setNewLesson((prev) => {
       const updatedQuiz = prev.quiz.map((quiz, idx) => {
@@ -132,7 +125,6 @@ const LessonManager = () => {
     });
   };
 
-  // Option-level changes
   const handleOptionChange = (quizIdx, questionIdx, optionIdx, value) => {
     setNewLesson((prev) => {
       const updatedQuiz = prev.quiz.map((quiz, idx) => {
@@ -157,7 +149,6 @@ const LessonManager = () => {
     });
   };
 
-  // Add a new quiz
   const addQuiz = () => {
     setNewLesson((prev) => ({
       ...prev,
@@ -165,7 +156,6 @@ const LessonManager = () => {
     }));
   };
 
-  // Delete a quiz
   const deleteQuiz = (quizIdx) => {
     setNewLesson((prev) => {
       const filteredQuiz = prev.quiz.filter((_, idx) => idx !== quizIdx);
@@ -176,7 +166,6 @@ const LessonManager = () => {
     });
   };
 
-  // Add a question to a quiz
   const addQuestion = (quizIdx) => {
     setNewLesson((prev) => {
       const updatedQuiz = prev.quiz.map((quiz, idx) =>
@@ -188,7 +177,6 @@ const LessonManager = () => {
     });
   };
 
-  // Delete a question from a quiz
   const deleteQuestion = (quizIdx, questionIdx) => {
     setNewLesson((prev) => {
       const updatedQuiz = prev.quiz.map((quiz, idx) => {
@@ -210,7 +198,6 @@ const LessonManager = () => {
     });
   };
 
-  // Validation
   const validateLesson = () => {
     const errs = {};
     if (!newLesson.topic.trim()) errs.topic = "Topic is required.";
@@ -239,7 +226,6 @@ const LessonManager = () => {
     return Object.keys(errs).length === 0;
   };
 
-  // Submit
   const submitLesson = async () => {
     if (!adminId) {
       setMessage("❌ You must be logged in as admin.");
@@ -280,7 +266,6 @@ const LessonManager = () => {
     }
   };
 
-  // Delete lesson
   const deleteLesson = async (lessonId) => {
     if (!adminId) return;
     if (!confirm("Are you sure you want to delete this lesson?")) return;
@@ -313,7 +298,6 @@ const LessonManager = () => {
         Lesson Manager
       </motion.h2>
 
-      {/* Lesson Create Form */}
       <motion.div
         className="p-6 border rounded-xl shadow-xl bg-white dark:bg-gray-900 space-y-4"
         initial={{ opacity: 0 }}
@@ -348,7 +332,6 @@ const LessonManager = () => {
           )}
         </div>
 
-        {/* Quizzes */}
         <div className="space-y-4">
           <h4 className="text-xl font-semibold flex items-center gap-2">
             Quizzes
@@ -389,7 +372,6 @@ const LessonManager = () => {
                   )}
                 </summary>
 
-                {/* Per-quiz Form/JSON toggle */}
                 <div className="flex gap-2 mt-2 mb-2">
                   <button
                     type="button"
@@ -534,7 +516,6 @@ const LessonManager = () => {
                       </p>
                     )}
 
-                    {/* Questions for this quiz */}
                     <div className="space-y-4 mt-4">
                       <div className="flex items-center gap-2">
                         <strong>Questions</strong>

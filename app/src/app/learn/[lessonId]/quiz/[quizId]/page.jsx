@@ -4,7 +4,7 @@ export default function QuizPage({ params }) {
   const { lessonId, quizId } = params;
 
   return (
-    <main className="flex flex-col items-center justify-center w-full h-full">
+    <main>
       <Quiz lessonId={lessonId} quizId={quizId} />
     </main>
   );

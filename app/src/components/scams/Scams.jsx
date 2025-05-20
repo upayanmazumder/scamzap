@@ -113,7 +113,7 @@ export default function ScamFeed() {
           filteredScams.map((scam) => (
             <div
               key={scam.id}
-              className="p-4 border border-[var(--input)] rounded-xl shadow-md bg-[var(--card)]  bg-gray-800 hover:shadow-md hover:bg-gray-700 "
+              className="p-4 border border-[var(--input)] rounded-xl shadow-md  bg-gray-800 hover:shadow-md hover:bg-gray-700 "
             >
               <h2 className="text-lg font-semibold text-[var(--foreground)]">
                 {scam.title}
