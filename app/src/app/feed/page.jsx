@@ -3,12 +3,15 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { Flag } from "lucide-react"; // You can replace with any icon library
+import { Flag } from "lucide-react";
 import API from "../../utils/api";
 import Loader from "../../components/loader/Loader";
 
 export default function ScamFeed() {
   const [scams, setScams] = useState([]);
+  const [filteredScams, setFilteredScams] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -19,11 +22,17 @@ export default function ScamFeed() {
         return res.json();
       })
       .then((data) => {
-        // Sort by newest first
         const sorted = [...data].sort(
           (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
         );
         setScams(sorted);
+        setFilteredScams(sorted);
+
+        // Extract unique categories
+        const uniqueCategories = Array.from(
+          new Set(sorted.map((s) => s.category))
+        );
+        setCategories(uniqueCategories);
       })
       .catch((err) => {
         setError(err.message);
@@ -33,9 +42,19 @@ export default function ScamFeed() {
       });
   }, []);
 
+  useEffect(() => {
+    if (selectedCategory === "All") {
+      setFilteredScams(scams);
+    } else {
+      const filtered = scams.filter(
+        (scam) => scam.category === selectedCategory
+      );
+      setFilteredScams(filtered);
+    }
+  }, [selectedCategory, scams]);
+
   return (
     <div className="flex flex-col min-h-screen bg-[var(--background)] text-[var(--foreground)] relative">
-
       {/* Fixed Report Icon */}
       <Link href="/report">
         <button
@@ -49,6 +68,38 @@ export default function ScamFeed() {
       <div className="flex-1 w-full max-w-screen-sm mx-auto p-4 mt-4 space-y-6">
         <h1 className="text-2xl font-bold text-center pb-4">Recent Scams</h1>
 
+        {/* Category Tags - Horizontal Scrollable */}
+        <div
+          className="overflow-x-auto mb-4"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          <div className="flex flex-nowrap gap-2 px-2 whitespace-nowrap w-max">
+            <button
+              onClick={() => setSelectedCategory("All")}
+              className={`px-3 py-1 rounded-full border text-sm shrink-0 ${
+                selectedCategory === "All"
+                  ? "bg-blue-600 text-white"
+                  : "border-[var(--input)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
+              }`}
+            >
+              All
+            </button>
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-3 py-1 rounded-full border text-sm capitalize shrink-0 ${
+                  selectedCategory === category
+                    ? "bg-blue-600 text-white"
+                    : "border-[var(--input)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
+                }`}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {loading && (
           <div className="text-center mt-10">
             <Loader />
@@ -59,13 +110,15 @@ export default function ScamFeed() {
           <p className="text-red-500 text-center mt-4">Error: {error}</p>
         )}
 
-        {!loading && !error && scams.length === 0 && (
-          <p className="text-center text-gray-500">No scams reported yet.</p>
+        {!loading && !error && filteredScams.length === 0 && (
+          <p className="text-center text-gray-500">
+            No scams in this category yet.
+          </p>
         )}
 
         {!loading &&
           !error &&
-          scams.map((scam) => (
+          filteredScams.map((scam) => (
             <div
               key={scam.id}
               className="p-4 border border-[var(--input)] rounded-xl shadow-md bg-[var(--card)]"
