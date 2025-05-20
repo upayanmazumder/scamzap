@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import authenticateToken from "./middleware/auth.js";
+import authenticateToken from "./middleware/authToken.js";
 import userRoutes from "./routes/userRoutes.js";
 import scamRoutes from "./routes/scamRoutes.js";
 import lessonRoutes from "./routes/lessonRoutes.js";
