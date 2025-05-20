@@ -40,7 +40,10 @@ export default function UserRoleManager() {
         `${API}/admin/${action}/${id}?userId=${currentAdminId}`,
         {
           method: "POST",
-          headers: token ? { Authorization: `Bearer ${token}` } : {},
+          headers: {
+            ...(token && { Authorization: `Bearer ${token}` }),
+            "Content-Type": "application/json",
+          },
         }
       );
 
