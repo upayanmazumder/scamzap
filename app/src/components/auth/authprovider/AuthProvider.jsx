@@ -1,6 +1,6 @@
 "use client";
 
-import { SessionProvider, useSession } from "next-auth/react";
+import { SessionProvider, useSession, signOut } from "next-auth/react";
 import { useEffect } from "react";
 import API from "../../../utils/api";
 
@@ -14,12 +14,12 @@ function SyncUser() {
       try {
         const token = session?.accessToken;
 
-        if (token) {
-          sessionStorage.setItem("authToken", token);
-        } else {
+        if (!token) {
           console.error("No JWT token found in session");
           return;
         }
+
+        sessionStorage.setItem("authToken", token);
 
         const res = await fetch(`${API}/users`, {
           method: "POST",
@@ -34,6 +34,12 @@ function SyncUser() {
           }),
         });
 
+        if (res.status === 401) {
+          console.warn("Token expired or unauthorized, signing out...");
+          signOut({ callbackUrl: "/" });
+          return;
+        }
+
         if (!res.ok) {
           const errText = await res.text();
           throw new Error(`Failed to sync user: ${errText}`);
@@ -42,6 +48,12 @@ function SyncUser() {
         console.log("User synced in AuthProvider");
       } catch (err) {
         console.error("User sync failed:", err);
+        if (
+          err.message.toLowerCase().includes("unauthorized") ||
+          err.message.toLowerCase().includes("token")
+        ) {
+          signOut({ callbackUrl: "/" });
+        }
       }
     };
 
