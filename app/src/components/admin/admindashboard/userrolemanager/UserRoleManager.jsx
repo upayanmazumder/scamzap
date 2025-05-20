@@ -65,7 +65,7 @@ export default function UserRoleManager() {
           users.map((user) => (
             <div
               key={user.id}
-              className="p-4 border rounded shadow-sm flex items-center justify-between"
+              className="p-4 border rounded shadow-sm flex items-center justify-between  bg-gray-800 hover:shadow-md hover:bg-gray-700 "
             >
               <div>
                 <p className="font-semibold">{user.name}</p>
