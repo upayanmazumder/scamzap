@@ -115,9 +115,9 @@ export default function LearnJourney() {
               key={lesson._id}
               className="text-[#79b2e4] px-6 pb-4 rounded-2xl flex flex-col items-center"
             >
-              <div className="flex items-center gap-4 bg-[#F89C3B] px-5 py-3 rounded-4xl shadow-md w-fit">
-  <div className="flex flex-col px-4 w-full items-center">
-    <span className="text-lg font-semibold text-[#164A78]">{lesson.topic}</span>
+              <div className="flex items-center gap-4 bg-[#F89C3B] px-5 py-3 rounded-3xl shadow-md w-fit">
+  <div className="flex flex-col px-4 w-full items-start">
+    <span className="text-xl font-semibold text-[#164A78]">{lesson.topic}</span>
     <span className="text-md text-[#164A78]">
       {lesson.quiz.length} quiz{lesson.quiz.length !== 1 ? "zes" : ""} — {progressPercent}% done
     </span>
@@ -149,9 +149,6 @@ export default function LearnJourney() {
                           {isLeft && (
                             <>
                               <div className="flex flex-col items-end text-right mr-4 max-w-xs">
-                                <span className="text-md font-semibold text-blue-400">
-                                  {quiz.topic}
-                                </span>
                                 <motion.button
                                   whileHover={{ scale: 1.08 }}
                                   whileTap={{ scale: 0.97 }}
@@ -170,12 +167,6 @@ export default function LearnJourney() {
                                     style={{ width: "120px", height: "120px" }}
                                   />
                                 </motion.button>
-                                <span className="text-sm text-blue-200 mb-2">
-                                  {quiz.questions?.length || 0}{" "}
-                                  {quiz.questions?.length === 1
-                                    ? "question"
-                                    : "questions"}
-                                </span>
                               </div>
                               <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
                             </>
@@ -195,9 +186,6 @@ export default function LearnJourney() {
                             <>
                               <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
                               <div className="flex flex-col items-start text-left ml-4 max-w-xs">
-                                <span className="text-md font-semibold text-blue-400">
-                                  {quiz.topic}
-                                </span>
                                 <motion.button
                                   whileHover={{ scale: 1.08 }}
                                   whileTap={{ scale: 0.97 }}
@@ -216,12 +204,6 @@ export default function LearnJourney() {
                                     style={{ width: "120px", height: "120px" }}
                                   />
                                 </motion.button>
-                                <span className="text-sm text-blue-200 mb-2">
-                                  {quiz.questions?.length || 0}{" "}
-                                  {quiz.questions?.length === 1
-                                    ? "question"
-                                    : "questions"}
-                                </span>
                               </div>
                             </>
                           )}
