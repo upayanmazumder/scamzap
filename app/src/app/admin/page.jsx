@@ -1,98 +1,13 @@
-"use client";
+import AdminDashboard from "../../components/admin/admindashboard/AdminDashboard";
 
-import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
-import UserRoleManager from "../../components/admin/userrolemanager/UserRoleManager";
-import LessonManager from "../../components/admin/lessonmanager/LessonManager.jsx";
-import API from "../../utils/api";
-import Loader from "../../components/loader/Loader";
-
-export default function Dashboard() {
-  const [activeTab, setActiveTab] = useState("users");
-  const { data: session, status } = useSession();
-  const router = useRouter();
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    if (status === "loading") return;
-    if (!session?.user?.sub) {
-      router.replace("/learn");
-      return;
-    }
-    const checkAdmin = async () => {
-      try {
-        const res = await fetch(`${API}/admin/role/${session.user.sub}`);
-        if (!res.ok) throw new Error();
-        const data = await res.json();
-        if (data.role !== "admin") {
-          router.replace("/learn");
-        } else {
-          setLoading(false);
-        }
-      } catch {
-        router.replace("/learn");
-      }
-    };
-    checkAdmin();
-  }, [session, status, router]);
-
-  if (loading || status === "loading")
-    return (
-      <main>
-        <Loader />
-      </main>
-    );
-
+export default function AdminPage() {
   return (
     <main>
       <div className="page-header">
         <h1>Admin Dashboard</h1>
-        <p>Manage users and content</p>
+        <p>Manage users, reports, and more.</p>
       </div>
-
-      <div className="tabs">
-        <button
-          className={activeTab === "users" ? "active" : ""}
-          onClick={() => setActiveTab("users")}
-        >
-          User Roles
-        </button>
-        <button
-          className={activeTab === "lessons" ? "active" : ""}
-          onClick={() => setActiveTab("lessons")}
-        >
-          Lessons
-        </button>
-      </div>
-
-      <div className="tab-content">
-        {activeTab === "users" && <UserRoleManager />}
-        {activeTab === "lessons" && <LessonManager />}
-      </div>
-
-      <style jsx>{`
-        .tabs {
-          display: flex;
-          gap: 1rem;
-          margin-bottom: 1rem;
-        }
-        button {
-          padding: 0.5rem 1rem;
-          border: none;
-          background: #1e5377;
-          cursor: pointer;
-          border-radius: 4px;
-          font-weight: 600;
-        }
-        button.active {
-          background: #0070f3;
-          color: white;
-        }
-        button:hover:not(.active) {
-          background: #3188c3;
-        }
-      `}</style>
+      <AdminDashboard />
     </main>
   );
 }

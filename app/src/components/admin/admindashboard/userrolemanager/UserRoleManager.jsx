@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import API from "../../../utils/api";
+import API from "../../../../utils/api";
 import { useSession } from "next-auth/react";
-import Loader from "../../loader/Loader";
+import Loader from "../../../loader/Loader";
 
 export default function UserRoleManager() {
   const { data: session } = useSession();

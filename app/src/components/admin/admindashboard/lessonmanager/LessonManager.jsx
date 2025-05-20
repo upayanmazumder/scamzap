@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { motion } from "framer-motion";
-import API from "../../../utils/api";
-import Loader from "../../loader/Loader";
+import API from "../../../../utils/api";
+import Loader from "../../../loader/Loader";
 
 import {
   AiOutlinePlus,

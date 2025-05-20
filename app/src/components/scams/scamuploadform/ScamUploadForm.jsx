@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
-import API from "../../utils/api";
+import API from "../../../utils/api";
 
 function ScamUploadForm({ userId }) {
   const [form, setForm] = useState({
