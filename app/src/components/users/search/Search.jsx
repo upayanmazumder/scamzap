@@ -73,6 +73,29 @@ export default function Users() {
       setFollowing((prev) =>
         isFollowing ? prev.filter((id) => id !== targetId) : [...prev, targetId]
       );
+
+      setUsers((prevUsers) =>
+        prevUsers.map((user) => {
+          if (user.id === targetId) {
+            const followers = user.followers ?? [];
+            return {
+              ...user,
+              followers: isFollowing
+                ? followers.filter((id) => id !== currentUserId)
+                : [...followers, currentUserId],
+            };
+          } else if (user.id === currentUserId) {
+            const followingList = user.following ?? [];
+            return {
+              ...user,
+              following: isFollowing
+                ? followingList.filter((id) => id !== targetId)
+                : [...followingList, targetId],
+            };
+          }
+          return user;
+        })
+      );
     } catch (err) {
       console.error(
         `Failed to ${isFollowing ? "unfollow" : "follow"} user:`,
