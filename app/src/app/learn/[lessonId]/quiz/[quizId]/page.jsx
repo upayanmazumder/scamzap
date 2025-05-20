@@ -1,11 +1,9 @@
 import Quiz from "../../../../../components/learn/quiz/Quiz";
 
-export default function QuizPage({ params }) {
-  const { lessonId, quizId } = params;
-
+export default function QuizPage() {
   return (
     <main>
-      <Quiz lessonId={lessonId} quizId={quizId} />
+      <Quiz />
     </main>
   );
 }
