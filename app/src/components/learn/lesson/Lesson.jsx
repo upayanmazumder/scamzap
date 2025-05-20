@@ -280,8 +280,12 @@ export default function LearnJourney() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black bg-opacity-40 flex items-center justify-center"
+            className="fixed inset-0 z-50 flex items-center justify-center"
             onClick={handleModalClose}
+            style={{
+              backdropFilter: "blur(5px)",
+              backgroundColor: "rgba(0, 0, 0, 0.5)",
+            }}
           >
             <motion.div
               initial={{ scale: 0.95, opacity: 0 }}
@@ -290,13 +294,6 @@ export default function LearnJourney() {
               className=" bg-[#164A78] rounded-2xl shadow-2xl p-8 max-w-xs w-full relative"
               onClick={(e) => e.stopPropagation()}
             >
-              <button
-                className="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl"
-                onClick={handleModalClose}
-                aria-label="Close"
-              >
-                ×
-              </button>
               <h2 className="text-xl font-bold text-blue-700 mb-2 text-center">
                 {modalQuiz.topic}
               </h2>
