@@ -63,14 +63,12 @@ export default function ScamFeed() {
       </Link>
 
       <div className="flex-1 w-full max-w-screen-sm mx-auto p-4 mt-4 space-y-6">
-        <div
-          className="overflow-x-auto mb-4"
-          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
-        >
-          <div className="flex flex-nowrap gap-2 px-2 whitespace-nowrap w-max">
+        <div className="mb-4 px-2">
+          <div className="flex flex-wrap gap-2 justify-center">
+            {" "}
             <button
               onClick={() => setSelectedCategory("All")}
-              className={`px-3 py-1 rounded-full border text-sm shrink-0 ${
+              className={`px-3 py-1 rounded-full border text-sm ${
                 selectedCategory === "All"
                   ? "bg-blue-600 text-white"
                   : "border-[var(--input)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
@@ -82,7 +80,7 @@ export default function ScamFeed() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-1 rounded-full border text-sm capitalize shrink-0 ${
+                className={`px-3 py-1 rounded-full border text-sm capitalize ${
                   selectedCategory === category
                     ? "bg-blue-600 text-white"
                     : "border-[var(--input)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
