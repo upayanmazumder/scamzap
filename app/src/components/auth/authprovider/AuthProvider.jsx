@@ -12,9 +12,22 @@ function SyncUser() {
       if (!session?.user?.email) return;
 
       try {
+        const token = session?.accessToken;
+
+        if (token) {
+          console.log("Token:", token);
+          sessionStorage.setItem("authToken", token);
+        } else {
+          console.error("No JWT token found in session");
+          return;
+        }
+
         const res = await fetch(`${API}/users`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
           body: JSON.stringify({
             id: session.user.sub,
             name: session.user.name,

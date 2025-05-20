@@ -13,15 +13,23 @@ export default function Redirect() {
   const router = useRouter();
 
   useEffect(() => {
-    if (status === "authenticated" && session?.user?.sub) {
+    if (
+      status === "authenticated" &&
+      session?.user?.sub &&
+      session?.accessToken
+    ) {
       const fetchRole = async () => {
         try {
-          const res = await fetch(`${API}/admin/role/${session.user.sub}`);
+          const res = await fetch(`${API}/admin/role/${session.user.sub}`, {
+            headers: {
+              Authorization: `Bearer ${session.accessToken}`,
+            },
+          });
           if (!res.ok) throw new Error("Failed to fetch role");
           const data = await res.json();
           setRole(data.role);
         } catch (error) {
-          console.error(error);
+          console.error("Error fetching role:", error);
           setRole(null);
         } finally {
           setLoading(false);
@@ -29,19 +37,17 @@ export default function Redirect() {
       };
       fetchRole();
     } else if (status !== "loading") {
-      setLoading(false);
       setRole(null);
+      setLoading(false);
     }
   }, [session, status]);
 
   if (loading) return <Loader />;
 
-  if (!session) {
-    return null;
-  }
+  if (!session) return null;
 
   return (
-    <div>
+    <>
       {role === "admin" && (
         <div
           style={{
@@ -53,6 +59,11 @@ export default function Redirect() {
           }}
           onClick={() => router.push("/admin")}
           title="Go to Admin Panel"
+          role="button"
+          tabIndex={0}
+          onKeyDown={(e) => {
+            if (e.key === "Enter" || e.key === " ") router.push("/admin");
+          }}
         >
           <img
             src="/icon.svg"
@@ -61,6 +72,6 @@ export default function Redirect() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }

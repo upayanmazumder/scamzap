@@ -24,7 +24,10 @@ export default function Profile() {
       const userId = session.user.sub;
       setLoadingCreatedAt(true);
       setError(null);
-      fetch(`${API}/users/${userId}`)
+      const token = sessionStorage.getItem("authToken");
+      fetch(`${API}/users/${userId}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
         .then(async (res) => {
           if (!res.ok) {
             throw new Error(`Error fetching user: ${res.statusText}`);

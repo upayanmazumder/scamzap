@@ -21,13 +21,21 @@ export default function User() {
   const fetchUser = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API}/users/${id}`);
+      const token = sessionStorage.getItem("authToken");
+      const res = await fetch(`${API}/users/${id}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
       if (!res.ok) throw new Error("Failed to fetch user");
       const data = await res.json();
       setUser(data);
 
       if (currentUserId && currentUserId !== id) {
-        const resFollowing = await fetch(`${API}/users/following/${id}`);
+        const resFollowing = await fetch(
+          `${API}/users/following/${currentUserId}`,
+          {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          }
+        );
         if (!resFollowing.ok) throw new Error("Failed to fetch following");
         const followingList = await resFollowing.json();
         setIsFollowing(followingList.some((u) => u.id === id));
@@ -52,10 +60,14 @@ export default function User() {
 
     setProcessing(true);
     try {
+      const token = sessionStorage.getItem("authToken");
       const endpoint = isFollowing ? "unfollow" : "follow";
       const res = await fetch(`${API}/users/${endpoint}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ userId: currentUserId, targetId: id }),
       });
 

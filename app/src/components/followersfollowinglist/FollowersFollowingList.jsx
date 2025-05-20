@@ -9,7 +9,10 @@ export default function FollowersFollowingList({ userId, type }) {
 
   useEffect(() => {
     if (open && userId) {
-      fetch(`${API}/users/${type}/${userId}`)
+      const token = sessionStorage.getItem("authToken");
+      fetch(`${API}/users/${type}/${userId}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      })
         .then((res) => res.json())
         .then((data) => setList(data))
         .catch(() => setList([]));

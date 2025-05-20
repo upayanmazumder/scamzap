@@ -4,41 +4,64 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
+import jwt from "jsonwebtoken";
 import userRoutes from "./routes/userRoutes.js";
 import scamRoutes from "./routes/scamRoutes.js";
 import lessonRoutes from "./routes/lessonRoutes.js";
 import followRoutes from "./routes/followRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 
-dotenv.config({ path: "../.env" });
+// Load environment variables from the root .env file
+dotenv.config({ path: path.resolve(process.cwd(), "../.env") });
 
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// CORS setup depending on environment
 const corsOptions =
   process.env.NEXT_PUBLIC_ENV === "production"
     ? { origin: process.env.NEXTAUTH_URL }
-    : {};
+    : { origin: "*" };
+
+// Middleware to authenticate JWT token using NextAuth secret
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) return res.status(401).json({ error: "No token provided" });
+
+  jwt.verify(token, process.env.NEXTAUTH_SECRET, (err, user) => {
+    if (err) return res.status(403).json({ error: "Invalid token" });
+    req.user = user;
+    next();
+  });
+}
 
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "public")));
+
+// Routes
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "public", "home.html"));
 });
 app.get("/ping", (req, res) => {
   res.status(200).json({ message: "API is online" });
 });
-app.use("/users", userRoutes);
-app.use("/scams", scamRoutes);
-app.use("/lessons", lessonRoutes);
-app.use("/users", followRoutes);
-app.use("/admin", adminRoutes);
+app.use("/users", authenticateToken, userRoutes);
+app.use("/scams", authenticateToken, scamRoutes);
+app.use("/lessons", authenticateToken, lessonRoutes);
+app.use("/users", authenticateToken, followRoutes);
+app.use("/admin", authenticateToken, adminRoutes);
+
+// 404 handler
 app.use((req, res, next) => {
   res.status(404).json({ error: "Not Found" });
 });
 
+// MongoDB connection
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => {
