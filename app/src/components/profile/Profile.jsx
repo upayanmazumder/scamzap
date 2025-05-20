@@ -174,7 +174,7 @@ export default function Profile() {
         >
           <button
             onClick={handleShare}
-            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-200 shadow-md"
+            className="flex items-center gap-2 px-6 py-2 text-white rounded-md duration-200 shadow-md"
             disabled={copySuccess}
           >
             <FaShareAlt />
@@ -182,7 +182,7 @@ export default function Profile() {
           </button>
           <button
             onClick={() => signOut()}
-            className="flex items-center gap-2 px-6 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-200 shadow-md"
+            className="flex items-center gap-2 px-6 py-2 text-white rounded-md duration-200 shadow-md"
           >
             <FaSignOutAlt />
             Logout

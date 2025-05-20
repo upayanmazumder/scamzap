@@ -238,12 +238,13 @@ button {
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  background-color: var(--theme-orange);
+  background-color: var(--theme-red);
   color: var(--foreground);
 }
 
 button:hover {
-  background-color: var(--theme-red);
+  background-color: var(--theme-orange);
+  text-decoration: none;
 }
 
 button svg {

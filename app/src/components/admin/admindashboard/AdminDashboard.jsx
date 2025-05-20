@@ -7,6 +7,7 @@ import UserRoleManager from "./userrolemanager/UserRoleManager";
 import LessonManager from "./lessonmanager/LessonManager";
 import API from "../../../utils/api";
 import Loader from "../../loader/Loader";
+import styles from "./AdminDashboard.module.css";
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState("users");
@@ -41,48 +42,26 @@ export default function Dashboard() {
 
   return (
     <>
-      <div className="tabs">
+      <div className={styles.tabs} style={{ display: "flex", gap: "1rem" }}>
         <button
-          className={activeTab === "users" ? "active" : ""}
+          className={activeTab === "users" ? styles.active : ""}
           onClick={() => setActiveTab("users")}
         >
           User Roles
         </button>
         <button
-          className={activeTab === "lessons" ? "active" : ""}
+          className={activeTab === "lessons" ? styles.active : ""}
           onClick={() => setActiveTab("lessons")}
         >
           Lessons
         </button>
       </div>
 
-      <div className="tab-content">
+      <div className={styles["tab-content"]}>
+        {" "}
         {activeTab === "users" && <UserRoleManager />}
         {activeTab === "lessons" && <LessonManager />}
       </div>
-
-      <style jsx>{`
-        .tabs {
-          display: flex;
-          gap: 1rem;
-          margin-bottom: 1rem;
-        }
-        button {
-          padding: 0.5rem 1rem;
-          border: none;
-          background: #1e5377;
-          cursor: pointer;
-          border-radius: 4px;
-          font-weight: 600;
-        }
-        button.active {
-          background: #0070f3;
-          color: white;
-        }
-        button:hover:not(.active) {
-          background: #3188c3;
-        }
-      `}</style>
     </>
   );
 }
