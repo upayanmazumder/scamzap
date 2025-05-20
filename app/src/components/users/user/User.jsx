@@ -1,7 +1,7 @@
 "use client";
 
 import API from "../../../utils/api";
-import Loader from "../../../components/loader/Loader";
+import Loader from "../../loader/Loader";
 import { useState, useEffect, useCallback } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { Flag } from "lucide-react";
 import API from "../../utils/api";
-import Loader from "../../components/loader/Loader";
+import Loader from "../loader/Loader";
 
 export default function ScamFeed() {
   const [scams, setScams] = useState([]);
