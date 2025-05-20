@@ -17,8 +17,39 @@ export const BottomBar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Hide BottomBar for "/" and any "/learn/*" routes but not "/learn"
-  if (pathname === "/" || pathname.startsWith("/learn/")) return null;
+  if (pathname === "/" || pathname.startsWith("/learn/")) {
+    return (
+      <div
+        className="
+        hidden lg:fixed lg:z-50 lg:top-0 lg:left-0 lg:h-screen lg:w-[21rem] 
+        lg:flex lg:items-center lg:justify-center
+      "
+      >
+        <motion.div
+          animate={{
+            y: [0, -100, 0, 100, 0],
+            x: [0, 40, 0, -40, 0],
+            rotate: [0, 2, 0, -2, 0],
+            scale: [1, 1.1, 1, 0.9, 1],
+          }}
+          transition={{
+            duration: 8,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        >
+          <Image
+            src="/mascot/full.webp"
+            alt="Mascot"
+            width={360}
+            height={388}
+            className="object-contain max-h-full max-w-full"
+            priority
+          />
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <div
