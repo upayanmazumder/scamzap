@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import Loader from "../../components/loader/Loader";
 import API from "../../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaBookOpen, FaStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import * as Accordion from "@radix-ui/react-accordion";
 
 export default function LearnJourney() {
   const { data: session, status } = useSession();
@@ -16,7 +17,6 @@ export default function LearnJourney() {
   const [progress, setProgress] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Modal state
   const [modalQuiz, setModalQuiz] = useState(null);
   const [modalLesson, setModalLesson] = useState(null);
 
@@ -41,6 +41,7 @@ export default function LearnJourney() {
               quiz: Array.isArray(lesson.quiz) ? lesson.quiz : [],
             }))
           : [];
+
         setLessons(normalized);
         setProgress(Array.isArray(progressData) ? progressData : []);
       } catch (err) {
@@ -62,7 +63,6 @@ export default function LearnJourney() {
     return lessonProgress.quizzes.find((q) => q.quizId === quizId);
   };
 
-  // Modal handlers
   const handleQuizCircleClick = (lesson, quiz) => {
     setModalLesson(lesson);
     setModalQuiz(quiz);
@@ -99,16 +99,19 @@ export default function LearnJourney() {
   }
 
   return (
-    <main className=" flex flex-col items-center justify-center min-h-screen">
-      <div>
+    <main className="flex flex-col items-center justify-center min-h-screen px-4 py-10">
+      <Accordion.Root
+        type="single"
+        collapsible
+        className="w-full max-w-4xl space-y-4"
+      >
         {lessons.map((lesson) => {
           const lessonProgress = getLessonProgress(lesson._id);
           let progressPercent = 0;
           if (
             lesson.quiz.length > 0 &&
             lessonProgress &&
-            lessonProgress.quizzes &&
-            lessonProgress.quizzes.length > 0
+            lessonProgress.quizzes?.length > 0
           ) {
             const completedQuizzes = lessonProgress.quizzes.filter(
               (q) => q.completed
@@ -117,112 +120,163 @@ export default function LearnJourney() {
               (completedQuizzes / lesson.quiz.length) * 100
             );
           }
+
           return (
-            <section
+            <Accordion.Item
               key={lesson._id}
-              className="mb-20 flex flex-col items-center w-full"
+              value={lesson._id}
+              className="overflow-hidden"
             >
-              {/* Capsule */}
-              <div
-                className="sticky top-6 z-20 bg-[#F89C3B] border border-blue-100 shadow-md rounded-2xl px-6 py-4 mb-0 grid grid-cols-1 gap-2 text-center w-full mx-auto"
-              >
-                <h1 className="text-xl font-semibold flex justify-center items-center gap-2 text-gray-700"
-                  style={{ color: "#164A78" }}>
-                  {lesson.topic}
-                </h1>
-                <div className="grid grid-cols-2 gap-2 text-md text-[#164A78]">
-                  <span>
-                    {lesson.quiz.length} quiz{lesson.quiz.length > 1 ? "zes" : ""}
-                  </span>
-                  {lesson.quiz.length > 0 && (
-                    <span>{progressPercent}% done</span>
-                  )}
-                </div>
-              </div>
-              {/* Timeline */}
-              <div className="relative w-full max-w-3xl mx-auto py-12">
-                <div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
-                <div className="flex flex-col gap-20">
-                  {lesson.quiz.map((quiz, quizIdx) => {
-                    const quizProgress = getQuizProgress(lesson._id, quiz._id);
-                    const isLeft = quizIdx % 2 === 0;
-                    return (
-                      <div
-                        key={quiz._id}
-                        className="relative flex items-center min-h-[140px]"
-                      >
-                        {quizIdx !== 0 && (
-                          <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
-                        )}
-                        {/* Left side */}
-                        <div className={`w-1/2 flex ${isLeft ? "justify-end mr-24" : "justify-end"}`}>
-                          {isLeft && (
-                            <>
-                              <motion.button
-                                whileHover={{ scale: 1.08 }}
-                                whileTap={{ scale: 0.97 }}
-                                className={`
-                                  w-20 h-20 rounded-full flex items-center justify-center
-                                  shadow-lg border-2 transition-all
-                                  relative z-10
-                                `}
-                                style={{
-                                  backgroundColor: quizProgress?.completed
-                                    ? "#2ECC71"
-                                    : "#F89C3B",
-                                }}
-                                onClick={() => handleQuizCircleClick(lesson, quiz)}
-                              >
-                                <FaStar
-                                  className="text-[#164A78]"
-                                  style={{ width: "120px", height: "120px" }}
-                                />
-                              </motion.button>
-                              <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
-                            </>
-                          )}
-                        </div>
-                        {/* Timeline dot */}
-                        <div className="absolute left-1/2 -translate-x-1/2 z-10">
-                          <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
-                        </div>
-                        {/* Right side */}
-                        <div className={`w-1/2 flex ${!isLeft ? "justify-start ml-24" : "justify-start"}`}>
-                          {!isLeft && (
-                            <>
-                              <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
-                              <motion.button
-                                whileHover={{ scale: 1.08 }}
-                                whileTap={{ scale: 0.97 }}
-                                className={`
-                                  w-20 h-20 rounded-full flex items-center justify-center
-                                  shadow-lg border-2 transition-all
-                                  relative z-10
-                                `}
-                                style={{
-                                  backgroundColor: quizProgress?.completed
-                                    ? "#2ECC71"
-                                    : "#F89C3B",
-                                }}
-                                onClick={() => handleQuizCircleClick(lesson, quiz)}
-                              >
-                                <FaStar
-                                  className="text-[#164A78]"
-                                  style={{ width: "120px", height: "120px" }}
-                                />
-                              </motion.button>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </section>
+              <Accordion.Header>
+                <Accordion.Trigger className="w-full bg-[#F89C3B] text-[#164A78] px-6 py-4 flex justify-between items-center font-semibold text-lg hover:bg-[#fca652] transition-all">
+                  <div className="flex flex-col text-left">
+                    <span className="text-xl font-bold">{lesson.topic}</span>
+                    <span className="text-sm">
+                      {lesson.quiz.length} quiz
+                      {lesson.quiz.length !== 1 ? "zes" : ""} —{" "}
+                      {progressPercent}% done
+                    </span>
+                  </div>
+                  <motion.span
+                    className="text-xl"
+                    animate={{ rotate: 90 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    ▶
+                  </motion.span>
+                </Accordion.Trigger>
+              </Accordion.Header>
+
+              <Accordion.Content asChild>
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  exit={{ opacity: 0, height: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="overflow-hidden"
+                >
+                  <div className="relative w-full max-w-3xl mx-auto py-12 px-4">
+                    <div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
+                    <div className="flex flex-col gap-20">
+                      {lesson.quiz.map((quiz, quizIdx) => {
+                        const quizProgress = getQuizProgress(
+                          lesson._id,
+                          quiz._id
+                        );
+                        const isLeft = quizIdx % 2 === 0;
+
+                        return (
+                          <div
+                            key={quiz._id}
+                            className="relative flex items-center min-h-[160px]"
+                          >
+                            {quizIdx !== 0 && (
+                              <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
+                            )}
+
+                            <div
+                              className={`w-1/2 flex ${
+                                isLeft ? "justify-end pr-6" : "justify-end"
+                              }`}
+                            >
+                              {isLeft && (
+                                <>
+                                  <div className="flex flex-col items-end text-right mr-4 max-w-xs">
+                                    <span className="text-md font-semibold text-blue-400">
+                                      {quiz.topic}
+                                    </span>
+                                    <motion.button
+                                      whileHover={{ scale: 1.08 }}
+                                      whileTap={{ scale: 0.97 }}
+                                      className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-2 transition-all relative z-10"
+                                      style={{
+                                        backgroundColor: quizProgress?.completed
+                                          ? "#2ECC71"
+                                          : "#F89C3B",
+                                      }}
+                                      onClick={() =>
+                                        handleQuizCircleClick(lesson, quiz)
+                                      }
+                                    >
+                                      <FaStar
+                                        className="text-[#164A78]"
+                                        style={{
+                                          width: "120px",
+                                          height: "120px",
+                                        }}
+                                      />
+                                    </motion.button>
+                                    <span className="text-sm text-blue-200 mb-2">
+                                      {quiz.questions?.length || 0}{" "}
+                                      {quiz.questions?.length === 1
+                                        ? "question"
+                                        : "questions"}
+                                    </span>
+                                  </div>
+                                  <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
+                                </>
+                              )}
+                            </div>
+
+                            <div className="absolute left-1/2 -translate-x-1/2 z-10">
+                              <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
+                            </div>
+
+                            <div
+                              className={`w-1/2 flex ${
+                                !isLeft ? "justify-start pl-6" : "justify-start"
+                              }`}
+                            >
+                              {!isLeft && (
+                                <>
+                                  <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
+                                  <div className="flex flex-col items-start text-left ml-4 max-w-xs">
+                                    <span className="text-md font-semibold text-blue-400">
+                                      {quiz.topic}
+                                    </span>
+                                    <motion.button
+                                      whileHover={{ scale: 1.08 }}
+                                      whileTap={{ scale: 0.97 }}
+                                      className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-2 transition-all relative z-10"
+                                      style={{
+                                        backgroundColor: quizProgress?.completed
+                                          ? "#2ECC71"
+                                          : "#F89C3B",
+                                      }}
+                                      onClick={() =>
+                                        handleQuizCircleClick(lesson, quiz)
+                                      }
+                                    >
+                                      <FaStar
+                                        className="text-[#164A78]"
+                                        style={{
+                                          width: "120px",
+                                          height: "120px",
+                                        }}
+                                      />
+                                    </motion.button>
+                                    <span className="text-sm text-blue-200 mb-2">
+                                      {quiz.questions?.length || 0}{" "}
+                                      {quiz.questions?.length === 1
+                                        ? "question"
+                                        : "questions"}
+                                    </span>
+                                  </div>
+                                </>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </motion.div>
+              </Accordion.Content>
+            </Accordion.Item>
           );
         })}
-      </div>
+      </Accordion.Root>
+
       {/* Modal */}
       <AnimatePresence>
         {modalQuiz && modalLesson && (
@@ -239,7 +293,7 @@ export default function LearnJourney() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               className=" bg-[#164A78] rounded-2xl shadow-2xl p-8 max-w-xs w-full relative"
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
               <button
                 className="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl"
@@ -248,11 +302,13 @@ export default function LearnJourney() {
               >
                 ×
               </button>
-              <h2 className="text-xl font-bold text-blue-700 mb-2 text-center">{modalQuiz.topic}</h2>
+              <h2 className="text-xl font-bold text-blue-700 mb-2 text-center">
+                {modalQuiz.topic}
+              </h2>
               <div className="text-center mb-6">
                 <span className="block">
-                  {modalQuiz.questions && modalQuiz.questions.length} question
-                  {modalQuiz.questions && modalQuiz.questions.length !== 1 ? "s" : ""}
+                  {modalQuiz.questions?.length || 0} question
+                  {modalQuiz.questions?.length !== 1 ? "s" : ""}
                 </span>
               </div>
               <button
