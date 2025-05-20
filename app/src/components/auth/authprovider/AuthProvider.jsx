@@ -15,7 +15,6 @@ function SyncUser() {
         const token = session?.accessToken;
 
         if (token) {
-          console.log("Token:", token);
           sessionStorage.setItem("authToken", token);
         } else {
           console.error("No JWT token found in session");
