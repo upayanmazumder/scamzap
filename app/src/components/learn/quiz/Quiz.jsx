@@ -108,7 +108,7 @@ export default function QuizPage() {
   return (
     <>
       {!quizCompleted && (
-        <div className="w-full h-4 bg-gray-300 rounded mb-6">
+        <div className="w-full max-w-2xl mx-auto h-4 bg-gray-300 rounded mb-6">
           <div
             className="h-full bg-green-500 transition-all duration-300 rounded"
             style={{
@@ -145,7 +145,7 @@ export default function QuizPage() {
                   animate={{ opacity: 1, x: 0 }}
                   exit={{ opacity: 0, x: -20 }}
                   transition={{ duration: 0.4 }}
-                  className="mb-8 h-full w-full flex flex-col justify-center"
+                  className="mb-8 h-full w-full max-w-2xl mx-auto flex flex-col justify-center"
                 >
                   <div className="mb-6">
                     <h2 className="text-2xl font-semibold mb-2">

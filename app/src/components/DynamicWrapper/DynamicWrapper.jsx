@@ -6,7 +6,7 @@ export default function DynamicWrapper({ children }) {
   const pathname = usePathname();
   let bool = true;
 
-  if (pathname === "/" || pathname === "/learn/") {
+  if (pathname === "/" || pathname.startsWith("/learn/")) {
     bool = false;
   }
 

@@ -2,12 +2,11 @@ import Search from "../../components/users/search/Search";
 
 export default function SearchPage() {
   return (
-    <main>
-      <div className="page-header">
+    <div className="w-full flex flex-col items-center justify-center pt-6 mx-auto">
+      <div className="flex flex-col items-center justify-center pt-6 mx-auto">
         <h1>Search Users</h1>
-        <p>Find users by their username or email.</p>
       </div>
       <Search />
-    </main>
+    </div>
   );
 }
