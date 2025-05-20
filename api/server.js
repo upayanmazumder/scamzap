@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
-import jwt from "jsonwebtoken";
+import authenticateToken from "./middleware/auth.js";
 import userRoutes from "./routes/userRoutes.js";
 import scamRoutes from "./routes/scamRoutes.js";
 import lessonRoutes from "./routes/lessonRoutes.js";
@@ -26,18 +26,7 @@ const corsOptions =
     ? { origin: process.env.NEXTAUTH_URL }
     : { origin: "*" };
 
-// Middleware to authenticate JWT token using NextAuth secret
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) return res.status(401).json({ error: "No token provided" });
 
-  jwt.verify(token, process.env.NEXTAUTH_SECRET, (err, user) => {
-    if (err) return res.status(403).json({ error: "Invalid token" });
-    req.user = user;
-    next();
-  });
-}
 
 app.use(cors(corsOptions));
 app.use(express.json());
