@@ -59,19 +59,39 @@ router.post("/:id/progress", async (req, res) => {
 
     let progress = user.progress || [];
     const idx = progress.findIndex((p) => p.lessonId === lessonId);
+
     if (idx > -1) {
+      let existingQuizzes = Array.isArray(progress[idx].quizzes)
+        ? progress[idx].quizzes
+        : [];
+      let newQuizzes = Array.isArray(quizzes) ? quizzes : [];
+
+      newQuizzes.forEach((newQuiz) => {
+        const quizIdx = existingQuizzes.findIndex(
+          (q) => String(q.quizId) === String(newQuiz.quizId)
+        );
+        if (quizIdx > -1) {
+          existingQuizzes[quizIdx] = {
+            ...existingQuizzes[quizIdx],
+            ...newQuiz,
+          };
+        } else {
+          existingQuizzes.push(newQuiz);
+        }
+      });
+
       progress[idx] = {
         ...progress[idx],
         lessonId,
         completed: completed ?? progress[idx].completed,
-        quizzes: quizzes ?? progress[idx].quizzes,
+        quizzes: existingQuizzes,
         lastAccessed: lastAccessed ?? progress[idx].lastAccessed,
       };
     } else {
       progress.push({
         lessonId,
         completed: !!completed,
-        quizzes: quizzes || [],
+        quizzes: Array.isArray(quizzes) ? quizzes : [],
         lastAccessed: lastAccessed || new Date(),
       });
     }
