@@ -5,6 +5,7 @@ import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { Home, Search, User, Settings, Users, Bell } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { FloatingMascot } from "../floatingmascot/FloatingMascot";
 
 const navItems = [
   { href: "/learn", label: "Learn", icon: Home },
@@ -25,28 +26,7 @@ export const BottomBar = () => {
         lg:flex lg:items-center lg:justify-center
       "
       >
-        <motion.div
-          animate={{
-            y: [0, -100, 0, 100, 0],
-            x: [0, 40, 0, -40, 0],
-            rotate: [0, 2, 0, -2, 0],
-            scale: [1, 1.1, 1, 0.9, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
-        >
-          <Image
-            src="/mascot/full.webp"
-            alt="Mascot"
-            width={360}
-            height={388}
-            className="object-contain max-h-full max-w-full"
-            priority
-          />
-        </motion.div>
+        <FloatingMascot />
       </div>
     );
   }
@@ -57,12 +37,15 @@ export const BottomBar = () => {
         fixed z-50 w-full h-16 max-w-lg bg-[var(--background)] px-2 py-2
         bottom-0 left-1/2 -translate-x-1/2
         border-t-2 border-[var(--input)]
-        lg:top-0 lg:left-0 lg:h-screen lg:w-56 lg:max-w-none lg:translate-x-0 lg:translate-y-0
+        lg:top-0 lg:left-0 lg:h-screen lg:w-60 lg:max-w-none lg:translate-x-0 lg:translate-y-0
         lg:flex lg:flex-col lg:items-start lg:justify-start lg:rounded-none lg:py-4 lg:px-3
         lg:border-t-0 lg:border-r-2
       "
     >
-      <div className="hidden lg:flex items-center justify-start gap-2 mb-6 w-full">
+      <div
+        className="hidden lg:flex items-center justify-center gap-2 mb-6 mr-0 w-full"
+        style={{ margin: 0 }}
+      >
         <a
           href="https://github.com/upayanmazumder/scamzap"
           target="_blank"
