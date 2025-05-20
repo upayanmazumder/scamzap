@@ -91,6 +91,7 @@ export default function User() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
+          classname
         >
           <Loader />
         </motion.div>
@@ -107,7 +108,7 @@ export default function User() {
       ) : (
         <motion.div
           key="profile"
-          className="flex flex-col items-center"
+          className="flex flex-col items-center  bg-gray-800 hover:shadow-md py-8 rounded-lg shadow-md"
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
