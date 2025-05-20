@@ -1,26 +1,13 @@
-"use client";
-import { motion } from "framer-motion";
+import Offline from "../../components/offline/Offline";
 
-export default function Offline() {
+export default function OfflinePage() {
   return (
-    <motion.div
-      className="flex flex-col items-center justify-center text-center p-4"
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6, ease: "easeOut" }}
-    >
-      <h1 className="text-4xl font-bold mb-4">You are offline</h1>
-      <p className="mb-6 text-lg text-gray-600">
-        Pages will now be served from the cache.
-      </p>
-      <motion.img
-        src="/mascot/expressionless.svg"
-        alt="Not Found Image"
-        className=" max-w-xs"
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.5 }}
-      />
-    </motion.div>
+    <main className="flex flex-col items-center justify-center w-full h-full">
+      <div className="page-header">
+        <h1>Offline</h1>
+        <p>It seems you are offline. Please check your internet connection.</p>
+      </div>
+      <Offline />
+    </main>
   );
 }

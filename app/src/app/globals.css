@@ -159,10 +159,18 @@ main {
   gap: var(--margin-medium);
 }
 
+@media (max-width: 1024px) {
+  main {
+    margin: var(--margin-large) 0;
+    padding: var(--padding-small) var(--padding-medium) 50px;
+    min-height: 80vh;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 768px) {
   main {
     margin: var(--margin-large) 0;
-    padding: var(--padding-small) var(--padding-medium);
     min-height: 80vh;
     justify-content: center;
   }
@@ -230,12 +238,13 @@ button {
   cursor: pointer;
   -webkit-user-select: none;
   user-select: none;
-  background-color: var(--theme-orange);
+  background-color: var(--theme-red);
   color: var(--foreground);
 }
 
 button:hover {
-  background-color: var(--theme-red);
+  background-color: var(--theme-orange);
+  text-decoration: none;
 }
 
 button svg {
@@ -308,6 +317,10 @@ blockquote {
   color: rgba(255, 255, 255, 0.8);
 }
 
+option {
+  background-color: rgb(250, 92, 35);
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -373,8 +386,4 @@ blockquote {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.4);
   border-color: rgba(255, 255, 255, 0.2);
-}
-
-::-webkit-scrollbar-track {
-  background: rgba(128, 128, 128, 0.05);
 }

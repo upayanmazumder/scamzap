@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import API from "../../../utils/api";
+import API from "../../../../utils/api";
 import { useSession } from "next-auth/react";
-import Loader from "../../loader/Loader";
+import Loader from "../../../loader/Loader";
 
 export default function UserRoleManager() {
   const { data: session } = useSession();
@@ -53,7 +53,7 @@ export default function UserRoleManager() {
   }, [session]);
 
   return (
-    <div className="p-4 max-w-3xl mx-auto h-screen">
+    <div className="p-4 max-w-3xl mx-auto">
       <h2 className="text-2xl font-bold mb-4">User Role Manager</h2>
 
       <div className="overflow-y-auto max-h-[calc(100vh-6rem)] space-y-4 pr-2">
@@ -65,7 +65,7 @@ export default function UserRoleManager() {
           users.map((user) => (
             <div
               key={user.id}
-              className="p-4 border rounded shadow-sm flex items-center justify-between"
+              className="p-4 border rounded shadow-sm flex items-center justify-between bg-gray-800 hover:shadow-md hover:bg-gray-700"
             >
               <div>
                 <p className="font-semibold">{user.name}</p>

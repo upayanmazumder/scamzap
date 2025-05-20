@@ -5,6 +5,7 @@ import ServiceWorkerRegister from "../components/serviceworkerregister/ServiceWo
 import { BottomBar } from "../components/bottombar/Bottombar";
 import AdminRedirect from "../components/admin/redirect/Redirect";
 import DynamicWrapper from "../components/DynamicWrapper/DynamicWrapper";
+import ProtectedRoute from "../components/auth/protectedroute/ProtectedRoute";
 
 export const metadata = {
   title: "Scamzap",
@@ -31,7 +32,9 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <BottomBar />
           <AdminRedirect />
-          <DynamicWrapper>{children}</DynamicWrapper>
+          <ProtectedRoute>
+            <DynamicWrapper>{children}</DynamicWrapper>
+          </ProtectedRoute>
           <ServiceWorkerRegister />
         </AuthProvider>
       </body>

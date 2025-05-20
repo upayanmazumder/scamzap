@@ -1,0 +1,12 @@
+.tabs button {
+  background-color: transparent;
+  transition: background-color 0.3s ease;
+}
+
+.tabs button:hover {
+  background-color: var(--theme-orange);
+}
+
+.tabs button.active {
+  background-color: var(--theme-red);
+}

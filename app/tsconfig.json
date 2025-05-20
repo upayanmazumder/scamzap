@@ -27,7 +27,8 @@
     "**/*.tsx",
     "src/app/[...catchall]/page.jsx",
     "src/components/404/404.jsx",
-    "src/app/offline/page.jsx"
+    "src/app/offline/page.jsx",
+    "src/components/serviceworkerregister/ServiceWorkerRegister.jsx"
   ],
   "exclude": ["node_modules"]
 }
