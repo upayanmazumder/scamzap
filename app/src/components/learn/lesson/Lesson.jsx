@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loader from "../../loader/Loader";
 import API from "../../../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,6 +18,9 @@ export default function LearnJourney() {
 
   const [modalQuiz, setModalQuiz] = useState(null);
   const [modalLesson, setModalLesson] = useState(null);
+
+  const quizRefs = useRef({});
+  const [scrollTargetId, setScrollTargetId] = useState(null);
 
   useEffect(() => {
     if (status !== "authenticated") {
@@ -66,6 +69,22 @@ export default function LearnJourney() {
 
         setLessons(normalized);
         setProgress(Array.isArray(progressData) ? progressData : []);
+
+        for (const lesson of normalized) {
+          for (const quiz of lesson.quiz) {
+            const quizId = quiz._id;
+            const lessonProgress = progressData.find(
+              (p) => p.lessonId === lesson._id
+            );
+            const quizProgress = lessonProgress?.quizzes?.find(
+              (q) => q.quizId === quizId
+            );
+            if (!quizProgress?.completed) {
+              setScrollTargetId(quizId);
+              return;
+            }
+          }
+        }
       } catch (err) {
         console.error("Failed to fetch lessons or progress:", err);
       } finally {
@@ -75,6 +94,19 @@ export default function LearnJourney() {
 
     fetchLessonsAndProgress();
   }, [session, status]);
+
+  useEffect(() => {
+    if (scrollTargetId && quizRefs.current[scrollTargetId]) {
+      const timeout = setTimeout(() => {
+        quizRefs.current[scrollTargetId].scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+        });
+      }, 800);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [scrollTargetId]);
 
   const getLessonProgress = (lessonId) =>
     progress.find((p) => p.lessonId === lessonId);
@@ -145,7 +177,8 @@ export default function LearnJourney() {
                   </span>
                   <span className="text-md text-[#164A78]">
                     {lesson.quiz.length} quiz
-                    {lesson.quiz.length !== 1 ? "zes" : ""} — {progressPercent}% done
+                    {lesson.quiz.length !== 1 ? "zes" : ""} — {progressPercent}%
+                    done
                   </span>
                 </div>
               </div>
@@ -161,6 +194,7 @@ export default function LearnJourney() {
                       <div
                         key={quiz._id}
                         className="relative flex items-center min-h-[160px]"
+                        ref={(el) => (quizRefs.current[quiz._id] = el)}
                       >
                         {quizIdx !== 0 && (
                           <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
