@@ -155,19 +155,19 @@ export default function QuizPage() {
                       const isCorrect = option === currentQuestion.answer;
 
                       let optionClass =
-                        "cursor-pointer rounded-md border px-4 py-2 select-none";
+                        "cursor-pointer rounded-md border px-4 py-2 select-none bg-gray-800 text-white transition-colors duration-200";
                       if (showAnswer) {
                         if (isCorrect) {
                           optionClass +=
-                            " bg-green-200 border-green-500 text-green-900 font-semibold";
+                            " bg-green-800 border-green-500 text-green-900 font-semibold";
                         } else if (isSelected && !isCorrect) {
                           optionClass +=
-                            " bg-red-200 border-red-500 text-red-900 font-semibold line-through";
+                            " bg-red-800 border-red-500 text-red-900 font-semibold line-through";
                         } else {
                           optionClass += " opacity-70 cursor-default";
                         }
                       } else {
-                        optionClass += " hover:bg-blue-100 text-gray-900";
+                        optionClass += "hover:bg-gray-700";
                       }
 
                       return (
