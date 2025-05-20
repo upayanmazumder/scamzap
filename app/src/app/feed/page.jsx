@@ -2,12 +2,11 @@ import Scams from "../../components/scams/Scams";
 
 export default function FeedPage() {
   return (
-    <main>
-      <div className="page-header">
+    <div className="w-full">
+      <div className="flex flex-col items-center justify-center pt-6">
         <h1>Recent Scams</h1>
-        <p>Stay updated with the latest scams reported by users.</p>
       </div>
       <Scams />
-    </main>
+    </div>
   );
 }

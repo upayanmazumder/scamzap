@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { Flag } from "lucide-react";
 import API from "../../utils/api";
-import Loader from "../loader/Loader";
+import Loader from "../../components/loader/Loader";
 
 export default function ScamFeed() {
   const [scams, setScams] = useState([]);
@@ -43,6 +44,7 @@ export default function ScamFeed() {
       });
   }, []);
 
+
   useEffect(() => {
     if (selectedCategory === "All") {
       setFilteredScams(scams);
@@ -56,22 +58,26 @@ export default function ScamFeed() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[var(--background)] text-[var(--foreground)] relative">
+      {/* Fixed Report Icon */}
       <Link href="/report">
         <button
-          className="fixed bottom-20 sm:bottom-6 right-4 z-50 p-2 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+          className="fixed bottom-20 right-4 z-50 p-2 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
           title="Report a Scam"
         >
           <Flag className="w-5 h-5" />
         </button>
       </Link>
 
-      <div className="flex-1 w-full max-w-screen-sm mx-auto p-4 mt-4 space-y-6">
-        <div className="mb-4 px-2">
-          <div className="flex flex-wrap gap-2 justify-center">
-            {" "}
+      <div className="flex-1 w-full max-w-screen-sm mx-auto px-4 pb-20 mt-4 space-y-6">
+        {/* Category Tags - Horizontal Scrollable */}
+        <div
+          className="overflow-x-auto mb-4"
+          style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+        >
+          <div className="flex flex-nowrap gap-2 px-2 whitespace-nowrap w-max">
             <button
               onClick={() => setSelectedCategory("All")}
-              className={`px-3 py-1 rounded-full border text-sm ${
+              className={`px-3 py-1 rounded-full border text-sm shrink-0 ${
                 selectedCategory === "All"
                   ? "bg-blue-600 text-white"
                   : "border-[var(--input)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
@@ -83,7 +89,7 @@ export default function ScamFeed() {
               <button
                 key={category}
                 onClick={() => setSelectedCategory(category)}
-                className={`px-3 py-1 rounded-full border text-sm capitalize ${
+                className={`px-3 py-1 rounded-full border text-sm capitalize shrink-0 ${
                   selectedCategory === category
                     ? "bg-blue-600 text-white"
                     : "border-[var(--input)] text-[var(--muted-foreground)] hover:bg-[var(--muted)]"
@@ -116,7 +122,7 @@ export default function ScamFeed() {
           filteredScams.map((scam) => (
             <div
               key={scam.id}
-              className="p-4 border border-[var(--input)] rounded-xl shadow-md  bg-gray-800 hover:shadow-md hover:bg-gray-700 "
+              className="p-4 border border-[var(--input)] rounded-xl shadow-md bg-[var(--card)]"
             >
               <h2 className="text-lg font-semibold text-[var(--foreground)]">
                 {scam.title}
