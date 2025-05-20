@@ -116,14 +116,16 @@ export default function LearnJourney() {
               className="text-[#79b2e4] px-6 pb-4 rounded-2xl flex flex-col items-center"
             >
               <div className="flex items-center gap-4 bg-[#F89C3B] px-5 py-3 rounded-3xl shadow-md w-fit">
-  <div className="flex flex-col px-4 w-full items-start">
-    <span className="text-xl font-semibold text-[#164A78]">{lesson.topic}</span>
-    <span className="text-md text-[#164A78]">
-      {lesson.quiz.length} quiz{lesson.quiz.length !== 1 ? "zes" : ""} — {progressPercent}% done
-    </span>
-  </div>
-</div>
-
+                <div className="flex flex-col px-4 w-full items-start">
+                  <span className="text-xl font-semibold text-[#164A78]">
+                    {lesson.topic}
+                  </span>
+                  <span className="text-md text-[#164A78]">
+                    {lesson.quiz.length} quiz
+                    {lesson.quiz.length !== 1 ? "zes" : ""} — {progressPercent}% done
+                  </span>
+                </div>
+              </div>
 
               <div className="relative w-full max-w-3xl mx-auto py-12 px-4">
                 <div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
@@ -236,7 +238,7 @@ export default function LearnJourney() {
               initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
-              className=" bg-[#164A78] rounded-2xl shadow-2xl p-8 max-w-xs w-full relative"
+              className="bg-[#164A78] rounded-2xl shadow-2xl p-8 max-w-xs w-full relative"
               onClick={(e) => e.stopPropagation()}
             >
               <h2 className="text-xl font-bold text-blue-700 mb-2 text-center">
