@@ -14,6 +14,7 @@ export default function ScamFeed() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [userNames, setUserNames] = useState({});
 
   useEffect(() => {
     const token = sessionStorage.getItem("authToken");
@@ -44,6 +45,36 @@ export default function ScamFeed() {
       });
   }, []);
 
+  useEffect(() => {
+    if (scams.length === 0) return;
+
+    const uniqueUserIds = [
+      ...new Set(scams.map((s) => s.submittedBy).filter(Boolean)),
+    ].filter((id) => !(id in userNames));
+
+    if (uniqueUserIds.length === 0) return;
+
+    const token = sessionStorage.getItem("authToken");
+
+    Promise.all(
+      uniqueUserIds.map((id) =>
+        fetch(`${API}/users/${id}`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        })
+          .then((res) => (res.ok ? res.json() : null))
+          .then((data) => ({ id, name: data?.name || "Unknown user" }))
+          .catch(() => ({ id, name: "Unknown user" }))
+      )
+    ).then((results) => {
+      setUserNames((prev) => {
+        const updated = { ...prev };
+        results.forEach(({ id, name }) => {
+          updated[id] = name;
+        });
+        return updated;
+      });
+    });
+  }, [scams, userNames]);
 
   useEffect(() => {
     if (selectedCategory === "All") {
@@ -58,7 +89,6 @@ export default function ScamFeed() {
 
   return (
     <div className="flex flex-col min-h-screen bg-[var(--background)] text-[var(--foreground)] relative">
-      {/* Fixed Report Icon */}
       <Link href="/report">
         <button
           className="fixed bottom-20 right-4 z-50 p-2 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
@@ -69,7 +99,6 @@ export default function ScamFeed() {
       </Link>
 
       <div className="flex-1 w-full max-w-screen-sm mx-auto px-4 pb-20 mt-4 space-y-6">
-        {/* Category Tags - Horizontal Scrollable */}
         <div
           className="overflow-x-auto mb-4"
           style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
@@ -140,7 +169,7 @@ export default function ScamFeed() {
                     href={`/search/${scam.submittedBy}`}
                     className="text-blue-600 hover:underline"
                   >
-                    This user
+                    {userNames[scam.submittedBy] || "Loading..."}
                   </Link>
                 ) : (
                   "Unknown user"
