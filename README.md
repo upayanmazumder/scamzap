@@ -37,5 +37,6 @@ scamzap is built by **Indecisive Folks**.
 - **Monica Srinivas** - [LinkedIn](https://www.linkedin.com/in/monicasrinivas/)
 - **[Devansh Arora](https://devansharora.in)** - [LinkedIn](https://www.linkedin.com/in/devansh-arora-7b2395215/)
 - **[Swayam](https://github.com/swayam5342)** - [LinkedIn](https://www.linkedin.com/in/swayam-prakash-2909222b4)
+- **[Shourya Saraf] - [LinkedIn](https://www.linkedin.com/in/shourya-saraf-186b8332a/)
 
 <todo>
