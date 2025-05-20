@@ -693,9 +693,10 @@ const LessonManager = () => {
         )}
       </motion.div>
 
-      {/* Existing Lessons */}
       <div>
-        <h3 className="text-3xl font-bold mb-4">Existing Lessons</h3>
+        <h3 className="text-3xl font-bold mb-4 text-center">
+          Existing Lessons
+        </h3>
         {loading && <Loader />}
 
         {!loading && lessons.length === 0 && <p>No lessons found.</p>}

@@ -95,10 +95,6 @@ export default function Users() {
 
   return (
     <>
-      <div className="page-header flex justify-center items-center mt-6 mb-4">
-        <h1 className="text-2xl md:text-3xl font-bold">Search Users</h1>
-      </div>
-
       <div className="flex flex-col items-center w-full max-w-4xl mx-auto">
         <input
           type="text"

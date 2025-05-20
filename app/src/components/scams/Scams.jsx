@@ -55,7 +55,7 @@ export default function ScamFeed() {
     <div className="flex flex-col min-h-screen bg-[var(--background)] text-[var(--foreground)] relative">
       <Link href="/report">
         <button
-          className="fixed bottom-20 right-4 z-50 p-2 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
+          className="fixed bottom-20 sm:bottom-6 right-4 z-50 p-2 h-12 rounded-full bg-blue-600 text-white hover:bg-blue-700 transition"
           title="Report a Scam"
         >
           <Flag className="w-5 h-5" />
