@@ -1,4 +1,4 @@
-import LessonDetail from "../../../components/lessondetail/LessonDetail";
+import LessonDetail from "../../../components/learn/lessondetail/LessonDetail";
 
 export default function LessonPage({ params }) {
   const { lessonId } = params;

@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import Loader from "../loader/Loader";
-import API from "../../utils/api";
+import Loader from "../../loader/Loader";
+import API from "../../../utils/api";
 import { useSession } from "next-auth/react";
 
 export default function QuizPage() {

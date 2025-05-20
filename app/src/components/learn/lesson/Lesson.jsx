@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Loader from "../../components/loader/Loader";
-import API from "../../utils/api";
+import Loader from "../../../components/loader/Loader";
+import API from "../../../utils/api";
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import { useSession } from "next-auth/react";
