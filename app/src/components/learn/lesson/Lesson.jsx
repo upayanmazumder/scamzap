@@ -7,7 +7,6 @@ import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from "react-icons/fa";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import * as Accordion from "@radix-ui/react-accordion";
 
 export default function LearnJourney() {
   const { data: session, status } = useSession();
@@ -94,11 +93,7 @@ export default function LearnJourney() {
 
   return (
     <>
-      <Accordion.Root
-        type="single"
-        collapsible
-        className="w-full max-w-4xl space-y-4"
-      >
+      <div className="w-full max-w-4xl space-y-8">
         {lessons.map((lesson) => {
           const lessonProgress = getLessonProgress(lesson._id);
           let progressPercent = 0;
@@ -116,163 +111,131 @@ export default function LearnJourney() {
           }
 
           return (
-            <Accordion.Item
+            <div
               key={lesson._id}
-              value={lesson._id}
-              className="overflow-hidden"
+              className="text-[#79b2e4] px-6 pb-4 rounded-2xl flex flex-col items-center"
             >
-              <Accordion.Header>
-                <Accordion.Trigger
-                  className="w-full bg-[#F89C3B] text-[#164A78] px-6 py-4 flex justify-between items-center font-semibold text-lg hover:bg-[#fca652] transition-all"
-                  style={{ borderRadius: "16px !important" }}
-                >
-                  <div className="flex flex-col text-left">
-                    <span className="text-xl font-bold">{lesson.topic}</span>
-                    <span className="text-sm">
-                      {lesson.quiz.length} quiz
-                      {lesson.quiz.length !== 1 ? "zes" : ""} —{" "}
-                      {progressPercent}% done
-                    </span>
-                  </div>
-                  <motion.span
-                    className="text-xl"
-                    animate={{ rotate: 90 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    ▶
-                  </motion.span>
-                </Accordion.Trigger>
-              </Accordion.Header>
+              <div className="flex items-center gap-4 bg-[#F89C3B] px-5 py-3 rounded-4xl shadow-md w-fit">
+  <div className="flex flex-col px-4 w-full items-center">
+    <span className="text-lg font-semibold text-[#164A78]">{lesson.topic}</span>
+    <span className="text-md text-[#164A78]">
+      {lesson.quiz.length} quiz{lesson.quiz.length !== 1 ? "zes" : ""} — {progressPercent}% done
+    </span>
+  </div>
+</div>
 
-              <Accordion.Content asChild>
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: "auto" }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden"
-                >
-                  <div className="relative w-full max-w-3xl mx-auto py-12 px-4">
-                    <div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
-                    <div className="flex flex-col gap-20">
-                      {lesson.quiz.map((quiz, quizIdx) => {
-                        const quizProgress = getQuizProgress(
-                          lesson._id,
-                          quiz._id
-                        );
-                        const isLeft = quizIdx % 2 === 0;
 
-                        return (
-                          <div
-                            key={quiz._id}
-                            className="relative flex items-center min-h-[160px]"
-                          >
-                            {quizIdx !== 0 && (
-                              <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
-                            )}
+              <div className="relative w-full max-w-3xl mx-auto py-12 px-4">
+                <div className="absolute left-1/2 top-[130px] bottom-[130px] w-1 bg-blue-200 -translate-x-1/2 z-0"></div>
+                <div className="flex flex-col gap-20">
+                  {lesson.quiz.map((quiz, quizIdx) => {
+                    const quizProgress = getQuizProgress(lesson._id, quiz._id);
+                    const isLeft = quizIdx % 2 === 0;
 
-                            <div
-                              className={`w-1/2 flex ${
-                                isLeft ? "justify-end pr-6" : "justify-end"
-                              }`}
-                            >
-                              {isLeft && (
-                                <>
-                                  <div className="flex flex-col items-end text-right mr-4 max-w-xs">
-                                    <span className="text-md font-semibold text-blue-400">
-                                      {quiz.topic}
-                                    </span>
-                                    <motion.button
-                                      whileHover={{ scale: 1.08 }}
-                                      whileTap={{ scale: 0.97 }}
-                                      className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-2 transition-all relative z-10"
-                                      style={{
-                                        backgroundColor: quizProgress?.completed
-                                          ? "#2ECC71"
-                                          : "#F89C3B",
-                                      }}
-                                      onClick={() =>
-                                        handleQuizCircleClick(lesson, quiz)
-                                      }
-                                    >
-                                      <FaStar
-                                        className="text-[#164A78]"
-                                        style={{
-                                          width: "120px",
-                                          height: "120px",
-                                        }}
-                                      />
-                                    </motion.button>
-                                    <span className="text-sm text-blue-200 mb-2">
-                                      {quiz.questions?.length || 0}{" "}
-                                      {quiz.questions?.length === 1
-                                        ? "question"
-                                        : "questions"}
-                                    </span>
-                                  </div>
-                                  <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
-                                </>
-                              )}
-                            </div>
+                    return (
+                      <div
+                        key={quiz._id}
+                        className="relative flex items-center min-h-[160px]"
+                      >
+                        {quizIdx !== 0 && (
+                          <div className="absolute left-1/2 -translate-x-1/2 -top-20 w-1 h-20 bg-blue-200 z-0"></div>
+                        )}
 
-                            <div className="absolute left-1/2 -translate-x-1/2 z-10">
-                              <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
-                            </div>
+                        <div
+                          className={`w-1/2 flex ${
+                            isLeft ? "justify-end pr-6" : "justify-end"
+                          }`}
+                        >
+                          {isLeft && (
+                            <>
+                              <div className="flex flex-col items-end text-right mr-4 max-w-xs">
+                                <span className="text-md font-semibold text-blue-400">
+                                  {quiz.topic}
+                                </span>
+                                <motion.button
+                                  whileHover={{ scale: 1.08 }}
+                                  whileTap={{ scale: 0.97 }}
+                                  className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-2 transition-all relative z-10"
+                                  style={{
+                                    backgroundColor: quizProgress?.completed
+                                      ? "#2ECC71"
+                                      : "#F89C3B",
+                                  }}
+                                  onClick={() =>
+                                    handleQuizCircleClick(lesson, quiz)
+                                  }
+                                >
+                                  <FaStar
+                                    className="text-[#164A78]"
+                                    style={{ width: "120px", height: "120px" }}
+                                  />
+                                </motion.button>
+                                <span className="text-sm text-blue-200 mb-2">
+                                  {quiz.questions?.length || 0}{" "}
+                                  {quiz.questions?.length === 1
+                                    ? "question"
+                                    : "questions"}
+                                </span>
+                              </div>
+                              <div className="absolute right-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
+                            </>
+                          )}
+                        </div>
 
-                            <div
-                              className={`w-1/2 flex ${
-                                !isLeft ? "justify-start pl-6" : "justify-start"
-                              }`}
-                            >
-                              {!isLeft && (
-                                <>
-                                  <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
-                                  <div className="flex flex-col items-start text-left ml-4 max-w-xs">
-                                    <span className="text-md font-semibold text-blue-400">
-                                      {quiz.topic}
-                                    </span>
-                                    <motion.button
-                                      whileHover={{ scale: 1.08 }}
-                                      whileTap={{ scale: 0.97 }}
-                                      className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-2 transition-all relative z-10"
-                                      style={{
-                                        backgroundColor: quizProgress?.completed
-                                          ? "#2ECC71"
-                                          : "#F89C3B",
-                                      }}
-                                      onClick={() =>
-                                        handleQuizCircleClick(lesson, quiz)
-                                      }
-                                    >
-                                      <FaStar
-                                        className="text-[#164A78]"
-                                        style={{
-                                          width: "120px",
-                                          height: "120px",
-                                        }}
-                                      />
-                                    </motion.button>
-                                    <span className="text-sm text-blue-200 mb-2">
-                                      {quiz.questions?.length || 0}{" "}
-                                      {quiz.questions?.length === 1
-                                        ? "question"
-                                        : "questions"}
-                                    </span>
-                                  </div>
-                                </>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </motion.div>
-              </Accordion.Content>
-            </Accordion.Item>
+                        <div className="absolute left-1/2 -translate-x-1/2 z-10">
+                          <div className="w-8 h-8 rounded-full bg-blue-400 border-4 border-white shadow-md"></div>
+                        </div>
+
+                        <div
+                          className={`w-1/2 flex ${
+                            !isLeft ? "justify-start pl-6" : "justify-start"
+                          }`}
+                        >
+                          {!isLeft && (
+                            <>
+                              <div className="absolute left-1/2 w-24 h-1 bg-blue-200 top-1/2 -translate-y-1/2 z-0" />
+                              <div className="flex flex-col items-start text-left ml-4 max-w-xs">
+                                <span className="text-md font-semibold text-blue-400">
+                                  {quiz.topic}
+                                </span>
+                                <motion.button
+                                  whileHover={{ scale: 1.08 }}
+                                  whileTap={{ scale: 0.97 }}
+                                  className="w-20 h-20 rounded-full flex items-center justify-center shadow-lg border-2 transition-all relative z-10"
+                                  style={{
+                                    backgroundColor: quizProgress?.completed
+                                      ? "#2ECC71"
+                                      : "#F89C3B",
+                                  }}
+                                  onClick={() =>
+                                    handleQuizCircleClick(lesson, quiz)
+                                  }
+                                >
+                                  <FaStar
+                                    className="text-[#164A78]"
+                                    style={{ width: "120px", height: "120px" }}
+                                  />
+                                </motion.button>
+                                <span className="text-sm text-blue-200 mb-2">
+                                  {quiz.questions?.length || 0}{" "}
+                                  {quiz.questions?.length === 1
+                                    ? "question"
+                                    : "questions"}
+                                </span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
           );
         })}
-      </Accordion.Root>
+      </div>
+
       <AnimatePresence>
         {modalQuiz && modalLesson && (
           <motion.div
