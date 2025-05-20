@@ -27,10 +27,33 @@ export default function LearnJourney() {
 
     const fetchLessonsAndProgress = async () => {
       try {
+        const token =
+          session?.accessToken || sessionStorage.getItem("authToken");
+
+        if (!token) {
+          throw new Error("No auth token available");
+        }
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+
         const [lessonsRes, progressRes] = await Promise.all([
-          fetch(`${API}/lessons`),
-          fetch(`${API}/users/${session.user.sub}/progress`),
+          fetch(`${API}/lessons`, { headers }),
+          fetch(`${API}/users/${session.user.sub}/progress`, { headers }),
         ]);
+
+        if (!lessonsRes.ok) {
+          const errText = await lessonsRes.text();
+          throw new Error(`Failed to fetch lessons: ${errText}`);
+        }
+
+        if (!progressRes.ok) {
+          const errText = await progressRes.text();
+          throw new Error(`Failed to fetch progress: ${errText}`);
+        }
+
         const lessonsData = await lessonsRes.json();
         const progressData = await progressRes.json();
 

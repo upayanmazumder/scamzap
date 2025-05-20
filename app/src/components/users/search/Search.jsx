@@ -19,11 +19,17 @@ export default function Users() {
   useEffect(() => {
     const fetchUsersAndFollowing = async () => {
       try {
-        const resUsers = await fetch(`${API}/users`);
+        const token = sessionStorage.getItem("authToken");
+        const resUsers = await fetch(`${API}/users`, {
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
+        });
         const dataUsers = await resUsers.json();
 
         const resFollowing = await fetch(
-          `${API}/users/following/${currentUserId}`
+          `${API}/users/following/${currentUserId}`,
+          {
+            headers: token ? { Authorization: `Bearer ${token}` } : {},
+          }
         );
         const dataFollowing = await resFollowing.json();
 
@@ -48,10 +54,14 @@ export default function Users() {
 
     setProcessing(targetId);
     try {
+      const token = sessionStorage.getItem("authToken");
       const endpoint = isFollowing ? "unfollow" : "follow";
       const res = await fetch(`${API}/users/${endpoint}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify({ userId: currentUserId, targetId }),
       });
 

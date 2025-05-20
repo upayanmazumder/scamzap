@@ -26,7 +26,11 @@ export default function QuizPage() {
   useEffect(() => {
     const fetchLesson = async () => {
       try {
-        const res = await fetch(`${API}/lessons/${lessonId}`);
+        const res = await fetch(`${API}/lessons/${lessonId}`, {
+          headers: {
+            Authorization: `Bearer ${session?.accessToken || ""}`,
+          },
+        });
         const data = await res.json();
         setLesson(data);
         if (Array.isArray(data.quiz)) {
@@ -39,7 +43,7 @@ export default function QuizPage() {
       }
     };
     if (lessonId && quizId) fetchLesson();
-  }, [lessonId, quizId]);
+  }, [lessonId, quizId, session?.accessToken]);
 
   useEffect(() => {
     const saveProgress = async () => {
@@ -55,7 +59,10 @@ export default function QuizPage() {
         try {
           await fetch(`${API}/users/${session.user.sub}/progress`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${session?.accessToken || ""}`,
+            },
             body: JSON.stringify({
               lessonId: lesson._id,
               quizzes: [{ quizId: quiz._id, completed: true }],
@@ -70,7 +77,7 @@ export default function QuizPage() {
       }
     };
     saveProgress();
-  }, [quizCompleted]);
+  }, [quizCompleted, lesson, quiz, session?.user?.sub, session?.accessToken]);
 
   if (loading) return <Loader />;
   if (!lesson || !quiz)

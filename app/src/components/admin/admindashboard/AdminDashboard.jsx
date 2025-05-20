@@ -17,24 +17,31 @@ export default function Dashboard() {
 
   useEffect(() => {
     if (status === "loading") return;
-    if (!session?.user?.sub) {
+
+    if (!session?.user?.sub || !session?.accessToken) {
       router.replace("/learn");
       return;
     }
+
     const checkAdmin = async () => {
       try {
-        const res = await fetch(`${API}/admin/role/${session.user.sub}`);
-        if (!res.ok) throw new Error();
+        const res = await fetch(`${API}/admin/role/${session.user.sub}`, {
+          headers: {
+            Authorization: `Bearer ${session.accessToken}`,
+          },
+        });
+        if (!res.ok) throw new Error("Failed to verify admin role");
         const data = await res.json();
         if (data.role !== "admin") {
           router.replace("/learn");
         } else {
           setLoading(false);
         }
-      } catch {
+      } catch (err) {
         router.replace("/learn");
       }
     };
+
     checkAdmin();
   }, [session, status, router]);
 
@@ -58,7 +65,6 @@ export default function Dashboard() {
       </div>
 
       <div className={styles["tab-content"]}>
-        {" "}
         {activeTab === "users" && <UserRoleManager />}
         {activeTab === "lessons" && <LessonManager />}
       </div>

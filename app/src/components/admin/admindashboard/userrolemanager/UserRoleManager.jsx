@@ -12,17 +12,22 @@ export default function UserRoleManager() {
   const [message, setMessage] = useState("");
 
   const currentAdminId = session?.user?.sub;
+  const token = session?.accessToken;
 
   const fetchUsers = async () => {
     if (!currentAdminId) return;
     setLoading(true);
     try {
-      const res = await fetch(`${API}/admin/users?userId=${currentAdminId}`);
+      const res = await fetch(`${API}/admin/users?userId=${currentAdminId}`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+      if (!res.ok) throw new Error("Failed to fetch users");
       const data = await res.json();
 
       setUsers(data.filter((user) => user.id !== currentAdminId));
     } catch (err) {
       console.error("Failed to fetch users:", err);
+      setMessage("Error loading users. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -35,6 +40,10 @@ export default function UserRoleManager() {
         `${API}/admin/${action}/${id}?userId=${currentAdminId}`,
         {
           method: "POST",
+          headers: {
+            ...(token && { Authorization: `Bearer ${token}` }),
+            "Content-Type": "application/json",
+          },
         }
       );
 
@@ -76,6 +85,12 @@ export default function UserRoleManager() {
                 <button
                   onClick={() => changeRole(user.id, "demote")}
                   className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded"
+                  aria-label={`Demote ${user.name}`}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      changeRole(user.id, "demote");
+                  }}
                 >
                   Demote
                 </button>
@@ -83,6 +98,12 @@ export default function UserRoleManager() {
                 <button
                   onClick={() => changeRole(user.id, "promote")}
                   className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded"
+                  aria-label={`Promote ${user.name}`}
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ")
+                      changeRole(user.id, "promote");
+                  }}
                 >
                   Promote
                 </button>
@@ -92,7 +113,11 @@ export default function UserRoleManager() {
         )}
       </div>
 
-      {message && <p className="mt-4 text-center text-blue-600">{message}</p>}
+      {message && (
+        <p className="mt-4 text-center text-blue-600 whitespace-pre-line">
+          {message}
+        </p>
+      )}
     </div>
   );
 }

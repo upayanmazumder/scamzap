@@ -82,7 +82,10 @@ const LessonManager = () => {
   const fetchLessons = async () => {
     setLoading(true);
     try {
-      const res = await fetch(`${API}/lessons`);
+      const token = sessionStorage.getItem("authToken");
+      const res = await fetch(`${API}/lessons`, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
       const data = await res.json();
       setLessons(data);
     } catch (err) {
@@ -249,9 +252,13 @@ const LessonManager = () => {
 
     setMessage("Submitting...");
     try {
+      const token = sessionStorage.getItem("authToken");
       const res = await fetch(`${API}/admin/lessons?userId=${adminId}`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          ...(token ? { Authorization: `Bearer ${token}` } : {}),
+        },
         body: JSON.stringify(lessonToSend),
       });
 
@@ -272,10 +279,12 @@ const LessonManager = () => {
 
     setMessage("Deleting...");
     try {
+      const token = sessionStorage.getItem("authToken");
       const res = await fetch(
         `${API}/admin/lessons/${lessonId}?userId=${adminId}`,
         {
           method: "DELETE",
+          headers: token ? { Authorization: `Bearer ${token}` } : {},
         }
       );
 

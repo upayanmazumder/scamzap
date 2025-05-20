@@ -15,7 +15,10 @@ export default function ScamFeed() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetch(`${API}/scams`)
+    const token = sessionStorage.getItem("authToken");
+    fetch(`${API}/scams`, {
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+    })
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load scams");
         return res.json();
