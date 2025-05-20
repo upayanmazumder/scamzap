@@ -6,20 +6,17 @@ import { isAdmin } from "../middleware/isAdmin.js";
 
 const router = express.Router();
 
-// Get user role
 router.get("/role/:id", async (req, res) => {
   const user = await User.findOne({ id: req.params.id });
   if (!user) return res.status(404).json({ error: "User not found" });
   res.json({ role: user.role });
 });
 
-// List all users
 router.get("/users", isAdmin, async (req, res) => {
   const users = await User.find();
   res.json(users);
 });
 
-// Promote user to admin
 router.post("/promote/:id", isAdmin, async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
@@ -34,7 +31,6 @@ router.post("/promote/:id", isAdmin, async (req, res) => {
   }
 });
 
-// Demote admin to user
 router.post("/demote/:id", isAdmin, async (req, res) => {
   try {
     const user = await User.findOneAndUpdate(
@@ -49,7 +45,6 @@ router.post("/demote/:id", isAdmin, async (req, res) => {
   }
 });
 
-// Get lesson and quiz stats
 router.get("/stats", isAdmin, async (req, res) => {
   const totalLessons = await Lesson.countDocuments();
   const totalQuizzes = await Lesson.aggregate([
@@ -59,7 +54,6 @@ router.get("/stats", isAdmin, async (req, res) => {
   res.json({ totalLessons, totalQuizzes: totalQuizzes[0]?.total || 0 });
 });
 
-// Create lesson
 router.post("/lessons", isAdmin, async (req, res) => {
   try {
     const lesson = await Lesson.create(req.body);
@@ -69,7 +63,6 @@ router.post("/lessons", isAdmin, async (req, res) => {
   }
 });
 
-// Add quiz to lesson
 router.post("/lessons/:lessonId/quiz", isAdmin, async (req, res) => {
   const { topic, questions } = req.body;
   try {
@@ -85,7 +78,6 @@ router.post("/lessons/:lessonId/quiz", isAdmin, async (req, res) => {
   }
 });
 
-// Update quiz
 router.put("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
   const lesson = await Lesson.findById(req.params.lessonId);
   const quiz = lesson.quiz.id(req.params.quizId);
@@ -94,7 +86,6 @@ router.put("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
   res.json(quiz);
 });
 
-// Add question to quiz
 router.post(
   "/lessons/:lessonId/quiz/:quizId/question",
   isAdmin,
@@ -117,7 +108,6 @@ router.post(
   }
 );
 
-// Delete lesson
 router.delete("/lessons/:lessonId", isAdmin, async (req, res) => {
   try {
     await Lesson.findByIdAndDelete(req.params.lessonId);
@@ -127,7 +117,6 @@ router.delete("/lessons/:lessonId", isAdmin, async (req, res) => {
   }
 });
 
-// Delete quiz
 router.delete("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
   try {
     const lesson = await Lesson.findById(req.params.lessonId);
@@ -145,7 +134,6 @@ router.delete("/lessons/:lessonId/quiz/:quizId", isAdmin, async (req, res) => {
   }
 });
 
-// Delete question from quiz
 router.delete(
   "/lessons/:lessonId/quiz/:quizId/question/:questionId",
   isAdmin,
@@ -171,13 +159,11 @@ router.delete(
   }
 );
 
-// List all scams
 router.get("/scams", isAdmin, async (req, res) => {
   const scams = await Scam.find().populate("submittedBy");
   res.json(scams);
 });
 
-// Delete scam
 router.delete("/scams/:id", isAdmin, async (req, res) => {
   await Scam.findByIdAndDelete(req.params.id);
   res.json({ message: "Scam removed" });
