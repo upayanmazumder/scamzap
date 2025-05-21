@@ -19,12 +19,12 @@ export default function ProtectedRoute({ children }) {
   const pathname = usePathname();
 
   const isProtected = PROTECTED_PATHS.some(
-    (path) => pathname === path || pathname.startsWith(path + "/")
+    (path) => pathname === path || pathname.startsWith(`${path}/`)
   );
 
   if (!isProtected) return children;
 
-  if (status === "loading")
+  if (status === "loading") {
     return (
       <main
         style={{
@@ -37,7 +37,9 @@ export default function ProtectedRoute({ children }) {
         <Loader />
       </main>
     );
-  if (!session)
+  }
+
+  if (status === "unauthenticated" || !session) {
     return (
       <main
         style={{
@@ -46,6 +48,8 @@ export default function ProtectedRoute({ children }) {
           alignItems: "center",
           minHeight: "100vh",
           flexDirection: "column",
+          padding: "2rem",
+          textAlign: "center",
         }}
       >
         <div className="page-header">
@@ -56,15 +60,24 @@ export default function ProtectedRoute({ children }) {
           </p>
         </div>
         <Authenticate />
-        <span>or</span>
+        <span style={{ margin: "1rem 0" }}>or</span>
         <button
-          style={{ backgroundColor: "transparent", padding: 0 }}
+          style={{
+            backgroundColor: "transparent",
+            padding: 0,
+            fontSize: "1.5em",
+            cursor: "pointer",
+            border: "none",
+            color: "#0070f3",
+            textDecoration: "underline",
+          }}
           onClick={() => (window.location.href = "/")}
         >
-          <b style={{ fontSize: "1.5em" }}>Go to Home</b>
+          Go to Home
         </button>
       </main>
     );
+  }
 
   return children;
 }

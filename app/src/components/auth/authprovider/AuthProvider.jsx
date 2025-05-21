@@ -5,22 +5,23 @@ import { useEffect } from "react";
 import API from "../../../utils/api";
 
 function SyncUser() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   useEffect(() => {
+    if (status !== "authenticated" || !session?.user?.email) return;
+
     const syncUser = async () => {
-      if (!session?.user?.email) return;
+      const token = session?.accessToken;
+
+      if (!token) {
+        console.error("No JWT token found in session");
+        signOut({ callbackUrl: "/" });
+        return;
+      }
+
+      sessionStorage.setItem("authToken", token);
 
       try {
-        const token = session?.accessToken;
-
-        if (!token) {
-          console.error("No JWT token found in session");
-          return;
-        }
-
-        sessionStorage.setItem("authToken", token);
-
         const res = await fetch(`${API}/users`, {
           method: "POST",
           headers: {
@@ -35,7 +36,7 @@ function SyncUser() {
         });
 
         if (res.status === 401) {
-          console.warn("Token expired or unauthorized, signing out...");
+          console.warn("Unauthorized. Signing out...");
           signOut({ callbackUrl: "/" });
           return;
         }
@@ -48,17 +49,12 @@ function SyncUser() {
         console.log("User synced in AuthProvider");
       } catch (err) {
         console.error("User sync failed:", err);
-        if (
-          err.message.toLowerCase().includes("unauthorized") ||
-          err.message.toLowerCase().includes("token")
-        ) {
-          signOut({ callbackUrl: "/" });
-        }
+        signOut({ callbackUrl: "/" });
       }
     };
 
     syncUser();
-  }, [session]);
+  }, [session, status]);
 
   return null;
 }

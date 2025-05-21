@@ -18,7 +18,7 @@ const createEmptyQuestion = () => ({
   id: `${Date.now()}-${Math.random()}`,
   question: "",
   options: ["", "", "", ""],
-  answer: "",
+  answer: 0,
   explanation: "",
 });
 
@@ -40,7 +40,11 @@ function convertFlatQuestionsToQuiz(flatQuestions, quizTopic = "Passwords") {
       questions: flatQuestions.map((q) => ({
         question: q.question,
         options: q.options,
-        answer: q.answer,
+
+        answer:
+          typeof q.answer === "number"
+            ? q.answer
+            : q.options.findIndex((opt) => opt === q.answer) || 0,
         explanation: q.explanation,
       })),
     },
@@ -137,8 +141,11 @@ const LessonManager = () => {
               const newOptions = [...q.options];
               newOptions[optionIdx] = value;
               let newAnswer = q.answer;
-              if (q.answer === q.options[optionIdx]) {
-                newAnswer = value;
+
+              if (q.answer === optionIdx) {
+                newAnswer = optionIdx;
+              } else if (q.answer >= newOptions.length) {
+                newAnswer = 0;
               }
               return { ...q, options: newOptions, answer: newAnswer };
             }
@@ -214,7 +221,14 @@ const LessonManager = () => {
         if (!q.question.trim()) qErr.question = "Question required";
         if (q.options.some((opt) => !opt.trim()))
           qErr.options = "All 4 options are required";
-        if (!q.answer.trim()) qErr.answer = "Answer required";
+        if (
+          typeof q.answer !== "number" ||
+          q.answer < 0 ||
+          q.answer >= q.options.length ||
+          !q.options[q.answer] ||
+          !q.options[q.answer].trim()
+        )
+          qErr.answer = "Select the correct answer";
         if (!q.explanation.trim()) qErr.explanation = "Explanation required";
         return Object.keys(qErr).length > 0 ? qErr : null;
       });
@@ -246,6 +260,7 @@ const LessonManager = () => {
         questions: quiz.questions.map((q, i) => ({
           ...q,
           id: i + 1,
+          answer: q.options[q.answer],
         })),
       })),
     };
@@ -464,7 +479,18 @@ const LessonManager = () => {
                             parsed.length > 0 &&
                             parsed[0].questions
                           ) {
-                            quizArray = parsed;
+                            quizArray = parsed.map((qz) => ({
+                              ...qz,
+                              questions: qz.questions.map((q) => ({
+                                ...q,
+                                answer:
+                                  typeof q.answer === "number"
+                                    ? q.answer
+                                    : q.options.findIndex(
+                                        (opt) => opt === q.answer
+                                      ) || 0,
+                              })),
+                            }));
                           } else {
                             throw new Error(
                               "JSON must be an array of questions or quizzes."
@@ -575,43 +601,54 @@ const LessonManager = () => {
                           <div>
                             <strong>Options:</strong>
                             <ul className="space-y-2 mt-2">
-                              {q.options.map((opt, optIndex) => (
-                                <li
-                                  key={optIndex}
-                                  className="flex items-center gap-2"
-                                >
-                                  <input
-                                    type="radio"
-                                    name={`correctOption-${quizIdx}-${q.id}`}
-                                    checked={q.answer === opt}
-                                    onChange={() =>
-                                      handleQuestionChange(
-                                        quizIdx,
-                                        qIdx,
-                                        "answer",
-                                        opt
-                                      )
-                                    }
-                                    className="accent-green-600"
-                                    aria-label={`Mark as correct option ${
-                                      optIndex + 1
+                              {q.options.map((opt, optIndex) => {
+                                const radioId = `quiz-${quizIdx}-q-${qIdx}-opt-${optIndex}`;
+                                const isSelected = q.answer === optIndex;
+                                return (
+                                  <li
+                                    key={optIndex}
+                                    className={`flex items-center gap-3 p-2 rounded transition ${
+                                      isSelected
+                                        ? "bg-green-50 dark:bg-gray-800"
+                                        : ""
                                     }`}
-                                  />
-                                  <input
-                                    value={opt}
-                                    onChange={(e) =>
-                                      handleOptionChange(
-                                        quizIdx,
-                                        qIdx,
-                                        optIndex,
-                                        e.target.value
-                                      )
-                                    }
-                                    placeholder={`Option ${optIndex + 1}`}
-                                    className="w-full p-2 border rounded"
-                                  />
-                                </li>
-                              ))}
+                                  >
+                                    <input
+                                      type="radio"
+                                      id={radioId}
+                                      name={`correctOption-${quizIdx}-${q.id}`}
+                                      checked={isSelected}
+                                      onChange={() =>
+                                        handleQuestionChange(
+                                          quizIdx,
+                                          qIdx,
+                                          "answer",
+                                          optIndex
+                                        )
+                                      }
+                                      className="w-5 h-5 accent-green-600"
+                                      aria-label={`Mark as correct option ${
+                                        optIndex + 1
+                                      }`}
+                                    />
+                                    <label htmlFor={radioId} className="w-full">
+                                      <input
+                                        value={opt}
+                                        onChange={(e) =>
+                                          handleOptionChange(
+                                            quizIdx,
+                                            qIdx,
+                                            optIndex,
+                                            e.target.value
+                                          )
+                                        }
+                                        placeholder={`Option ${optIndex + 1}`}
+                                        className="w-full p-2 border rounded"
+                                      />
+                                    </label>
+                                  </li>
+                                );
+                              })}
                             </ul>
                           </div>
                           {errors.quiz?.[quizIdx]?.questions?.[qIdx]
